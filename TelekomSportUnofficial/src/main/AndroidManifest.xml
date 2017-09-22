@@ -20,7 +20,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.Leanback"
-        android:banner="@drawable/banner">
+        android:banner="@drawable/app_banner">
 
         <activity
             android:name="de.berdsen.telekomsport_unofficial.OverviewActivity"
