@@ -1,11 +1,17 @@
 package de.berdsen.telekomsport_unofficial.model;
 
-import junit.framework.TestCase;
+import junit.framework.Assert;
 
-/**
- * Created by berthm on 26.09.2017.
- */
-public class VideoTest extends TestCase {
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
+
+@PrepareForTest({ Video.class })
+@RunWith(PowerMockRunner.class)
+public class VideoTest {
 
     private Video testVideo;
 
@@ -15,9 +21,8 @@ public class VideoTest extends TestCase {
     private final String videoUrl = "VideoUrl";
     private final String videoPoster = "VideoPoster";
 
+    @Before
     public void setUp() throws Exception {
-        super.setUp();
-
         testVideo = new Video();
         testVideo.setTitle(title);
         testVideo.setCategory(category);
@@ -26,72 +31,83 @@ public class VideoTest extends TestCase {
         testVideo.setPoster(videoPoster);
     }
 
+    @After
     public void tearDown() throws Exception {
         testVideo = null;
     }
 
+    @Test
     public void testToString() throws Exception {
-        assertEquals("Video {title='VideoTitle', description='VideoDescription', videoUrl='VideoUrl', category='VideoCategory', poster='VideoPoster'}", testVideo.toString());
+        Assert.assertEquals("Video {title='VideoTitle', description='VideoDescription', videoUrl='VideoUrl', category='VideoCategory', poster='VideoPoster'}", testVideo.toString());
     }
 
+    @Test
     public void testGetTitle() throws Exception {
-        assertEquals(title, testVideo.getTitle());
+        Assert.assertEquals(title, testVideo.getTitle());
     }
 
+    @Test
     public void testGetDescription() throws Exception {
-        assertEquals(description, testVideo.getDescription());
+        Assert.assertEquals(description, testVideo.getDescription());
     }
 
+    @Test
     public void testGetVideoUrl() throws Exception {
-        assertEquals(videoUrl, testVideo.getVideoUrl());
+        Assert.assertEquals(videoUrl, testVideo.getVideoUrl());
     }
 
+    @Test
     public void testGetCategory() throws Exception {
-        assertEquals(category, testVideo.getCategory());
+        Assert.assertEquals(category, testVideo.getCategory());
     }
 
+    @Test
     public void testGetPoster() throws Exception {
-        assertEquals(videoPoster, testVideo.getPoster());
+        Assert.assertEquals(videoPoster, testVideo.getPoster());
     }
 
+    @Test
     public void testSetTitle() throws Exception {
         String newTitle = "NewTitle";
 
-        assertEquals(title, testVideo.getTitle());
+        Assert.assertEquals(title, testVideo.getTitle());
         testVideo.setTitle(newTitle);
-        assertEquals(newTitle, testVideo.getTitle());
+        Assert.assertEquals(newTitle, testVideo.getTitle());
     }
 
+    @Test
     public void testSetDescription() throws Exception {
         String newDescription = "NewDescription";
 
-        assertEquals(description, testVideo.getDescription());
+        Assert.assertEquals(description, testVideo.getDescription());
         testVideo.setDescription(newDescription);
-        assertEquals(newDescription, testVideo.getDescription());
+        Assert.assertEquals(newDescription, testVideo.getDescription());
     }
 
+    @Test
     public void testSetVideoUrl() throws Exception {
         String newVideoUrl = "NewVideoUrl";
 
-        assertEquals(videoUrl, testVideo.getVideoUrl());
+        Assert.assertEquals(videoUrl, testVideo.getVideoUrl());
         testVideo.setVideoUrl(newVideoUrl);
-        assertEquals(newVideoUrl, testVideo.getVideoUrl());
+        Assert.assertEquals(newVideoUrl, testVideo.getVideoUrl());
     }
 
+    @Test
     public void testSetCategory() throws Exception {
         String newCategory = "NewCategory";
 
-        assertEquals(category, testVideo.getCategory());
+        Assert.assertEquals(category, testVideo.getCategory());
         testVideo.setCategory(newCategory);
-        assertEquals(newCategory, testVideo.getCategory());
+        Assert.assertEquals(newCategory, testVideo.getCategory());
     }
 
+    @Test
     public void testSetPoster() throws Exception {
         String newVideoPoster = "NewPoster";
 
-        assertEquals(videoPoster, testVideo.getPoster());
+        Assert.assertEquals(videoPoster, testVideo.getPoster());
         testVideo.setPoster(newVideoPoster);
-        assertEquals(newVideoPoster, testVideo.getPoster());
+        Assert.assertEquals(newVideoPoster, testVideo.getPoster());
     }
-
 }
