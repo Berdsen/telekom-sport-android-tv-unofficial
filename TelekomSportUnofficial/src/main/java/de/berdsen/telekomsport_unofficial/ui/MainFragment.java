@@ -1,4 +1,4 @@
-package de.berdsen.telekomsport_unofficial;
+package de.berdsen.telekomsport_unofficial.ui;
 
 import android.support.v17.leanback.app.BrowseFragment;
 
