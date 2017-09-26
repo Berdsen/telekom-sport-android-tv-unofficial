@@ -11,6 +11,7 @@ import de.berdsen.telekomsport_unofficial.ui.OverviewActivity;
 @Module
 public abstract class ActivityBuilder {
 
-    @ContributesAndroidInjector
+    @ContributesAndroidInjector(modules = FragmentBuilder.class)
     public abstract OverviewActivity overviewActivity();
+
 }
