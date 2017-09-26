@@ -4,6 +4,7 @@
 build
 
 *.iml
+*.apk
 
 /.idea
 /captures
