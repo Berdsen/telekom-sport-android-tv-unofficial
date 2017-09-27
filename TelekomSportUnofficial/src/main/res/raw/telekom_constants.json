@@ -1,20 +1,22 @@
 {
   "baseUrl": "https://www.telekomsport.de",
-  "apiUrlExtension": "/api/v1/",
+  "apiUrlExtension": "/api/v1",
+  "videoUrlExtension": "/service/player/streamAccess",
+  "videoUrlParams": "?videoId=%s&label=2780_hls",
   "sports": [{
       "title": "3. Liga",
       "imageUrl": "/images/packete/3liga.png",
       "pageExtension": "fussball/3-liga",
-      "epgExtension": ""
+      "epgExtension": "/epg/64"
     }, {
       "title": "Deutsche Eishockey Liga",
       "imageUrl": "/images/packete/del.png",
       "pageExtension": "eishockey/del",
-      "epgExtension": ""
+      "epgExtension": "/epg/52"
     }, {
       "title": "Easycredit BBL",
       "imageUrl": "/images/packete/easyCredit.png",
       "pageExtension": "basketball/bbl",
-      "epgExtension": ""
+      "epgExtension": "/epg/31"
     }]
 }

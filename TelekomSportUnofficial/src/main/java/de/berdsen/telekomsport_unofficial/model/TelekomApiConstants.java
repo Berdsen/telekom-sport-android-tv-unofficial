@@ -13,11 +13,15 @@ import lombok.Data;
 public final class TelekomApiConstants implements Serializable {
     private final String baseUrl;
     private final String apiUrlExtension;
+    private final String videoUrlExtension;
+    private final String videoUrlParams;
     private final List<Sport> sports;
 
-    TelekomApiConstants(String baseUrl, String apiUrlExtension, List<Sport> sports) {
+    TelekomApiConstants(String baseUrl, String apiUrlExtension, String videoUrlExtension, String videoUrlParams, List<Sport> sports) {
         this.baseUrl = baseUrl;
         this.apiUrlExtension = apiUrlExtension;
+        this.videoUrlExtension = videoUrlExtension;
+        this.videoUrlParams = videoUrlParams;
         this.sports = sports;
     }
 }
