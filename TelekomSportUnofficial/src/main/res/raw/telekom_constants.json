@@ -1,0 +1,20 @@
+{
+  "baseUrl": "https://www.telekomsport.de",
+  "apiUrlExtension": "/api/v1/",
+  "sports": [{
+      "title": "3. Liga",
+      "imageUrl": "/images/packete/3liga.png",
+      "pageExtension": "fussball/3-liga",
+      "epgExtension": ""
+    }, {
+      "title": "Deutsche Eishockey Liga",
+      "imageUrl": "/images/packete/del.png",
+      "pageExtension": "eishockey/del",
+      "epgExtension": ""
+    }, {
+      "title": "Easycredit BBL",
+      "imageUrl": "/images/packete/easyCredit.png",
+      "pageExtension": "basketball/bbl",
+      "epgExtension": ""
+    }]
+}

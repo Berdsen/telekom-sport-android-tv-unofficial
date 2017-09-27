@@ -20,7 +20,6 @@ import de.berdsen.telekomsport_unofficial.AndroidApplication;
 public class AppModule {
 
     @Provides
-    @Singleton
     Context provideContext(AndroidApplication application) {
         return application;
     }

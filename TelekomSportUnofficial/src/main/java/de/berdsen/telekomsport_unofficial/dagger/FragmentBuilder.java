@@ -11,7 +11,9 @@ import de.berdsen.telekomsport_unofficial.ui.MainFragment;
 @Module
 public abstract class FragmentBuilder {
 
-    @ContributesAndroidInjector
+    @ContributesAndroidInjector(modules = {
+            ServicesModule.class
+    })
     public abstract MainFragment mainFragment();
 
 }

@@ -25,6 +25,7 @@ import de.berdsen.telekomsport_unofficial.R;
 import de.berdsen.telekomsport_unofficial.dagger.AppComponent;
 import de.berdsen.telekomsport_unofficial.dagger.DaggerAppComponent;
 import de.berdsen.telekomsport_unofficial.model.Video;
+import de.berdsen.telekomsport_unofficial.services.RestService;
 import de.berdsen.telekomsport_unofficial.ui.presenter.CardPresenter;
 import de.berdsen.telekomsport_unofficial.utils.JsonUtils;
 
@@ -32,6 +33,9 @@ public class MainFragment extends BrowseFragment {
 
     @Inject
     Context context;
+
+    @Inject
+    RestService restService;
 
     private List<Video> mVideos = new ArrayList<Video>();
 
