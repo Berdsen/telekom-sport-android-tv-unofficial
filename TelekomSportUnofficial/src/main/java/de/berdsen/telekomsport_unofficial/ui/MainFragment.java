@@ -1,13 +1,15 @@
 package de.berdsen.telekomsport_unofficial.ui;
 
-import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v17.leanback.app.BrowseFragment;
 import android.support.v17.leanback.widget.ArrayObjectAdapter;
 import android.support.v17.leanback.widget.HeaderItem;
 import android.support.v17.leanback.widget.ListRow;
 import android.support.v17.leanback.widget.ListRowPresenter;
+import android.support.v17.leanback.widget.OnItemViewClickedListener;
+import android.support.v17.leanback.widget.Presenter;
+import android.support.v17.leanback.widget.Row;
+import android.support.v17.leanback.widget.RowPresenter;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -19,18 +21,16 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import dagger.android.AndroidInjection;
-import de.berdsen.telekomsport_unofficial.AndroidApplication;
 import de.berdsen.telekomsport_unofficial.R;
-import de.berdsen.telekomsport_unofficial.dagger.AppComponent;
-import de.berdsen.telekomsport_unofficial.dagger.DaggerAppComponent;
 import de.berdsen.telekomsport_unofficial.model.Video;
 import de.berdsen.telekomsport_unofficial.services.RestService;
 import de.berdsen.telekomsport_unofficial.ui.base.AbstractBaseBrowseFragment;
 import de.berdsen.telekomsport_unofficial.ui.presenter.CardPresenter;
 import de.berdsen.telekomsport_unofficial.utils.JsonUtils;
 
-public class MainFragment extends AbstractBaseBrowseFragment {
+public class MainFragment
+        extends AbstractBaseBrowseFragment
+        implements OnItemViewClickedListener {
 
     @Inject
     RestService restService;
@@ -40,6 +40,7 @@ public class MainFragment extends AbstractBaseBrowseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         initialize();
     }
 
@@ -51,6 +52,8 @@ public class MainFragment extends AbstractBaseBrowseFragment {
         loadData();
 
         loadRows();
+
+        setOnItemViewClickedListener( this );
     }
 
     private void loadData() {
@@ -88,7 +91,6 @@ public class MainFragment extends AbstractBaseBrowseFragment {
         setAdapter(adapter);
     }
 
-
     public List<String> getCategories() {
         if (mVideos == null) return null;
 
@@ -100,5 +102,16 @@ public class MainFragment extends AbstractBaseBrowseFragment {
         }
 
         return categories;
+    }
+
+    @Override
+    public void onItemClicked(Presenter.ViewHolder itemViewHolder, Object item, RowPresenter.ViewHolder rowViewHolder, Row row) {
+        if ( item instanceof Video ) {
+            Video video = (Video) item;
+
+            Intent intent = new Intent(getActivity(), VideoDetailsActivity.class);
+            intent.putExtra(VideoDetailsActivity.EXTRA_VIDEO, video);
+            startActivity(intent);
+        }
     }
 }
