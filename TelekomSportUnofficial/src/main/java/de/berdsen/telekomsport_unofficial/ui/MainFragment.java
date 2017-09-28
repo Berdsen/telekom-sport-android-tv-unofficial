@@ -26,13 +26,11 @@ import de.berdsen.telekomsport_unofficial.dagger.AppComponent;
 import de.berdsen.telekomsport_unofficial.dagger.DaggerAppComponent;
 import de.berdsen.telekomsport_unofficial.model.Video;
 import de.berdsen.telekomsport_unofficial.services.RestService;
+import de.berdsen.telekomsport_unofficial.ui.base.AbstractBaseBrowseFragment;
 import de.berdsen.telekomsport_unofficial.ui.presenter.CardPresenter;
 import de.berdsen.telekomsport_unofficial.utils.JsonUtils;
 
-public class MainFragment extends BrowseFragment {
-
-    @Inject
-    Context context;
+public class MainFragment extends AbstractBaseBrowseFragment {
 
     @Inject
     RestService restService;
@@ -41,9 +39,7 @@ public class MainFragment extends BrowseFragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
-
         initialize();
     }
 
