@@ -1,7 +1,7 @@
 {
   "baseUrl": "https://www.telekomsport.de",
   "apiUrlExtension": "/api/v1",
-  "loginUrlExtension": "'/service/auth/web/login?headto=%s/info'",
+  "loginUrlExtension": "/service/auth/web/login?headto=%s/info",
   "videoUrlExtension": "/service/player/streamAccess",
   "videoUrlParams": "?videoId=%s&label=2780_hls",
   "sports": [{
