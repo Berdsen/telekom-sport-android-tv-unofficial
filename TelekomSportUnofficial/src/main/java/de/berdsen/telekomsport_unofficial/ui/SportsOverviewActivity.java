@@ -23,7 +23,7 @@ public class SportsOverviewActivity extends AbstractBaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sports_overview);
 
-        sessionService.login();
+        sessionService.loginAsync();
     }
 
 }
