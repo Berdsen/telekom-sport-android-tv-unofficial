@@ -3,6 +3,7 @@ package de.berdsen.telekomsport_unofficial.dagger;
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 import de.berdsen.telekomsport_unofficial.ui.OverviewActivity;
+import de.berdsen.telekomsport_unofficial.ui.SportsOverviewActivity;
 import de.berdsen.telekomsport_unofficial.ui.VideoDetailsActivity;
 
 /**
@@ -11,6 +12,12 @@ import de.berdsen.telekomsport_unofficial.ui.VideoDetailsActivity;
 
 @Module
 public abstract class ActivityBuilder {
+
+    @ContributesAndroidInjector(modules = {
+            FragmentBuilder.class,
+            ServicesModule.class
+    })
+    public abstract SportsOverviewActivity sportsOverviewActivity();
 
     @ContributesAndroidInjector(modules = {
             FragmentBuilder.class

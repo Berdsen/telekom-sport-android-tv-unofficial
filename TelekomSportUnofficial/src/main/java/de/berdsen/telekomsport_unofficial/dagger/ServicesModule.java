@@ -8,11 +8,14 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 
+import javax.inject.Singleton;
+
 import dagger.Module;
 import dagger.Provides;
 import de.berdsen.telekomsport_unofficial.R;
 import de.berdsen.telekomsport_unofficial.model.TelekomApiConstants;
 import de.berdsen.telekomsport_unofficial.services.RestService;
+import de.berdsen.telekomsport_unofficial.services.SessionService;
 import de.berdsen.telekomsport_unofficial.utils.JsonUtils;
 
 /**
@@ -26,8 +29,10 @@ public class ServicesModule {
 
     private TelekomApiConstants singletonTelekomApiConstants;
     private RestService singletonRestService;
+    private SessionService singletonSessionService;
 
     @Provides
+    @Singleton
     TelekomApiConstants providesTelekomConstants(Context context) {
         if (singletonTelekomApiConstants == null) {
             readTelekomConstants(context);
@@ -41,6 +46,14 @@ public class ServicesModule {
             initializeRestService(context);
         }
         return singletonRestService;
+    }
+
+    @Provides
+    SessionService providesSessionService(Context context) {
+        if (singletonSessionService == null) {
+            initializeSessionService(context);
+        }
+        return singletonSessionService;
     }
 
     private void readTelekomConstants(Context context) {
@@ -62,5 +75,13 @@ public class ServicesModule {
         }
 
         singletonRestService = new RestService(singletonTelekomApiConstants);
+    }
+
+    private void initializeSessionService(Context context) {
+        if (singletonTelekomApiConstants == null) {
+            readTelekomConstants(context);
+        }
+
+        singletonSessionService = new SessionService(singletonTelekomApiConstants);
     }
 }
