@@ -26,7 +26,7 @@ import de.berdsen.telekomsport_unofficial.model.Video;
 import de.berdsen.telekomsport_unofficial.services.RestService;
 import de.berdsen.telekomsport_unofficial.ui.base.AbstractBaseBrowseFragment;
 import de.berdsen.telekomsport_unofficial.ui.presenter.CardPresenter;
-import de.berdsen.telekomsport_unofficial.utils.JsonUtils;
+import de.berdsen.telekomsport_unofficial.utils.ParseUtils;
 
 public class MainFragment
         extends AbstractBaseBrowseFragment
@@ -57,7 +57,7 @@ public class MainFragment
     }
 
     private void loadData() {
-        String json = JsonUtils.loadJsonFromResource(context, R.raw.videos);
+        String json = ParseUtils.loadJsonFromResource(context, R.raw.videos);
 
         Type collection = new TypeToken<ArrayList<Video>>(){}.getType();
 

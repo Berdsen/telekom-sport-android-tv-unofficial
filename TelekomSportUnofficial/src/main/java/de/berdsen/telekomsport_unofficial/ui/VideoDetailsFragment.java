@@ -34,7 +34,7 @@ import de.berdsen.telekomsport_unofficial.model.Video;
 import de.berdsen.telekomsport_unofficial.ui.base.AbstractBaseDetailsFragment;
 import de.berdsen.telekomsport_unofficial.ui.presenter.CardPresenter;
 import de.berdsen.telekomsport_unofficial.ui.presenter.DetailsDescriptionPresenter;
-import de.berdsen.telekomsport_unofficial.utils.JsonUtils;
+import de.berdsen.telekomsport_unofficial.utils.ParseUtils;
 
 /**
  * Created by berthm on 28.09.2017.
@@ -85,7 +85,7 @@ public class VideoDetailsFragment
     }
 
     private void loadRelatedMedia( ArrayObjectAdapter adapter ) {
-        String json = JsonUtils.loadJsonFromResource( context, R.raw.videos );
+        String json = ParseUtils.loadJsonFromResource( context, R.raw.videos );
         Gson gson = new Gson();
         Type collection = new TypeToken<ArrayList<Video>>(){}.getType();
         List<Video> videos = gson.fromJson( json, collection );

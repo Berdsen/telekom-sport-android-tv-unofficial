@@ -16,7 +16,7 @@ import de.berdsen.telekomsport_unofficial.R;
 import de.berdsen.telekomsport_unofficial.model.TelekomApiConstants;
 import de.berdsen.telekomsport_unofficial.services.RestService;
 import de.berdsen.telekomsport_unofficial.services.SessionService;
-import de.berdsen.telekomsport_unofficial.utils.JsonUtils;
+import de.berdsen.telekomsport_unofficial.utils.ParseUtils;
 
 /**
  * Created by berthm on 27.09.2017.
@@ -57,7 +57,7 @@ public class ServicesModule {
     }
 
     private void readTelekomConstants(Context context) {
-        String json = JsonUtils.loadJsonFromResource(context, R.raw.telekom_constants);
+        String json = ParseUtils.loadJsonFromResource(context, R.raw.telekom_constants);
 
         Type type = new TypeToken<TelekomApiConstants>(){}.getType();
 

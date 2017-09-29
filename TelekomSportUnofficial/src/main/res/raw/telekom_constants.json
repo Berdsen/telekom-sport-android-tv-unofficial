@@ -2,6 +2,7 @@
   "baseUrl": "https://www.telekomsport.de",
   "apiUrlExtension": "/api/v1",
   "loginUrlExtension": "/service/auth/web/login?headto=%s/info",
+  "loginEndpoint": "https://accounts.login.idm.telekom.com/sso",
   "videoUrlExtension": "/service/player/streamAccess",
   "videoUrlParams": "?videoId=%s&label=2780_hls",
   "sports": [{
