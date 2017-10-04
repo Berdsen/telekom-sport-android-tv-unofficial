@@ -65,7 +65,9 @@ public class SessionService {
         private final String ACCEPT_CHARSET = "Accept-Charset";
         private final String ENCODING_UTF8 = "UTF-8";
         private final String ENCODING_GZIP = "gzip";
-        //private final String USER_AGENT = "User-Agent";
+        private final String USER_AGENT = "User-Agent";
+        // private final String USER_AGENT = "Mozilla/5.0";
+
         private final String COOKIE_HEADER_FIELD = "Set-Cookie";
         private String USER_AGENT_VALUE = "";
 
@@ -87,11 +89,11 @@ public class SessionService {
         protected Boolean doInBackground(Void... voids) {
             setUserAgentValue();
 
-            executeNewLogin();
+            // executeNewLogin();
 
-            //return executeLogin();
+            return executeLogin();
 
-            return false;
+            // return false;
         }
 
         private class TestHttpClient
@@ -111,8 +113,7 @@ public class SessionService {
 
                 // act like a browser
                 conn.setRequestProperty("User-Agent", USER_AGENT);
-                conn.setRequestProperty("Accept",
-                        "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
+                conn.setRequestProperty("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
                 conn.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
                 if (cookies != null) {
                     for (String cookie : this.cookies) {
@@ -267,7 +268,7 @@ public class SessionService {
             base += "AppleWebKit/537.36 (KHTML, like Gecko) ";
             base += "%CH_VER% Safari/537.36".replace("%CH_VER%", chrome_version);
 
-            USER_AGENT_VALUE = "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36";
+            USER_AGENT_VALUE = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36";
         }
 
         private HttpsURLConnection createConnection(String connectionUrl) throws IOException {
@@ -287,8 +288,6 @@ public class SessionService {
 
             return connection;
         }
-
-        private final String USER_AGENT = "Mozilla/5.0";
 
         // HTTP GET request
         public void sendHttpGet(String url) throws Exception {
@@ -376,8 +375,14 @@ public class SessionService {
                 */
 
 
+                String pageUrl = "https://www.telekomsport.de";
+                String loginUrl = "https://www.telekomsport.de/service/auth/web/login?headto=https://www.telekomsport.de/live";
+                String loginEndpoint = "https://accounts.login.idm.telekom.com/sso";
 
-                HttpsURLConnection connection = createConnection(constants.getLoginUrl());
+                HttpsURLConnection connection = createConnection(loginUrl /* constants.getLoginUrl() */ );
+                connection.setRequestProperty("Referer", "https://www.telekomsport.de/live");
+                //connection.setConnectTimeout(15000);
+                connection.setRequestProperty("Connection", "keep-alive");
 
                 // execute request and get response code
                 int res = connection.getResponseCode();
@@ -386,13 +391,11 @@ public class SessionService {
                 Map<String, List<String>> headerFields = connection.getHeaderFields();
                 List<String> cookies = headerFields.get(COOKIE_HEADER_FIELD);
 
-                //loadResponseCookies(connection, this.cookieManager);
-
                 String html = "";
 
                 if (res == HttpURLConnection.HTTP_OK) {
 
-                    loadResponseCookies(connection);
+                    //loadResponseCookies(connection);
 
                     // we accepted gzip, so we need to extract it
                     InputStream in = new GZIPInputStream(connection.getInputStream());
@@ -428,11 +431,18 @@ public class SessionService {
                     postParameter.put(KEY_USERNAME, "");
                 }
 
+                if (postParameter.containsKey("persist_session")) {
+                    // postParameter.put("persist_session", "1");
+                    postParameter.remove("persist_session");
+                }
+
                 if (!postParameter.containsKey(KEY_SUBMIT)) {
                     postParameter.put(KEY_SUBMIT, "");
                 }
 
-                ExecutePost(cookies, postParameter);
+                URL referer = connection.getURL();
+
+                ExecutePost(cookies, postParameter, referer.toString());
 
                 // loadResponseCookies(connection, cookieManager);
 
@@ -508,6 +518,7 @@ public class SessionService {
 
         public void populateCookieHeaders(HttpURLConnection conn) {
 
+            /*
             ArrayList<String> cs = new ArrayList<>();
             for (HttpCookie cookie : cookieList) {
                 String c = cookie.getName() + "=" + cookie.getValue();
@@ -515,8 +526,8 @@ public class SessionService {
             }
 
             conn.setRequestProperty("Cookie", TextUtils.join(";", cs));
+            */
 
-            /*
             if (this.cookieManager != null) {
                 //getting cookies(if any) and manually adding them to the request header
                 List<HttpCookie> cookies = this.cookieManager.getCookieStore().getCookies();
@@ -532,14 +543,14 @@ public class SessionService {
                     }
                 }
             }
-            */
+
         }
 
-        private void ExecutePost(List<String> cookies, Map<String, String> postParameter) throws IOException {
+        private void ExecutePost(List<String> cookies, Map<String, String> postParameter, String referer) throws IOException {
 
             StringBuilder postData = new StringBuilder();
             for (Map.Entry<String,String> param : postParameter.entrySet()) {
-                if (param.getValue() == "") continue;
+                //if (param.getValue() == "") continue;
 
                 if (postData.length() != 0) postData.append('&');
 
@@ -560,7 +571,7 @@ public class SessionService {
             }
             String cookieParameters = cookieData.toString();
 
-            urlParameters += "&headto=https://www.telekomsport.de/";// [{"key":"headto","value":"https://www.telekomsport.de/","description":""}]
+            //urlParameters += "&headto=https://www.telekomsport.de/";// [{"key":"headto","value":"https://www.telekomsport.de/","description":""}]
 
             HttpsURLConnection connection = (HttpsURLConnection)(new URL(constants.getLoginEndpoint()).openConnection());
             connection.setRequestProperty(USER_AGENT, USER_AGENT_VALUE);
@@ -573,6 +584,7 @@ public class SessionService {
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             connection.setRequestProperty("Content-Length", "" + Integer.toString(urlParameters.getBytes().length));
+            connection.setRequestProperty("Referer", referer);
             //connection.setRequestProperty("Content-Language", "en-US");
             connection.setUseCaches (false);
             connection.setDoInput(true);
@@ -585,9 +597,13 @@ public class SessionService {
 
             loadResponseCookies(connection);
 
-            connection.connect();
 
             Map<String, List<String>> headerFields = connection.getHeaderFields();
+
+            connection = (HttpsURLConnection)(connection.getURL()).openConnection();
+            connection.setRequestProperty(USER_AGENT, USER_AGENT_VALUE);
+            connection.setRequestProperty(ACCEPT_ENCODING, ENCODING_GZIP);
+            connection.setRequestProperty(ACCEPT_CHARSET, ENCODING_UTF8);
 
             String html = "";
 
@@ -651,8 +667,4 @@ public class SessionService {
 
         }
     }
-
-
-
-
 }
