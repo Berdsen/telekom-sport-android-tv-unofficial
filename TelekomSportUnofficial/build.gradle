@@ -43,5 +43,4 @@ dependencies {
     testCompile 'org.powermock:powermock-api-mockito2:1.7.1'
     testCompile 'org.powermock:powermock-module-junit4:1.7.1'
     compile 'com.squareup.okhttp3:okhttp:3.9.0'
-    compile 'com.squareup.okhttp3:okhttp-urlconnection:3.9.0'
 }
