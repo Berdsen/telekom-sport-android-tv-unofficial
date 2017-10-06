@@ -1,4 +1,4 @@
-package de.berdsen.telekomsport_unofficial.services;
+package de.berdsen.telekomsport_unofficial.services.AsyncTasks;
 
 import android.os.AsyncTask;
 
@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.net.CookieManager;
 import java.net.HttpCookie;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 import de.berdsen.telekomsport_unofficial.model.TelekomApiConstants;
+import de.berdsen.telekomsport_unofficial.services.interfaces.LoginFinishedHandler;
 import okhttp3.Cookie;
 import okhttp3.CookieJar;
 import okhttp3.HttpUrl;
@@ -31,7 +31,7 @@ import okhttp3.Response;
 /**
  * Created by berthm on 05.10.2017.
  */
-class LoginTask extends AsyncTask<Void, Void, Boolean> {
+public class LoginTask extends AsyncTask<Void, Void, Boolean> {
 
     private final CookieManager cookieManager;
     private final TelekomApiConstants constants;
@@ -45,12 +45,19 @@ class LoginTask extends AsyncTask<Void, Void, Boolean> {
     private final String ATTRIBUTE_VALUE = "value";
     private final String KEY_PASSWORD = "pw_pwd";
     private final String KEY_USERNAME = "pw_usr";
+    private final String KEY_PERSIST_SESSION = "persist_session";
     private final String KEY_SUBMIT = "pw_submit";
+    private final String POST_MEDIA_TYPE = "application/x-www-form-urlencoded";
 
+    public LoginFinishedHandler loginFinished = null;
+
+    private final URI baseUri;
 
     public LoginTask(TelekomApiConstants constants, CookieManager cookieManager) {
         this.cookieManager = cookieManager;
         this.constants = constants;
+        this.baseUri = URI.create(constants.getBaseUrl());
+
         setUserAgentValue();
     }
 
@@ -129,9 +136,9 @@ class LoginTask extends AsyncTask<Void, Void, Boolean> {
                 postParameter.put(KEY_USERNAME, "");
             }
 
-            if (postParameter.containsKey("persist_session")) {
+            if (postParameter.containsKey(KEY_PERSIST_SESSION)) {
                 // postParameter.put("persist_session", "1");
-                postParameter.remove("persist_session");
+                postParameter.remove(KEY_PERSIST_SESSION);
             }
 
             if (!postParameter.containsKey(KEY_SUBMIT)) {
@@ -147,7 +154,7 @@ class LoginTask extends AsyncTask<Void, Void, Boolean> {
                 postData.append(URLEncoder.encode(String.valueOf(param.getValue()), ENCODING_UTF8));
             }
 
-            RequestBody body = RequestBody.create(MediaType.parse("application/x-www-form-urlencoded"), postData.toString());
+            RequestBody body = RequestBody.create(MediaType.parse(POST_MEDIA_TYPE), postData.toString());
             Request login = new Request.Builder()
                     .url(constants.getLoginEndpoint())
                     .post(body)
@@ -163,8 +170,7 @@ class LoginTask extends AsyncTask<Void, Void, Boolean> {
 
             if (title.text().toLowerCase().contains("sport")) {
 
-                URI uri = new URI(constants.getBaseUrl());
-                List<Cookie> storedCookies = client.cookieJar().loadForRequest(HttpUrl.get(uri));
+                List<Cookie> storedCookies = client.cookieJar().loadForRequest(HttpUrl.get(baseUri));
 
                 //TODO: put cookies into store
                 //List<HttpCookie> httpCookies = this.cookieManager.getCookieStore().get(new URI(constants.getBaseUrl()));
@@ -173,18 +179,29 @@ class LoginTask extends AsyncTask<Void, Void, Boolean> {
                     List<HttpCookie> parse = HttpCookie.parse(c.toString());
 
                     for (HttpCookie hc : parse) {
-                        cookieManager.getCookieStore().add(uri, hc);
+                        cookieManager.getCookieStore().add(baseUri, hc);
                     }
                 }
 
                 return true;
             }
 
-        } catch (IOException | URISyntaxException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
         return false;
+    }
+
+    @Override
+    protected void onPostExecute(Boolean loginResult) {
+        if (loginFinished == null) return;
+
+        if (loginResult) {
+            loginFinished.loginSucceeded();
+        } else {
+            loginFinished.loginFailed();
+        }
     }
 }
 
