@@ -3,7 +3,7 @@ package de.berdsen.telekomsport_unofficial.dagger;
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 import de.berdsen.telekomsport_unofficial.ui.OverviewActivity;
-import de.berdsen.telekomsport_unofficial.ui.SportsOverviewActivity;
+import de.berdsen.telekomsport_unofficial.ui.sportsOverviewView.SportsOverviewActivity;
 import de.berdsen.telekomsport_unofficial.ui.VideoDetailsActivity;
 
 /**

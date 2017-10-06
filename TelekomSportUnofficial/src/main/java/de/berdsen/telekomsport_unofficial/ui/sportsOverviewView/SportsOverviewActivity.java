@@ -1,4 +1,4 @@
-package de.berdsen.telekomsport_unofficial.ui;
+package de.berdsen.telekomsport_unofficial.ui.sportsOverviewView;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
