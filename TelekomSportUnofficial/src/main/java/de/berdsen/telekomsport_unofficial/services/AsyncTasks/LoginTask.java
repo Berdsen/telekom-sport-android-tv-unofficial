@@ -19,6 +19,7 @@ import java.util.Map;
 
 import de.berdsen.telekomsport_unofficial.model.TelekomApiConstants;
 import de.berdsen.telekomsport_unofficial.services.interfaces.LoginFinishedHandler;
+import de.berdsen.telekomsport_unofficial.services.model.LoginUserData;
 import okhttp3.Cookie;
 import okhttp3.CookieJar;
 import okhttp3.HttpUrl;
@@ -31,7 +32,7 @@ import okhttp3.Response;
 /**
  * Created by berthm on 05.10.2017.
  */
-public class LoginTask extends AsyncTask<Void, Void, Boolean> {
+public class LoginTask extends AsyncTask<LoginUserData, Void, Boolean> {
 
     private final CookieManager cookieManager;
     private final TelekomApiConstants constants;
@@ -72,9 +73,12 @@ public class LoginTask extends AsyncTask<Void, Void, Boolean> {
     }
 
     @Override
-    protected Boolean doInBackground(Void... voids) {
-
+    protected Boolean doInBackground(LoginUserData... userdataArray) {
         try {
+            if (userdataArray == null || userdataArray.length < 1) {
+                return false;
+            }
+
             OkHttpClient client = new OkHttpClient.Builder()
                     .cookieJar(new CookieJar() {
 
@@ -109,7 +113,6 @@ public class LoginTask extends AsyncTask<Void, Void, Boolean> {
                     })
                     .build();
 
-
             Request loginPage = new Request.Builder().url(constants.getLoginUrl()).build();
             Response response = client.newCall(loginPage).execute();
 
@@ -129,11 +132,11 @@ public class LoginTask extends AsyncTask<Void, Void, Boolean> {
             }
 
             if (postParameter.containsKey(KEY_PASSWORD)) {
-                postParameter.put(KEY_PASSWORD, "");
+                postParameter.put(KEY_PASSWORD, userdataArray[0].getPassword());
             }
 
             if (postParameter.containsKey(KEY_USERNAME)) {
-                postParameter.put(KEY_USERNAME, "");
+                postParameter.put(KEY_USERNAME, userdataArray[0].getUsername());
             }
 
             if (postParameter.containsKey(KEY_PERSIST_SESSION)) {

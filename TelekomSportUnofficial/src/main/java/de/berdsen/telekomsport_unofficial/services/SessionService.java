@@ -11,6 +11,7 @@ import de.berdsen.telekomsport_unofficial.services.model.ExtendedCookieStore;
 import de.berdsen.telekomsport_unofficial.model.TelekomApiConstants;
 import de.berdsen.telekomsport_unofficial.services.interfaces.LoginFinishedHandler;
 import de.berdsen.telekomsport_unofficial.services.AsyncTasks.LoginTask;
+import de.berdsen.telekomsport_unofficial.services.model.LoginUserData;
 
 /**
  * Created by berthm on 05.10.2017.
@@ -39,7 +40,12 @@ public class SessionService {
 
         LoginTask lt = new LoginTask(constants, cookieManager);
         lt.loginFinished = handler;
-        lt.execute();
+        LoginUserData userData = new LoginUserData();
+
+        userData.setUsername("");
+        userData.setPassword("");
+
+        lt.execute(userData);
     }
 
     private void executeLogout() {
