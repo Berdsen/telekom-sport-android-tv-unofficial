@@ -9,13 +9,13 @@ import lombok.Data;
 @Data
 public final class Sport {
     private final String title;
-    private final String imageUrl;
+    private final String imageUrlExtension;
     private final String pageExtension;
     private final String epgExtension;
 
-    Sport(String title, String imageUrl, String pageExtension, String epgExtension) {
+    Sport(String title, String imageUrlExtension, String pageExtension, String epgExtension) {
         this.title = title;
-        this.imageUrl = imageUrl;
+        this.imageUrlExtension = imageUrlExtension;
         this.pageExtension = pageExtension;
         this.epgExtension = epgExtension;
     }

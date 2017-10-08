@@ -36,7 +36,6 @@ public class SportsOverviewActivity extends AbstractBaseActivity {
                 Toast.makeText(context, "Login Succeeded", Toast.LENGTH_LONG).show();
             }
         });
-
     }
 
 }

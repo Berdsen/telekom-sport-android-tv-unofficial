@@ -12,7 +12,7 @@ import dagger.android.AndroidInjection;
  * Created by berthm on 28.09.2017.
  */
 
-public abstract class AbstractBaseDetailsFragment extends DetailsFragment{
+public abstract class AbstractBaseDetailsFragment extends DetailsFragment {
 
     @Inject
     protected Context context;

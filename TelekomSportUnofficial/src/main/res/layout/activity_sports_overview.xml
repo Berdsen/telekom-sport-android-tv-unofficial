@@ -7,5 +7,5 @@
         android:id="@+id/sportsOverviewFragment"
         android:name="de.berdsen.telekomsport_unofficial.ui.sportsOverviewView.SportsOverviewFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></fragment>
+        android:layout_height="match_parent" />
 </RelativeLayout>
