@@ -21,7 +21,6 @@ import de.berdsen.telekomsport_unofficial.services.RestService;
 import de.berdsen.telekomsport_unofficial.services.SessionService;
 import de.berdsen.telekomsport_unofficial.services.interfaces.SportsResolvedHandler;
 import de.berdsen.telekomsport_unofficial.ui.base.AbstractBaseBrowseFragment;
-import de.berdsen.telekomsport_unofficial.ui.base.AbstractBaseVerticalGridFragment;
 import de.berdsen.telekomsport_unofficial.ui.preferenceView.PreferenceActivity;
 import de.berdsen.telekomsport_unofficial.ui.presenter.DefaultCardItem;
 import de.berdsen.telekomsport_unofficial.ui.presenter.DefaultCardPresenter;
@@ -51,7 +50,6 @@ public class SportsOverviewFragment extends AbstractBaseBrowseFragment implement
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
 
         mRowsAdapter = new ArrayObjectAdapter(new ListRowPresenter());
         mSportsRowAdapter = new ArrayObjectAdapter(new DefaultCardPresenter());
@@ -99,4 +97,5 @@ public class SportsOverviewFragment extends AbstractBaseBrowseFragment implement
             }
         }
     }
+
 }
