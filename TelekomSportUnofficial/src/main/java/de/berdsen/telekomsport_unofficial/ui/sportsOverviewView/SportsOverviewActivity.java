@@ -25,7 +25,10 @@ public class SportsOverviewActivity extends AbstractBaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sports_overview);
 
-        /*
+        // doLogin();
+    }
+
+    private void doLogin() {
         sessionService.loginAsync(new LoginFinishedHandler() {
             @Override
             public void loginFailed() {
@@ -37,7 +40,6 @@ public class SportsOverviewActivity extends AbstractBaseActivity {
                 Toast.makeText(context, "Login Succeeded", Toast.LENGTH_LONG).show();
             }
         });
-        */
     }
 
 }

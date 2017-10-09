@@ -4,7 +4,6 @@ import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 import de.berdsen.telekomsport_unofficial.ui.MainFragment;
 import de.berdsen.telekomsport_unofficial.ui.VideoDetailsFragment;
-import de.berdsen.telekomsport_unofficial.ui.preferenceView.PreferenceActivity;
 import de.berdsen.telekomsport_unofficial.ui.preferenceView.PreferenceFragment;
 import de.berdsen.telekomsport_unofficial.ui.sportsOverviewView.SportsOverviewFragment;
 

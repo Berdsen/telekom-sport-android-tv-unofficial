@@ -21,6 +21,7 @@ import de.berdsen.telekomsport_unofficial.AndroidApplication;
  */
 
 public class AbstractBasePreferenceActivity extends PreferenceActivity implements HasFragmentInjector {
+
     @Inject
     protected AndroidApplication app;
 
