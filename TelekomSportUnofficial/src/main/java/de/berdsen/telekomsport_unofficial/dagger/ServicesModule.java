@@ -64,6 +64,7 @@ public class ServicesModule {
         Gson gson = new Gson();
         try {
             singletonTelekomApiConstants = gson.fromJson( json, type );
+            singletonTelekomApiConstants.initBaseUrl();
         } catch (Exception e) {
             Log.e("MainFragment", e.getLocalizedMessage());
         }

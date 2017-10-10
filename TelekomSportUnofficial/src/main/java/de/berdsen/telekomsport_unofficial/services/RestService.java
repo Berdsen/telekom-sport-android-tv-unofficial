@@ -21,13 +21,4 @@ public class RestService {
         handler.resolvedSports(constants.getSports());
     }
 
-    public String getCompleteUrlForExtension(String urlExtension) {
-        if (urlExtension.toLowerCase().startsWith("http")) {
-            // url seems to be rooted
-            return urlExtension;
-        }
-        return constants.getBaseUrl() + urlExtension;
-    }
-
-
 }

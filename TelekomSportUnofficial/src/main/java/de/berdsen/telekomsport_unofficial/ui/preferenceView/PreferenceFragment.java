@@ -7,8 +7,6 @@ import android.support.v17.leanback.widget.GuidanceStylist;
 import android.support.v17.leanback.widget.GuidedAction;
 import android.text.InputType;
 
-import org.jsoup.helper.StringUtil;
-
 import java.util.List;
 
 import javax.inject.Inject;
@@ -57,7 +55,7 @@ public class PreferenceFragment extends AbstractBaseGuidedStepFragment
         String password = sharedPreferences.getString(PREFERENCES_LOGIN_PASSWORD, getString(R.string.emptyString));
 
         addEditableAction(actions, ACTION_SET_USERNAME, getString(R.string.settingsUsername), username, InputType.TYPE_CLASS_TEXT);
-        addEditableAction(actions, ACTION_SET_PASSWORD, getString(R.string.settingsPassword), password, InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        addEditableDescriptionAction(actions, ACTION_SET_PASSWORD, getString(R.string.settingsPassword), getString(R.string.settingsPassword), password, InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
     }
 
     @Override
@@ -82,8 +80,19 @@ public class PreferenceFragment extends AbstractBaseGuidedStepFragment
                 .id(id)
                 .title(title)
                 .descriptionEditable(true)
-                .descriptionInputType(inputType)
                 .description(description)
+                .descriptionInputType(inputType)
+                .build());
+    }
+
+    private void addEditableDescriptionAction(List<GuidedAction> actions, long id, String title, String desc, String editDescription, int descriptionEditInputType) {
+        actions.add(new GuidedAction.Builder(context)
+                .id(id)
+                .title(title)
+                .description(desc)
+                .editDescription(editDescription)
+                .descriptionEditInputType(descriptionEditInputType)
+                .descriptionEditable(true)
                 .build());
     }
 
@@ -91,34 +100,47 @@ public class PreferenceFragment extends AbstractBaseGuidedStepFragment
     public void onGuidedActionClicked(GuidedAction action) {
         int actionId = (int)action.getId();
 
-        SharedPreferences.Editor editor;
         switch (actionId) {
             case ACTION_SAVE:
-                editor = sharedPreferences.edit();
-                GuidedAction usernameAction = findActionById(ACTION_SET_USERNAME);
-                GuidedAction passwordAction = findActionById(ACTION_SET_PASSWORD);
-
-                CharSequence username = usernameAction.getDescription();
-                CharSequence password = passwordAction.getDescription();
-
-                editor.putString(PREFERENCES_LOGIN_USERNAME, username.toString());
-                editor.putString(PREFERENCES_LOGIN_PASSWORD, password.toString());
-
-                editor.commit();
-
-                this.getActivity().finish();
+                saveSettings();
+                closeView();
                 break;
             case ACTION_CANCEL:
-                this.getActivity().finish();
+                closeView();
                 break;
             case ACTION_RESET:
-                editor = sharedPreferences.edit();
-                editor.remove(PREFERENCES_LOGIN_USERNAME);
-                editor.remove(PREFERENCES_LOGIN_PASSWORD);
-                editor.commit();
-
-                this.getActivity().finish();
+                //TODO: ask user - create an GuidedStepFragment and replace active one
+                resetSettings();
+                closeView();
                 break;
         }
+
+    }
+
+    private void saveSettings() {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        GuidedAction usernameAction = findActionById(ACTION_SET_USERNAME);
+        GuidedAction passwordAction = findActionById(ACTION_SET_PASSWORD);
+
+        CharSequence username = usernameAction.getDescription();
+        CharSequence password = passwordAction.getEditDescription();
+
+        editor.putString(PREFERENCES_LOGIN_USERNAME, username.toString());
+        editor.putString(PREFERENCES_LOGIN_PASSWORD, password.toString());
+
+        editor.commit();
+    }
+
+    private void resetSettings() {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor = sharedPreferences.edit();
+        editor.remove(PREFERENCES_LOGIN_USERNAME);
+        editor.remove(PREFERENCES_LOGIN_PASSWORD);
+        editor.commit();
+    }
+
+    private void closeView() {
+        this.getActivity().finish();
     }
 }

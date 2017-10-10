@@ -11,4 +11,7 @@
     <string name="settingsSaveDescription">Save the user settings</string>
     <string name="settingsCancelDescription">Cancel and dismiss the changed settings</string>
     <string name="settingsReset">Reset</string>
+    <string name="settingsResetQuestion">Do you really want to reset all saved settings?</string>
+    <string name="globalYes">Yes</string>
+    <string name="globalNo">No</string>
 </resources>

@@ -60,7 +60,7 @@ public class ParseUtils {
         DefaultCardItem cardItem = new DefaultCardItem(sport);
         cardItem.setTitle(sport.getTitle());
         cardItem.setDescription(sport.getTitle());
-        cardItem.setImageUrl(restService.getCompleteUrlForExtension(sport.getImageUrlExtension()));
+        cardItem.setImageUrl(sport.getImageUrl());
 
         return cardItem;
     }
