@@ -1,12 +1,17 @@
 package de.berdsen.telekomsport_unofficial.utils;
 
 import android.content.Context;
+import android.preference.Preference;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+
+import de.berdsen.telekomsport_unofficial.model.Sport;
+import de.berdsen.telekomsport_unofficial.services.RestService;
+import de.berdsen.telekomsport_unofficial.ui.presenter.DefaultCardItem;
 
 /**
  * Created by berthm on 26.09.2017.
@@ -51,6 +56,22 @@ public class ParseUtils {
         return sb.toString();
     }
 
+    public static DefaultCardItem createDefaultCardItem(Sport sport, RestService restService) {
+        DefaultCardItem cardItem = new DefaultCardItem(sport);
+        cardItem.setTitle(sport.getTitle());
+        cardItem.setDescription(sport.getTitle());
+        cardItem.setImageUrl(restService.getCompleteUrlForExtension(sport.getImageUrlExtension()));
 
+        return cardItem;
+    }
+
+    public static DefaultCardItem createDefaultCardItem(String title, String description, int resourceId) {
+        DefaultCardItem cardItem = new DefaultCardItem(null);
+        cardItem.setTitle(title);
+        cardItem.setDescription(description);
+        cardItem.setImageResourceId(resourceId);
+
+        return cardItem;
+    }
 }
 

@@ -53,6 +53,8 @@
 
         <activity android:name=".ui.VideoDetailsActivity" />
 
+        <activity android:name=".ui.preferenceView.PreferenceActivity" />
+
     </application>
 
 </manifest>

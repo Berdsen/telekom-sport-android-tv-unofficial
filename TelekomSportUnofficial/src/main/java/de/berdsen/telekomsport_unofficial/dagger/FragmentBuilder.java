@@ -4,6 +4,7 @@ import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 import de.berdsen.telekomsport_unofficial.ui.MainFragment;
 import de.berdsen.telekomsport_unofficial.ui.VideoDetailsFragment;
+import de.berdsen.telekomsport_unofficial.ui.preferenceView.PreferenceFragment;
 import de.berdsen.telekomsport_unofficial.ui.sportsOverviewView.SportsOverviewFragment;
 
 /**
@@ -16,6 +17,16 @@ public abstract class FragmentBuilder {
     @ContributesAndroidInjector(modules = {
             ServicesModule.class
     })
+    public abstract SportsOverviewFragment sportsOverviewFragment();
+
+    @ContributesAndroidInjector(modules = {
+            ServicesModule.class
+    })
+    public abstract PreferenceFragment preferenceFragment();
+
+    @ContributesAndroidInjector(modules = {
+            ServicesModule.class
+    })
     public abstract MainFragment mainFragment();
 
     @ContributesAndroidInjector(modules = {
@@ -23,8 +34,4 @@ public abstract class FragmentBuilder {
     })
     public abstract VideoDetailsFragment videoDetailsFragment();
 
-    @ContributesAndroidInjector(modules = {
-            ServicesModule.class
-    })
-    public abstract SportsOverviewFragment sportsOverviewFragment();
 }
