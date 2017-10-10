@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Telekom Sport - Unofficial</string>
+    <string name="settingsTitle">User Settings</string>
+    <string name="settingsBreadcrumb">Telekomsport - Unofficial</string>
+    <string name="settingsDescription">Here you can adjust your user settings</string>
+    <string name="settingsPassword">Password</string>
+    <string name="settingsUsername">Username</string>
+    <string name="emptyString" />
+    <string name="settingsSave">Save</string>
+    <string name="settingsCancel">Cancel</string>
+    <string name="settingsSaveDescription">Save the user settings</string>
+    <string name="settingsCancelDescription">Cancel and dismiss the changed settings</string>
+    <string name="settingsReset">Reset</string>
 </resources>
