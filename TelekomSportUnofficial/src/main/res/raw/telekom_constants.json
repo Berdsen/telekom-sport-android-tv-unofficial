@@ -18,6 +18,12 @@
       "epgExtension": ""
     },
     {
+      "title": "Basketball 7Days Eurocup",
+      "imageUrlExtension": "http://www.eurocupbasketball.com/_euroleague/themes/default/images/main-logo-ec.png",
+      "pageExtension": "basketball/eurocup",
+      "epgExtension": ""
+    },
+    {
       "title": "Deutsche Eishockey Liga",
       "imageUrlExtension": "/images/packete/del.png",
       "pageExtension": "eishockey/del",
