@@ -23,11 +23,19 @@ public final class Sport {
     }
 
     public String getImageUrl() {
-        if (this.imageUrlExtension.toLowerCase().startsWith("http")) {
+        return buildUrl(imageUrlExtension);
+    }
+
+    public String getPageUrl() {
+        return buildUrl(pageExtension);
+    }
+
+    private String buildUrl(String extension) {
+        if (extension.toLowerCase().startsWith("http")) {
             // url seems to be rooted
-            return this.imageUrlExtension;
+            return extension;
         }
 
-        return baseUrl + imageUrlExtension;
+        return baseUrl + extension;
     }
 }

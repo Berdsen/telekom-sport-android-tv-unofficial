@@ -1,5 +1,6 @@
 package de.berdsen.telekomsport_unofficial.ui.sportsOverviewView;
 
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import de.berdsen.telekomsport_unofficial.ui.base.AbstractBaseBrowseFragment;
 import de.berdsen.telekomsport_unofficial.ui.settingsView.SettingsActivity;
 import de.berdsen.telekomsport_unofficial.ui.presenter.DefaultCardItem;
 import de.berdsen.telekomsport_unofficial.ui.presenter.DefaultCardPresenter;
+import de.berdsen.telekomsport_unofficial.ui.sportsVideoView.SportsVideoViewFragment;
 import de.berdsen.telekomsport_unofficial.utils.ParseUtils;
 
 /**
@@ -92,7 +94,21 @@ public class SportsOverviewFragment extends AbstractBaseBrowseFragment implement
 
             } else {
 
-                //TODO: start selected sports browse activity
+                Sport sport = (Sport) cardItem.getItem();
+                SportsVideoViewFragment newFragment = new SportsVideoViewFragment();
+                Bundle args = new Bundle();
+                args.putString(SportsVideoViewFragment.SELECTED_SPORTS_URL, sport.getPageUrl());
+                newFragment.setArguments(args);
+
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+                // Replace whatever is in the fragment_container view with this fragment,
+                // and add the transaction to the back stack so the user can navigate back
+                transaction.replace(R.id.sportsOverviewFragment, newFragment);
+                transaction.addToBackStack(null);
+
+                // Commit the transaction
+                transaction.commit();
             }
         }
     }

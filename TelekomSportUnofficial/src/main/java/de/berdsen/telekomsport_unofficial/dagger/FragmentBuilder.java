@@ -4,6 +4,7 @@ import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 import de.berdsen.telekomsport_unofficial.ui.settingsView.SettingsFragment;
 import de.berdsen.telekomsport_unofficial.ui.sportsOverviewView.SportsOverviewFragment;
+import de.berdsen.telekomsport_unofficial.ui.sportsVideoView.SportsVideoViewFragment;
 
 /**
  * Created by berthm on 26.09.2017.
@@ -22,4 +23,8 @@ public abstract class FragmentBuilder {
     })
     public abstract SettingsFragment settingsFragment();
 
+    @ContributesAndroidInjector(modules = {
+            ServicesModule.class
+    })
+    public abstract SportsVideoViewFragment sportsVideoViewFragment();
 }
