@@ -2,7 +2,7 @@ package de.berdsen.telekomsport_unofficial.dagger;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
-import de.berdsen.telekomsport_unofficial.ui.preferenceView.PreferenceFragment;
+import de.berdsen.telekomsport_unofficial.ui.settingsView.SettingsFragment;
 import de.berdsen.telekomsport_unofficial.ui.sportsOverviewView.SportsOverviewFragment;
 
 /**
@@ -20,6 +20,6 @@ public abstract class FragmentBuilder {
     @ContributesAndroidInjector(modules = {
             ServicesModule.class
     })
-    public abstract PreferenceFragment preferenceFragment();
+    public abstract SettingsFragment settingsFragment();
 
 }

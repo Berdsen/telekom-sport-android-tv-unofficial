@@ -5,11 +5,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import javax.inject.Singleton;
-
 import dagger.Module;
 import dagger.Provides;
-import dagger.android.AndroidInjection;
 import de.berdsen.telekomsport_unofficial.AndroidApplication;
 
 /**

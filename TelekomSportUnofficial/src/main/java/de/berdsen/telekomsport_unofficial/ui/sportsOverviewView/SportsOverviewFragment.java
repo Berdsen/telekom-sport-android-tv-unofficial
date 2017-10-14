@@ -22,7 +22,7 @@ import de.berdsen.telekomsport_unofficial.services.RestService;
 import de.berdsen.telekomsport_unofficial.services.SessionService;
 import de.berdsen.telekomsport_unofficial.services.interfaces.SportsResolvedHandler;
 import de.berdsen.telekomsport_unofficial.ui.base.AbstractBaseBrowseFragment;
-import de.berdsen.telekomsport_unofficial.ui.preferenceView.PreferenceActivity;
+import de.berdsen.telekomsport_unofficial.ui.settingsView.SettingsActivity;
 import de.berdsen.telekomsport_unofficial.ui.presenter.DefaultCardItem;
 import de.berdsen.telekomsport_unofficial.ui.presenter.DefaultCardPresenter;
 import de.berdsen.telekomsport_unofficial.utils.ParseUtils;
@@ -87,7 +87,7 @@ public class SportsOverviewFragment extends AbstractBaseBrowseFragment implement
             DefaultCardItem cardItem = (DefaultCardItem) item;
             if (cardItem.getItem() == null) {
 
-                Intent i = new Intent(this.getActivity(), PreferenceActivity.class);
+                Intent i = new Intent(this.getActivity(), SettingsActivity.class);
                 startActivity(i);
 
             } else {

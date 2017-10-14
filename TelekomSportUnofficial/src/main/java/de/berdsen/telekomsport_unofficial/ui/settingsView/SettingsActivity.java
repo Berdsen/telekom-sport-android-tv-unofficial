@@ -1,4 +1,4 @@
-package de.berdsen.telekomsport_unofficial.ui.preferenceView;
+package de.berdsen.telekomsport_unofficial.ui.settingsView;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,12 +10,12 @@ import de.berdsen.telekomsport_unofficial.ui.base.AbstractBaseActivity;
  * Created by berthm on 09.10.2017.
  */
 
-public class PreferenceActivity extends AbstractBaseActivity {
+public class SettingsActivity extends AbstractBaseActivity {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_preference);
+        setContentView(R.layout.activity_settings);
     }
 
 }

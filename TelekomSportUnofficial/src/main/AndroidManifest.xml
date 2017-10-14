@@ -36,7 +36,7 @@
 
         </activity>
 
-        <activity android:name=".ui.preferenceView.PreferenceActivity" />
+        <activity android:name=".ui.settingsView.SettingsActivity" />
 
     </application>
 

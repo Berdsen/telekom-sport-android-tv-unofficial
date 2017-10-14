@@ -2,7 +2,7 @@ package de.berdsen.telekomsport_unofficial.dagger;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
-import de.berdsen.telekomsport_unofficial.ui.preferenceView.PreferenceActivity;
+import de.berdsen.telekomsport_unofficial.ui.settingsView.SettingsActivity;
 import de.berdsen.telekomsport_unofficial.ui.sportsOverviewView.SportsOverviewActivity;
 
 /**
@@ -21,6 +21,6 @@ public abstract class ActivityBuilder {
     @ContributesAndroidInjector(modules = {
             FragmentBuilder.class
     })
-    public abstract PreferenceActivity preferenceActivity();
+    public abstract SettingsActivity settingsActivity();
 
 }

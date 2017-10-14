@@ -1,4 +1,4 @@
-package de.berdsen.telekomsport_unofficial.ui.preferenceView;
+package de.berdsen.telekomsport_unofficial.ui.settingsView;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -18,7 +18,7 @@ import de.berdsen.telekomsport_unofficial.ui.base.AbstractBaseGuidedStepFragment
  * Created by berthm on 09.10.2017.
  */
 
-public class PreferenceFragment extends AbstractBaseGuidedStepFragment
+public class SettingsFragment extends AbstractBaseGuidedStepFragment
 {
     private final int ACTION_SAVE = 0;
     private final int ACTION_CANCEL = 1;
