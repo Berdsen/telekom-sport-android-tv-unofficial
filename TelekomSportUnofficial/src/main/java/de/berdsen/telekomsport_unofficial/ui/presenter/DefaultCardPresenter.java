@@ -33,12 +33,13 @@ public class DefaultCardPresenter extends Presenter {
 
         if (cardItem.getImageResourceId() == 0) {
             if (!TextUtils.isEmpty(cardItem.getImageUrl())) {
-                holder.updateCardViewImage( holder.getCardView().getContext(), cardItem.getImageUrl() );
+                holder.updateCardViewImage( cardView.getContext(), cardItem.getImageUrl() );
             } else {
-                holder.updateCardViewImage( holder.getCardView().getContext(), android.support.v17.leanback.R.drawable.lb_search_orb );
+                // or set a default image?
+                // holder.updateCardViewImage( holder.getCardView().getContext(),  );
             }
         } else {
-            holder.updateCardViewImage( holder.getCardView().getContext(), cardItem.getImageResourceId() );
+            holder.updateCardViewImage( cardView.getContext(), cardItem.getImageResourceId() );
         }
     }
 
@@ -65,13 +66,13 @@ public class DefaultCardPresenter extends Presenter {
 
         public void updateCardViewImage(Context context, String link ) {
             Picasso.with(context).load(link)
-                    .resize(320, 240)/*.centerCrop()*/
+                    .fit()/*.centerCrop()*/
                     .into(mCardView.getMainImageView());
         }
 
         public void updateCardViewImage(Context context, int imageId ) {
             Picasso.with(context).load(imageId)
-                    .resize(320, 240)/*.centerCrop()*/
+                    .fit()
                     .into(mCardView.getMainImageView());
         }
     }

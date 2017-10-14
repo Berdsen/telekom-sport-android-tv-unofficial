@@ -16,6 +16,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import de.berdsen.telekomsport_unofficial.R;
 import de.berdsen.telekomsport_unofficial.model.Sport;
 import de.berdsen.telekomsport_unofficial.services.RestService;
 import de.berdsen.telekomsport_unofficial.services.SessionService;
@@ -60,7 +61,7 @@ public class SportsOverviewFragment extends AbstractBaseBrowseFragment implement
         mRowsAdapter.add(new ListRow(sportsHeader, mSportsRowAdapter));
         mRowsAdapter.add(new ListRow(settingsHeader, mSettingsRowAdapter));
 
-        mSettingsRowAdapter.add(ParseUtils.createDefaultCardItem("Preferences", "Application settings", android.support.v17.leanback.R.drawable.lb_search_orb));
+        mSettingsRowAdapter.add(ParseUtils.createDefaultCardItem("Preferences", "Application settings", R.drawable.perm_group_system_tools));
 
         setTitle("Select Sport");
         setAdapter(mRowsAdapter);
@@ -85,8 +86,6 @@ public class SportsOverviewFragment extends AbstractBaseBrowseFragment implement
         if (item instanceof DefaultCardItem ) {
             DefaultCardItem cardItem = (DefaultCardItem) item;
             if (cardItem.getItem() == null) {
-
-                // this should be the preference item
 
                 Intent i = new Intent(this.getActivity(), PreferenceActivity.class);
                 startActivity(i);
