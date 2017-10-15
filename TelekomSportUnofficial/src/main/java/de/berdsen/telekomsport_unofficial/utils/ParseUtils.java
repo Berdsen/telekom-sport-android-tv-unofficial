@@ -9,7 +9,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 
+import de.berdsen.telekomsport_unofficial.model.EventDetails;
+import de.berdsen.telekomsport_unofficial.model.GameEvent;
 import de.berdsen.telekomsport_unofficial.model.Sport;
+import de.berdsen.telekomsport_unofficial.model.Video;
 import de.berdsen.telekomsport_unofficial.services.RestService;
 import de.berdsen.telekomsport_unofficial.ui.presenter.DefaultCardItem;
 
@@ -56,11 +59,34 @@ public class ParseUtils {
         return sb.toString();
     }
 
-    public static DefaultCardItem createDefaultCardItem(Sport sport, RestService restService) {
+    public static DefaultCardItem createDefaultCardItem(Sport sport) {
         DefaultCardItem cardItem = new DefaultCardItem(sport);
         cardItem.setTitle(sport.getTitle());
         cardItem.setDescription(sport.getTitle());
         cardItem.setImageUrl(sport.getImageUrl());
+
+        return cardItem;
+    }
+
+    public static DefaultCardItem createDefaultCardItem(Video video) {
+        DefaultCardItem cardItem = new DefaultCardItem(video);
+        cardItem.setTitle(video.getTitle());
+        cardItem.setDescription(video.getDescription());
+        cardItem.setImageUrl(video.getPoster());
+
+        return cardItem;
+    }
+
+    public static DefaultCardItem createDefaultCardItem(GameEvent event, String baseUrl) {
+        DefaultCardItem cardItem = new DefaultCardItem(event);
+
+        EventDetails details = event.getMetadata().getDetails();
+        String title = details.getHome().getNameMini() + " vs. " + details.getAway().getNameMini();
+        String description = event.getMetadata().getScheduleStart().getOriginal();
+
+        cardItem.setTitle(title);
+        cardItem.setDescription(description);
+        cardItem.setImageUrl(baseUrl + event.getMetadata().getImages().getFallback());
 
         return cardItem;
     }
