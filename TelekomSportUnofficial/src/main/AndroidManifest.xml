@@ -22,7 +22,7 @@
         android:name=".AndroidApplication">
 
         <activity
-            android:name=".ui.sportsOverviewView.SportsOverviewActivity"
+            android:name=".ui.MainActivity"
             android:banner="@drawable/app_banner"
             android:icon="@drawable/app_banner"
             android:label="@string/app_name"
@@ -35,8 +35,6 @@
             </intent-filter>
 
         </activity>
-
-        <activity android:name=".ui.settingsView.SettingsActivity" />
 
     </application>
 

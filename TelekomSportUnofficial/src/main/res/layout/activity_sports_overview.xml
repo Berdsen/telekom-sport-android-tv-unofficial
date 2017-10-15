@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/sportsOverviewContainer"
+    android:background="?android:windowBackground">
 
+    <!--
     <fragment
         android:id="@+id/sportsOverviewFragment"
         android:name="de.berdsen.telekomsport_unofficial.ui.sportsOverviewView.SportsOverviewFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+    -->
 </RelativeLayout>

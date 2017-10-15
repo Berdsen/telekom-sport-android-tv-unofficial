@@ -8,67 +8,67 @@
   "sports": [{
       "title": "3. Liga",
       "imageUrlExtension": "/images/packete/3liga.png",
-      "pageExtension": "fussball/3-liga",
+      "pageExtension": "/fussball/3-liga",
       "epgExtension": "/epg/64"
     },
     {
       "title": "Basketball Turkish Airlines Euroleague",
       "imageUrlExtension": "/images/packete/euroleague.png",
-      "pageExtension": "basketball/euroleague",
+      "pageExtension": "/basketball/euroleague",
       "epgExtension": ""
     },
     {
       "title": "Basketball 7Days Eurocup",
       "imageUrlExtension": "http://www.eurocupbasketball.com/_euroleague/themes/default/images/main-logo-ec.png",
-      "pageExtension": "basketball/eurocup",
+      "pageExtension": "/basketball/eurocup",
       "epgExtension": ""
     },
     {
       "title": "Deutsche Eishockey Liga",
       "imageUrlExtension": "/images/packete/del.png",
-      "pageExtension": "eishockey/del",
+      "pageExtension": "/eishockey/del",
       "epgExtension": "/epg/52"
     },
     {
       "title": "Easycredit BBL",
       "imageUrlExtension": "/images/packete/easyCredit.png",
-      "pageExtension": "basketball/bbl",
+      "pageExtension": "/basketball/bbl",
       "epgExtension": "/epg/31"
     },
     {
       "title": "FC Bayern.TV",
       "imageUrlExtension": "/images/packete/fcbayerntv.png",
-      "pageExtension": "fc-bayern-tv-live",
+      "pageExtension": "/fc-bayern-tv-live",
       "epgExtension": ""
     },
     {
       "title": "FIBA Eurobasket",
       "imageUrlExtension": "http://www.fiba.basketball/img/12104_logo_landscape.png",
-      "pageExtension": "basketball/eurobasket2017",
+      "pageExtension": "/basketball/eurobasket2017",
       "epgExtension": ""
     },
     {
       "title": "Frauen-Bundesliga",
       "imageUrlExtension": "/images/packete/frauenbundesliga.png",
-      "pageExtension": "fussball/frauen-bundesliga",
+      "pageExtension": "/fussball/frauen-bundesliga",
       "epgExtension": ""
     },
     {
       "title": "Sky Bundesliga",
       "imageUrlExtension": "/images/packete/sky-bundesliga.png",
-      "pageExtension": "sky/bundesliga",
+      "pageExtension": "/sky/bundesliga",
       "epgExtension": ""
     },
     {
       "title": "Sky Champions League",
       "imageUrlExtension": "/images/packete/sky-cl.png",
-      "pageExtension": "sky/champions-league",
+      "pageExtension": "/sky/champions-league",
       "epgExtension": ""
     },
     {
       "title": "Sky Handball Bundeslige",
       "imageUrlExtension": "/images/packete/DKB.png",
-      "pageExtension": "sky/handball-bundesliga",
+      "pageExtension": "/sky/handball-bundesliga",
       "epgExtension": ""
     }]
 }

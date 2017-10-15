@@ -13,6 +13,7 @@ import javax.inject.Inject;
 
 import de.berdsen.telekomsport_unofficial.R;
 import de.berdsen.telekomsport_unofficial.ui.base.AbstractBaseGuidedStepFragment;
+import de.berdsen.telekomsport_unofficial.utils.ApplicationConstants;
 
 /**
  * Created by berthm on 09.10.2017.
@@ -26,9 +27,6 @@ public class SettingsFragment extends AbstractBaseGuidedStepFragment
 
     private final int ACTION_SET_USERNAME = 10;
     private final int ACTION_SET_PASSWORD = 11;
-
-    private static final String PREFERENCES_LOGIN_USERNAME = "__USERNAME__";
-    private static final String PREFERENCES_LOGIN_PASSWORD = "__PASSWORD__";
 
     @Inject
     SharedPreferences sharedPreferences;
@@ -51,8 +49,8 @@ public class SettingsFragment extends AbstractBaseGuidedStepFragment
 
     @Override
     public void onCreateActions(@NonNull List<GuidedAction> actions, Bundle savedInstanceState) {
-        String username = sharedPreferences.getString(PREFERENCES_LOGIN_USERNAME, getString(R.string.emptyString));
-        String password = sharedPreferences.getString(PREFERENCES_LOGIN_PASSWORD, getString(R.string.emptyString));
+        String username = sharedPreferences.getString(ApplicationConstants.PREFERENCES_LOGIN_USERNAME, getString(R.string.emptyString));
+        String password = sharedPreferences.getString(ApplicationConstants.PREFERENCES_LOGIN_PASSWORD, getString(R.string.emptyString));
 
         addEditableAction(actions, ACTION_SET_USERNAME, getString(R.string.settingsUsername), username, InputType.TYPE_CLASS_TEXT);
         addEditableDescriptionAction(actions, ACTION_SET_PASSWORD, getString(R.string.settingsPassword), getString(R.string.settingsPassword), password, InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
@@ -119,14 +117,15 @@ public class SettingsFragment extends AbstractBaseGuidedStepFragment
 
     private void saveSettings() {
         SharedPreferences.Editor editor = sharedPreferences.edit();
+
         GuidedAction usernameAction = findActionById(ACTION_SET_USERNAME);
         GuidedAction passwordAction = findActionById(ACTION_SET_PASSWORD);
 
         CharSequence username = usernameAction.getDescription();
         CharSequence password = passwordAction.getEditDescription();
 
-        editor.putString(PREFERENCES_LOGIN_USERNAME, username.toString());
-        editor.putString(PREFERENCES_LOGIN_PASSWORD, password.toString());
+        editor.putString(ApplicationConstants.PREFERENCES_LOGIN_USERNAME, username.toString());
+        editor.putString(ApplicationConstants.PREFERENCES_LOGIN_PASSWORD, password.toString());
 
         editor.commit();
     }
@@ -134,13 +133,13 @@ public class SettingsFragment extends AbstractBaseGuidedStepFragment
     private void resetSettings() {
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        editor = sharedPreferences.edit();
-        editor.remove(PREFERENCES_LOGIN_USERNAME);
-        editor.remove(PREFERENCES_LOGIN_PASSWORD);
+        editor.remove(ApplicationConstants.PREFERENCES_LOGIN_USERNAME);
+        editor.remove(ApplicationConstants.PREFERENCES_LOGIN_PASSWORD);
+
         editor.commit();
     }
 
     private void closeView() {
-        this.getActivity().finish();
+        getFragmentManager().popBackStack();
     }
 }

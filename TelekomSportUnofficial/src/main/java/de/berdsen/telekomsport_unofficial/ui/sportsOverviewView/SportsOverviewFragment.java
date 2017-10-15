@@ -1,7 +1,6 @@
 package de.berdsen.telekomsport_unofficial.ui.sportsOverviewView;
 
 import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v17.leanback.widget.ArrayObjectAdapter;
@@ -12,6 +11,7 @@ import android.support.v17.leanback.widget.OnItemViewClickedListener;
 import android.support.v17.leanback.widget.Presenter;
 import android.support.v17.leanback.widget.Row;
 import android.support.v17.leanback.widget.RowPresenter;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -23,9 +23,9 @@ import de.berdsen.telekomsport_unofficial.services.RestService;
 import de.berdsen.telekomsport_unofficial.services.SessionService;
 import de.berdsen.telekomsport_unofficial.services.interfaces.SportsResolvedHandler;
 import de.berdsen.telekomsport_unofficial.ui.base.AbstractBaseBrowseFragment;
-import de.berdsen.telekomsport_unofficial.ui.settingsView.SettingsActivity;
 import de.berdsen.telekomsport_unofficial.ui.presenter.DefaultCardItem;
 import de.berdsen.telekomsport_unofficial.ui.presenter.DefaultCardPresenter;
+import de.berdsen.telekomsport_unofficial.ui.settingsView.SettingsFragment;
 import de.berdsen.telekomsport_unofficial.ui.sportsVideoView.SportsVideoViewFragment;
 import de.berdsen.telekomsport_unofficial.utils.ParseUtils;
 
@@ -76,7 +76,7 @@ public class SportsOverviewFragment extends AbstractBaseBrowseFragment implement
                 loadedSports = sports;
 
                 for (Sport s : loadedSports) {
-                    mSportsRowAdapter.add(ParseUtils.createDefaultCardItem(s, restService));
+                    mSportsRowAdapter.add(ParseUtils.createDefaultCardItem(s));
                 }
             }
         });
@@ -89,22 +89,36 @@ public class SportsOverviewFragment extends AbstractBaseBrowseFragment implement
             DefaultCardItem cardItem = (DefaultCardItem) item;
             if (cardItem.getItem() == null) {
 
-                Intent i = new Intent(this.getActivity(), SettingsActivity.class);
-                startActivity(i);
+                //Intent i = new Intent(this.getActivity(), SettingsActivity.class);
+                //startActivity(i);
+
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+                // Replace whatever is in the fragment_container view with this fragment,
+                // and add the transaction to the back stack so the user can navigate back
+                transaction.replace(R.id.sportsOverviewContainer, new SettingsFragment());
+                transaction.addToBackStack(null);
+
+                // Commit the transaction
+                transaction.commit();
 
             } else {
+                if (!(cardItem.getItem() instanceof Sport)) {
+                    Toast.makeText(context, "No sports entry selected", Toast.LENGTH_LONG).show();
+                    return;
+                }
 
                 Sport sport = (Sport) cardItem.getItem();
                 SportsVideoViewFragment newFragment = new SportsVideoViewFragment();
                 Bundle args = new Bundle();
-                args.putString(SportsVideoViewFragment.SELECTED_SPORTS_URL, sport.getPageUrl());
+                args.putParcelable(SportsVideoViewFragment.SELECTED_SPORT_PARAMETER, sport);
                 newFragment.setArguments(args);
 
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
                 // Replace whatever is in the fragment_container view with this fragment,
                 // and add the transaction to the back stack so the user can navigate back
-                transaction.replace(R.id.sportsOverviewFragment, newFragment);
+                transaction.replace(R.id.sportsOverviewContainer, newFragment);
                 transaction.addToBackStack(null);
 
                 // Commit the transaction

@@ -1,6 +1,7 @@
 package de.berdsen.telekomsport_unofficial.dagger;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -49,9 +50,9 @@ public class ServicesModule {
     }
 
     @Provides
-    SessionService providesSessionService(Context context) {
+    SessionService providesSessionService(Context context, SharedPreferences preferences) {
         if (singletonSessionService == null) {
-            initializeSessionService(context);
+            initializeSessionService(context, preferences);
         }
         return singletonSessionService;
     }
@@ -78,11 +79,11 @@ public class ServicesModule {
         singletonRestService = new RestService(singletonTelekomApiConstants);
     }
 
-    private void initializeSessionService(Context context) {
+    private void initializeSessionService(Context context, SharedPreferences preferences) {
         if (singletonTelekomApiConstants == null) {
             readTelekomConstants(context);
         }
 
-        singletonSessionService = new SessionService(singletonTelekomApiConstants);
+        singletonSessionService = new SessionService(singletonTelekomApiConstants, preferences);
     }
 }
