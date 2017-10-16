@@ -31,15 +31,10 @@ public class DefaultCardPresenter extends Presenter {
         cardView.setContentDescription(cardItem.getDescription());
         cardView.setMainImageDimensions( 320, 240 );
 
-        if (cardItem.getImageResourceId() == 0) {
-            if (!TextUtils.isEmpty(cardItem.getImageUrl())) {
-                holder.updateCardViewImage( cardView.getContext(), cardItem.getImageUrl() );
-            } else {
-                // or set a default image?
-                // holder.updateCardViewImage( holder.getCardView().getContext(),  );
-            }
-        } else {
+        if (cardItem.getImageResourceId() != 0) {
             holder.updateCardViewImage( cardView.getContext(), cardItem.getImageResourceId() );
+        } else if (!TextUtils.isEmpty(cardItem.getImageUrl())){
+            holder.updateCardViewImage( cardView.getContext(), cardItem.getImageUrl() );
         }
     }
 
@@ -51,17 +46,10 @@ public class DefaultCardPresenter extends Presenter {
         // TODO: release resources
     }
 
-    private class DefaultCardPresenterViewHolder extends ViewHolder {
-
-        private ImageCardView mCardView;
+    private class DefaultCardPresenterViewHolder extends AbstractBaseCardViewHolder {
 
         public DefaultCardPresenterViewHolder(ImageCardView cardView) {
             super(cardView);
-            mCardView = (ImageCardView) cardView;
-        }
-
-        public ImageCardView getCardView() {
-            return mCardView;
         }
 
         public void updateCardViewImage(Context context, String link ) {

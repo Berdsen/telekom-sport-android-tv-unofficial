@@ -9,11 +9,10 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
-import de.berdsen.telekomsport_unofficial.R;
-import de.berdsen.telekomsport_unofficial.services.model.ExtendedCookieStore;
 import de.berdsen.telekomsport_unofficial.model.TelekomApiConstants;
-import de.berdsen.telekomsport_unofficial.services.interfaces.LoginFinishedHandler;
 import de.berdsen.telekomsport_unofficial.services.AsyncTasks.LoginTask;
+import de.berdsen.telekomsport_unofficial.services.interfaces.LoginFinishedHandler;
+import de.berdsen.telekomsport_unofficial.services.model.ExtendedCookieStore;
 import de.berdsen.telekomsport_unofficial.services.model.LoginUserData;
 import de.berdsen.telekomsport_unofficial.utils.ApplicationConstants;
 

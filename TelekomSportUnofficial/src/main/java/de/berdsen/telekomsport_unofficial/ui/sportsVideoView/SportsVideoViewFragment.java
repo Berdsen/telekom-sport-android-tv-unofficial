@@ -6,7 +6,6 @@ import android.support.v17.leanback.widget.HeaderItem;
 import android.support.v17.leanback.widget.ListRow;
 import android.support.v17.leanback.widget.ListRowPresenter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -14,12 +13,12 @@ import javax.inject.Inject;
 import de.berdsen.telekomsport_unofficial.model.EpgData;
 import de.berdsen.telekomsport_unofficial.model.GameEvent;
 import de.berdsen.telekomsport_unofficial.model.Sport;
-import de.berdsen.telekomsport_unofficial.model.Video;
 import de.berdsen.telekomsport_unofficial.services.RestService;
 import de.berdsen.telekomsport_unofficial.services.SessionService;
 import de.berdsen.telekomsport_unofficial.services.interfaces.EpgResolvedHandler;
 import de.berdsen.telekomsport_unofficial.ui.base.AbstractBaseBrowseFragment;
 import de.berdsen.telekomsport_unofficial.ui.presenter.DefaultCardPresenter;
+import de.berdsen.telekomsport_unofficial.ui.presenter.EventCardPresenter;
 import de.berdsen.telekomsport_unofficial.utils.ParseUtils;
 
 /**
@@ -63,12 +62,12 @@ public class SportsVideoViewFragment extends AbstractBaseBrowseFragment {
                         continue;
                     }
 
-                    ArrayObjectAdapter rowAdapter = new ArrayObjectAdapter(new DefaultCardPresenter());
+                    ArrayObjectAdapter rowAdapter = new ArrayObjectAdapter(new EventCardPresenter());
 
                     HeaderItem headerItem = new HeaderItem(headerItemId++, epgData.getTitle());
 
                     for (GameEvent e : epgData.getEvents()) {
-                        rowAdapter.add(ParseUtils.createDefaultCardItem(e, givenSport.getBaseUrl()));
+                        rowAdapter.add(ParseUtils.createCardItem(e, givenSport.getBaseUrl()));
                     }
 
                     mRowsAdapter.add(new ListRow(headerItem, rowAdapter));
@@ -76,38 +75,5 @@ public class SportsVideoViewFragment extends AbstractBaseBrowseFragment {
             }
 
         });
-        /*
-        restService.retrieveSportVideos(givenSport, new VideosResolvedHandler() {
-            @Override
-            public void resolvedVideos(List<Video> sports) {
-                List<String> categories = getCategories(sports);
-                int i = 0;
-                for (String c : categories) {
-                    ArrayObjectAdapter aoa = new ArrayObjectAdapter(new DefaultCardPresenter());
-
-                    HeaderItem hi = new HeaderItem(i++, c);
-                    for(Video v : sports) {
-                        if (v.getCategory() == c) {
-                            aoa.add(ParseUtils.createDefaultCardItem(v));
-                        }
-                    }
-
-                    mRowsAdapter.add(new ListRow(hi, aoa));
-                }
-            }
-        });
-        */
-    }
-
-    private List<String> getCategories(List<Video> sportVideos) {
-        if( sportVideos == null )
-            return null;
-        List<String> categories = new ArrayList<String>();
-        for( Video v : sportVideos) {
-            if( !categories.contains( v.getCategory() ) ) {
-                categories.add( v.getCategory() );
-            }
-        }
-        return categories;
     }
 }

@@ -63,7 +63,7 @@ public class SportsOverviewFragment extends AbstractBaseBrowseFragment implement
         mRowsAdapter.add(new ListRow(sportsHeader, mSportsRowAdapter));
         mRowsAdapter.add(new ListRow(settingsHeader, mSettingsRowAdapter));
 
-        mSettingsRowAdapter.add(ParseUtils.createDefaultCardItem("Preferences", "Application settings", R.drawable.perm_group_system_tools));
+        mSettingsRowAdapter.add(ParseUtils.createCardItem("Preferences", "Application settings", R.drawable.perm_group_system_tools));
 
         setTitle("Select Sport");
         setAdapter(mRowsAdapter);
@@ -76,7 +76,7 @@ public class SportsOverviewFragment extends AbstractBaseBrowseFragment implement
                 loadedSports = sports;
 
                 for (Sport s : loadedSports) {
-                    mSportsRowAdapter.add(ParseUtils.createDefaultCardItem(s));
+                    mSportsRowAdapter.add(ParseUtils.createCardItem(s));
                 }
             }
         });

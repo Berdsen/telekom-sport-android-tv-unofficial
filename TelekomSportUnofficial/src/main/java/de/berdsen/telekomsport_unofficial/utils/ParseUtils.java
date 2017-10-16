@@ -1,20 +1,17 @@
 package de.berdsen.telekomsport_unofficial.utils;
 
 import android.content.Context;
-import android.preference.Preference;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 
 import de.berdsen.telekomsport_unofficial.model.EventDetails;
 import de.berdsen.telekomsport_unofficial.model.GameEvent;
 import de.berdsen.telekomsport_unofficial.model.Sport;
-import de.berdsen.telekomsport_unofficial.model.Video;
-import de.berdsen.telekomsport_unofficial.services.RestService;
 import de.berdsen.telekomsport_unofficial.ui.presenter.DefaultCardItem;
+import de.berdsen.telekomsport_unofficial.ui.presenter.EventCardItem;
 
 /**
  * Created by berthm on 26.09.2017.
@@ -59,7 +56,7 @@ public class ParseUtils {
         return sb.toString();
     }
 
-    public static DefaultCardItem createDefaultCardItem(Sport sport) {
+    public static DefaultCardItem createCardItem(Sport sport) {
         DefaultCardItem cardItem = new DefaultCardItem(sport);
         cardItem.setTitle(sport.getTitle());
         cardItem.setDescription(sport.getTitle());
@@ -68,30 +65,7 @@ public class ParseUtils {
         return cardItem;
     }
 
-    public static DefaultCardItem createDefaultCardItem(Video video) {
-        DefaultCardItem cardItem = new DefaultCardItem(video);
-        cardItem.setTitle(video.getTitle());
-        cardItem.setDescription(video.getDescription());
-        cardItem.setImageUrl(video.getPoster());
-
-        return cardItem;
-    }
-
-    public static DefaultCardItem createDefaultCardItem(GameEvent event, String baseUrl) {
-        DefaultCardItem cardItem = new DefaultCardItem(event);
-
-        EventDetails details = event.getMetadata().getDetails();
-        String title = details.getHome().getNameMini() + " vs. " + details.getAway().getNameMini();
-        String description = event.getMetadata().getScheduleStart().getOriginal();
-
-        cardItem.setTitle(title);
-        cardItem.setDescription(description);
-        cardItem.setImageUrl(baseUrl + event.getMetadata().getImages().getFallback());
-
-        return cardItem;
-    }
-
-    public static DefaultCardItem createDefaultCardItem(String title, String description, int resourceId) {
+    public static DefaultCardItem createCardItem(String title, String description, int resourceId) {
         DefaultCardItem cardItem = new DefaultCardItem(null);
         cardItem.setTitle(title);
         cardItem.setDescription(description);
@@ -99,5 +73,22 @@ public class ParseUtils {
 
         return cardItem;
     }
+
+    public static EventCardItem createCardItem(GameEvent event, String baseUrl) {
+        EventCardItem cardItem = new EventCardItem(event);
+
+        EventDetails details = event.getMetadata().getDetails();
+        String title = details.getHome().getNameShort() + " : " + details.getAway().getNameShort();
+        String description = event.getMetadata().getScheduleStart().getOriginal();
+
+        cardItem.setTitle(title);
+        cardItem.setDescription(description);
+        cardItem.setMainImageUrl(baseUrl + event.getMetadata().getImages().getFallback());
+        cardItem.setHomeTeamImageUrl(baseUrl + event.getMetadata().getDetails().getHome().getLogo());
+        cardItem.setAwayTeamImageUrl(baseUrl + event.getMetadata().getDetails().getAway().getLogo());
+
+        return cardItem;
+    }
+
 }
 
