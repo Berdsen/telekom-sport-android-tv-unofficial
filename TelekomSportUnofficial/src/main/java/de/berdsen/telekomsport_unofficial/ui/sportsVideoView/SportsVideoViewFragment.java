@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import de.berdsen.telekomsport_unofficial.model.EpgData;
 import de.berdsen.telekomsport_unofficial.model.GameEvent;
 import de.berdsen.telekomsport_unofficial.model.Sport;
+import de.berdsen.telekomsport_unofficial.services.ImageCacheService;
 import de.berdsen.telekomsport_unofficial.services.RestService;
 import de.berdsen.telekomsport_unofficial.services.SessionService;
 import de.berdsen.telekomsport_unofficial.services.interfaces.EpgResolvedHandler;
@@ -31,6 +32,9 @@ public class SportsVideoViewFragment extends AbstractBaseBrowseFragment {
 
     @Inject
     SessionService sessionService;
+
+    @Inject
+    ImageCacheService imageCacheService;
 
     public static final String SELECTED_SPORT_PARAMETER = "__SELECTED_SPORT__";
 
@@ -67,7 +71,7 @@ public class SportsVideoViewFragment extends AbstractBaseBrowseFragment {
                     HeaderItem headerItem = new HeaderItem(headerItemId++, epgData.getTitle());
 
                     for (GameEvent e : epgData.getEvents()) {
-                        rowAdapter.add(ParseUtils.createCardItem(e, givenSport.getBaseUrl()));
+                        rowAdapter.add(ParseUtils.createCardItem(e, givenSport.getBaseUrl(), imageCacheService));
                     }
 
                     mRowsAdapter.add(new ListRow(headerItem, rowAdapter));

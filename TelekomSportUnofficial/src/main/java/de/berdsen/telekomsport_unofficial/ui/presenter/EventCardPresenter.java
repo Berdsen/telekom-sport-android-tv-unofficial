@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -37,15 +38,7 @@ public class EventCardPresenter extends Presenter {
         cardView.setContentText(cardItem.getDescription());
         cardView.setMainImageDimensions( 320, 240 );
 
-        Runnable r = new Runnable() {
-            @Override
-            public void run() {
-                holder.updateImage(cardView.getContext(), cardItem);
-            }
-        };
-
-        Thread t = new Thread(r);
-        t.start();
+        holder.updateImage(cardView.getContext(), cardItem);
     }
 
     @Override
@@ -59,30 +52,49 @@ public class EventCardPresenter extends Presenter {
             super(cardView);
         }
 
-        public void updateImage(Context context, EventCardItem cardItem) {
-            try {
-                Bitmap image = Picasso.with(context).load(cardItem.getMainImageUrl()).resize(320, 240).get();
-                Bitmap homeTeam = Picasso.with(context).load(cardItem.getHomeTeamImageUrl()).resize(100, 100).get();
-                Bitmap awayTeam = Picasso.with(context).load(cardItem.getAwayTeamImageUrl()).resize(100, 100).get();
+        public void updateImage(final Context context, final EventCardItem cardItem) {
+            Thread loadImages = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    final Drawable drawable;
+                    try {
+                        drawable = resolveImages(context, cardItem);
 
-                Bitmap result = Bitmap.createBitmap(image.getWidth(), image.getHeight(), image.getConfig());
-                Canvas canvas = new Canvas(result);
+                        mCardView.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                mCardView.setMainImage(drawable);
+                            }
+                        });
 
-                canvas.drawBitmap(image, 0f, 0f, null);
-                canvas.drawBitmap(homeTeam, 20f, 20f, null);
-                canvas.drawBitmap(awayTeam, 200f, 20f, null);
-
-                final Drawable drawable = new BitmapDrawable(mCardView.getResources(), result);
-
-                mCardView.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        mCardView.setMainImage(drawable);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        //TODO: set default image
                     }
-                });
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+                }
+            });
+
+            loadImages.start();
+        }
+
+        private Drawable resolveImages(Context context, EventCardItem cardItem) throws IOException {
+
+            File mainImageFile = cardItem.getImageCacheService().retrieveFileFromUrl(cardItem.getMainImageUrl(), context);
+            File homeTeamFile = cardItem.getImageCacheService().retrieveFileFromUrl(cardItem.getHomeTeamImageUrl(), context);
+            File awayTeamFile = cardItem.getImageCacheService().retrieveFileFromUrl(cardItem.getAwayTeamImageUrl(), context);
+
+            Bitmap image = Picasso.with(context).load(mainImageFile).resize(320, 240).get();
+            Bitmap homeTeam = Picasso.with(context).load(homeTeamFile).resize(100, 100).get();
+            Bitmap awayTeam = Picasso.with(context).load(awayTeamFile).resize(100, 100).get();
+
+            Bitmap result = Bitmap.createBitmap(image.getWidth(), image.getHeight(), image.getConfig());
+            Canvas canvas = new Canvas(result);
+
+            canvas.drawBitmap(image, 0f, 0f, null);
+            canvas.drawBitmap(homeTeam, 20f, 20f, null);
+            canvas.drawBitmap(awayTeam, 200f, 20f, null);
+
+            return new BitmapDrawable(mCardView.getResources(), result);
         }
     }
 }
