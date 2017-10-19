@@ -10,6 +10,7 @@ import java.io.InputStreamReader;
 import de.berdsen.telekomsport_unofficial.model.EventDetails;
 import de.berdsen.telekomsport_unofficial.model.GameEvent;
 import de.berdsen.telekomsport_unofficial.model.Sport;
+import de.berdsen.telekomsport_unofficial.services.ImageCacheService;
 import de.berdsen.telekomsport_unofficial.ui.presenter.DefaultCardItem;
 import de.berdsen.telekomsport_unofficial.ui.presenter.EventCardItem;
 
@@ -74,8 +75,8 @@ public class ParseUtils {
         return cardItem;
     }
 
-    public static EventCardItem createCardItem(GameEvent event, String baseUrl) {
-        EventCardItem cardItem = new EventCardItem(event);
+    public static EventCardItem createCardItem(GameEvent event, String baseUrl, ImageCacheService imageCacheService) {
+        EventCardItem cardItem = new EventCardItem(event, imageCacheService);
 
         EventDetails details = event.getMetadata().getDetails();
         String title = details.getHome().getNameShort() + " : " + details.getAway().getNameShort();

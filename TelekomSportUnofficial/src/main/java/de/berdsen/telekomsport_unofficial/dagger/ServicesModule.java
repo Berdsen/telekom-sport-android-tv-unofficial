@@ -15,6 +15,7 @@ import dagger.Module;
 import dagger.Provides;
 import de.berdsen.telekomsport_unofficial.R;
 import de.berdsen.telekomsport_unofficial.model.TelekomApiConstants;
+import de.berdsen.telekomsport_unofficial.services.ImageCacheService;
 import de.berdsen.telekomsport_unofficial.services.RestService;
 import de.berdsen.telekomsport_unofficial.services.SessionService;
 import de.berdsen.telekomsport_unofficial.utils.ParseUtils;
@@ -31,6 +32,7 @@ public class ServicesModule {
     private TelekomApiConstants singletonTelekomApiConstants;
     private RestService singletonRestService;
     private SessionService singletonSessionService;
+    private ImageCacheService singletonImageCacheService;
 
     @Provides
     @Singleton
@@ -55,6 +57,14 @@ public class ServicesModule {
             initializeSessionService(context, preferences);
         }
         return singletonSessionService;
+    }
+
+    @Provides
+    ImageCacheService providesImageCacheService(Context context) {
+        if (singletonImageCacheService == null) {
+            singletonImageCacheService = new ImageCacheService(context);
+        }
+        return singletonImageCacheService;
     }
 
     private void readTelekomConstants(Context context) {
