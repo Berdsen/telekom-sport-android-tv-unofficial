@@ -11,7 +11,7 @@ import de.berdsen.telekomsport_unofficial.R;
 import de.berdsen.telekomsport_unofficial.services.SessionService;
 import de.berdsen.telekomsport_unofficial.services.interfaces.LoginFinishedHandler;
 import de.berdsen.telekomsport_unofficial.ui.base.AbstractBaseActivity;
-import de.berdsen.telekomsport_unofficial.ui.sportsOverviewView.SportsOverviewFragment;
+import de.berdsen.telekomsport_unofficial.ui.fragments.SportsOverviewFragment;
 
 /**
  * Created by berthm on 28.09.2017.

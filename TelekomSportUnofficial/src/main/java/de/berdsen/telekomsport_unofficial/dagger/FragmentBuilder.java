@@ -2,10 +2,10 @@ package de.berdsen.telekomsport_unofficial.dagger;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
-import de.berdsen.telekomsport_unofficial.ui.selectedVideoDetailsView.SelectedVideoDetailsFragment;
-import de.berdsen.telekomsport_unofficial.ui.settingsView.SettingsFragment;
-import de.berdsen.telekomsport_unofficial.ui.sportsOverviewView.SportsOverviewFragment;
-import de.berdsen.telekomsport_unofficial.ui.sportsVideoView.SportsVideoViewFragment;
+import de.berdsen.telekomsport_unofficial.ui.fragments.SelectedVideoDetailsFragment;
+import de.berdsen.telekomsport_unofficial.ui.fragments.SettingsFragment;
+import de.berdsen.telekomsport_unofficial.ui.fragments.SportsOverviewFragment;
+import de.berdsen.telekomsport_unofficial.ui.fragments.SportsVideoViewFragment;
 
 /**
  * Created by berthm on 26.09.2017.

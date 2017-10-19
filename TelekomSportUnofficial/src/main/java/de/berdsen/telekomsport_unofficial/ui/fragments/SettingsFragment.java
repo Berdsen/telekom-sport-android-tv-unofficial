@@ -1,4 +1,4 @@
-package de.berdsen.telekomsport_unofficial.ui.settingsView;
+package de.berdsen.telekomsport_unofficial.ui.fragments;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;

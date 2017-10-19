@@ -1,4 +1,4 @@
-package de.berdsen.telekomsport_unofficial.ui.sportsOverviewView;
+package de.berdsen.telekomsport_unofficial.ui.fragments;
 
 import android.app.FragmentTransaction;
 import android.content.SharedPreferences;
@@ -17,18 +17,14 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import dagger.multibindings.IntKey;
 import de.berdsen.telekomsport_unofficial.R;
 import de.berdsen.telekomsport_unofficial.model.Sport;
 import de.berdsen.telekomsport_unofficial.services.RestService;
 import de.berdsen.telekomsport_unofficial.services.SessionService;
-import de.berdsen.telekomsport_unofficial.services.SportsService;
 import de.berdsen.telekomsport_unofficial.services.interfaces.SportsResolvedHandler;
 import de.berdsen.telekomsport_unofficial.ui.base.AbstractBaseBrowseFragment;
 import de.berdsen.telekomsport_unofficial.ui.presenter.DefaultCardItem;
 import de.berdsen.telekomsport_unofficial.ui.presenter.DefaultCardPresenter;
-import de.berdsen.telekomsport_unofficial.ui.settingsView.SettingsFragment;
-import de.berdsen.telekomsport_unofficial.ui.sportsVideoView.SportsVideoViewFragment;
 import de.berdsen.telekomsport_unofficial.utils.ParseUtils;
 
 /**

@@ -8,7 +8,7 @@
     <!--
     <fragment
         android:id="@+id/sportsOverviewFragment"
-        android:name="de.berdsen.telekomsport_unofficial.ui.sportsOverviewView.SportsOverviewFragment"
+        android:name="de.berdsen.telekomsport_unofficial.ui.fragments.SportsOverviewFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
     -->

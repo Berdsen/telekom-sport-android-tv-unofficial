@@ -1,4 +1,4 @@
-package de.berdsen.telekomsport_unofficial.ui.selectedVideoDetailsView;
+package de.berdsen.telekomsport_unofficial.ui.fragments;
 
 import android.os.Bundle;
 

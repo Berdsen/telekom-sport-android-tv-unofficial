@@ -1,4 +1,4 @@
-package de.berdsen.telekomsport_unofficial.ui.sportsVideoView;
+package de.berdsen.telekomsport_unofficial.ui.fragments;
 
 import android.app.FragmentTransaction;
 import android.os.Bundle;
@@ -11,7 +11,6 @@ import android.support.v17.leanback.widget.Presenter;
 import android.support.v17.leanback.widget.Row;
 import android.support.v17.leanback.widget.RowPresenter;
 
-import java.lang.annotation.Inherited;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -26,12 +25,8 @@ import de.berdsen.telekomsport_unofficial.services.SessionService;
 import de.berdsen.telekomsport_unofficial.services.SportsService;
 import de.berdsen.telekomsport_unofficial.services.interfaces.EpgResolvedHandler;
 import de.berdsen.telekomsport_unofficial.ui.base.AbstractBaseBrowseFragment;
-import de.berdsen.telekomsport_unofficial.ui.presenter.DefaultCardItem;
-import de.berdsen.telekomsport_unofficial.ui.presenter.DefaultCardPresenter;
 import de.berdsen.telekomsport_unofficial.ui.presenter.EventCardItem;
 import de.berdsen.telekomsport_unofficial.ui.presenter.EventCardPresenter;
-import de.berdsen.telekomsport_unofficial.ui.selectedVideoDetailsView.SelectedVideoDetailsFragment;
-import de.berdsen.telekomsport_unofficial.ui.settingsView.SettingsFragment;
 import de.berdsen.telekomsport_unofficial.utils.ParseUtils;
 
 /**
