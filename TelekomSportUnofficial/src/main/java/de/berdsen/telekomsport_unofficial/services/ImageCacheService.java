@@ -3,18 +3,13 @@ package de.berdsen.telekomsport_unofficial.services;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.provider.ContactsContract;
 
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
-
-import de.berdsen.telekomsport_unofficial.services.interfaces.ImageFileResolvedHandler;
 
 /**
  * Created by berthm on 17.10.2017.

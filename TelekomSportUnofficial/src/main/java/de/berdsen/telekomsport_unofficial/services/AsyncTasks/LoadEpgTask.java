@@ -14,16 +14,16 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
-import java.net.Proxy;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.berdsen.telekomsport_unofficial.model.EpgData;
 import de.berdsen.telekomsport_unofficial.model.ResponseData;
 import de.berdsen.telekomsport_unofficial.model.Sport;
-import de.berdsen.telekomsport_unofficial.model.EpgData;
 import de.berdsen.telekomsport_unofficial.model.TelekomApiConstants;
 import de.berdsen.telekomsport_unofficial.services.interfaces.EpgResolvedHandler;
+import lombok.Data;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -52,12 +52,12 @@ public class LoadEpgTask extends AsyncTask<Sport, Void, List<EpgData>> {
 
         currentSport = sports[0];
 
-        List<String> eventLaneUrlExtensions = FindEventLaneUrls(currentSport);
+        List<EventLaneData> eventLaneUrlExtensions = FindEventLaneUrls(currentSport);
 
         if (eventLaneUrlExtensions == null || eventLaneUrlExtensions.size() == 0) {
             return null;
         }
-        return retrieveEpgData(currentSport, eventLaneUrlExtensions);
+        return retrieveEpgData(eventLaneUrlExtensions);
     }
 
     @Override
@@ -67,8 +67,8 @@ public class LoadEpgTask extends AsyncTask<Sport, Void, List<EpgData>> {
         handler.epgDataResolved(currentSport, epgData);
     }
 
-    private List<String> FindEventLaneUrls(Sport sport) {
-        List<String> returnValue = new ArrayList<>();
+    private List<EventLaneData> FindEventLaneUrls(Sport sport) {
+        List<EventLaneData> returnValue = new ArrayList<>();
 
         String html = ReadPlainHtml(sport.getPageUrl());
 
@@ -82,17 +82,23 @@ public class LoadEpgTask extends AsyncTask<Sport, Void, List<EpgData>> {
             return returnValue;
         }
 
-        Elements elementsByAttribute = sportsPageDocument.body().getElementsByTag("event-lane");
+        Elements contentGroups = sportsPageDocument.body().getElementsByClass("content-group");
 
-        if (elementsByAttribute == null || elementsByAttribute.size() == 0) {
-            return returnValue;
-        }
+        for (Element e : contentGroups) {
+            Elements headline = e.getElementsByClass("headline"); // should be one element
+            Elements eventLane = e.getElementsByTag("event-lane");
 
-        for (Element e : elementsByAttribute) {
-            String urlExtension = e.attr("prop-url");
-            if (urlExtension != null && urlExtension != "" && !returnValue.contains(urlExtension)) {
-                returnValue.add(urlExtension);
+            if (headline == null || headline.size() == 0 || eventLane == null || eventLane.size() == 0) {
+                continue;
             }
+
+            String urlExtension = eventLane.get(0).attr("prop-url");
+
+            EventLaneData eventLaneData = new EventLaneData();
+            eventLaneData.setTitle(headline.get(0).text());
+            eventLaneData.setEventLaneUrlExtension(urlExtension);
+
+            returnValue.add(eventLaneData);
         }
 
         return returnValue;
@@ -116,7 +122,7 @@ public class LoadEpgTask extends AsyncTask<Sport, Void, List<EpgData>> {
         }
     }
 
-    private List<EpgData> retrieveEpgData(Sport sportToLoad, List<String> eventLaneUrlExtensions) {
+    private List<EpgData> retrieveEpgData(List<EventLaneData> eventLaneUrlExtensions) {
 
         List<EpgData> returnValue = new ArrayList<>();
 
@@ -124,17 +130,21 @@ public class LoadEpgTask extends AsyncTask<Sport, Void, List<EpgData>> {
 
         OkHttpClient client = new OkHttpClient.Builder().build();
 
-        for (String eventLaneExtension : eventLaneUrlExtensions) {
-            Request request = new Request.Builder().url(apiUrl + eventLaneExtension).build();
+        for (EventLaneData entry : eventLaneUrlExtensions) {
+            Request request = new Request.Builder().url(apiUrl + entry.getEventLaneUrlExtension()).build();
             Response response = SafeLoadResponse(client, request);
 
             EpgData epgData = LoadEpgDataFromJson(response);
+
             if (epgData != null) {
+                if (epgData.getTitle() == null || epgData.getTitle().length() == 0) {
+                    epgData.setTitle(entry.getTitle());
+                }
                 returnValue.add(epgData);
             }
         }
 
-        return returnValue ;
+        return returnValue;
     }
 
     private EpgData LoadEpgDataFromJson(Response response) {
@@ -177,4 +187,9 @@ public class LoadEpgTask extends AsyncTask<Sport, Void, List<EpgData>> {
         return null;
     }
 
+    @Data
+    private class EventLaneData {
+        String eventLaneUrlExtension;
+        String title;
+    }
 }
