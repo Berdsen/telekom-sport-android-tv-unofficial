@@ -2,6 +2,7 @@ package de.berdsen.telekomsport_unofficial.dagger;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
+import de.berdsen.telekomsport_unofficial.ui.selectedVideoDetailsView.SelectedVideoDetailsFragment;
 import de.berdsen.telekomsport_unofficial.ui.settingsView.SettingsFragment;
 import de.berdsen.telekomsport_unofficial.ui.sportsOverviewView.SportsOverviewFragment;
 import de.berdsen.telekomsport_unofficial.ui.sportsVideoView.SportsVideoViewFragment;
@@ -27,4 +28,9 @@ public abstract class FragmentBuilder {
             ServicesModule.class
     })
     public abstract SportsVideoViewFragment sportsVideoViewFragment();
+
+    @ContributesAndroidInjector(modules = {
+            ServicesModule.class
+    })
+    public abstract SelectedVideoDetailsFragment selectedVideoDetailsFragment();
 }

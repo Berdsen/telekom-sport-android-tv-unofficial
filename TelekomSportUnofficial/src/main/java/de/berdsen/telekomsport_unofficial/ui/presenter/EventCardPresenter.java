@@ -14,6 +14,10 @@ import com.squareup.picasso.Picasso;
 import java.io.File;
 import java.io.IOException;
 
+import javax.inject.Inject;
+
+import de.berdsen.telekomsport_unofficial.services.ImageCacheService;
+
 /**
  * Created by berthm on 16.10.2017.
  */
@@ -21,11 +25,17 @@ import java.io.IOException;
 //TODO: implement this
 public class EventCardPresenter extends Presenter {
 
+    private final ImageCacheService imageCacheService;
+
+    public EventCardPresenter(ImageCacheService imageCacheService) {
+        this.imageCacheService = imageCacheService;
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent) {
         ImageCardView cardView = new ImageCardView( parent.getContext() );
         cardView.setFocusable( true );
-        return new EventCardPresenterViewHolder(cardView);
+        return new EventCardPresenterViewHolder(cardView, imageCacheService);
     }
 
     @Override
@@ -48,8 +58,11 @@ public class EventCardPresenter extends Presenter {
 
     private class EventCardPresenterViewHolder extends AbstractBaseCardViewHolder {
 
-        public EventCardPresenterViewHolder(ImageCardView cardView) {
+        private ImageCacheService imageCacheService;
+
+        public EventCardPresenterViewHolder(ImageCardView cardView, ImageCacheService imageCacheService) {
             super(cardView);
+            this.imageCacheService = imageCacheService;
         }
 
         public void updateImage(final Context context, final EventCardItem cardItem) {
@@ -58,8 +71,13 @@ public class EventCardPresenter extends Presenter {
                 public void run() {
                     final Drawable drawable;
                     try {
-                        drawable = resolveImages(context, cardItem);
-
+                        Drawable alreadyExistentDrawable = cardItem.getCreatedDrawable();
+                        if (alreadyExistentDrawable == null) {
+                            drawable = resolveImage(context, cardItem);
+                            cardItem.setCreatedDrawable(drawable);
+                        } else {
+                            drawable = alreadyExistentDrawable;
+                        }
                         mCardView.post(new Runnable() {
                             @Override
                             public void run() {
@@ -77,11 +95,11 @@ public class EventCardPresenter extends Presenter {
             loadImages.start();
         }
 
-        private Drawable resolveImages(Context context, EventCardItem cardItem) throws IOException {
+        private Drawable resolveImage(Context context, EventCardItem cardItem) throws IOException {
 
-            File mainImageFile = cardItem.getImageCacheService().retrieveFileFromUrl(cardItem.getMainImageUrl(), context);
-            File homeTeamFile = cardItem.getImageCacheService().retrieveFileFromUrl(cardItem.getHomeTeamImageUrl(), context);
-            File awayTeamFile = cardItem.getImageCacheService().retrieveFileFromUrl(cardItem.getAwayTeamImageUrl(), context);
+            File mainImageFile = imageCacheService.retrieveFileFromUrl(cardItem.getMainImageUrl(), context);
+            File homeTeamFile = imageCacheService.retrieveFileFromUrl(cardItem.getHomeTeamImageUrl(), context);
+            File awayTeamFile = imageCacheService.retrieveFileFromUrl(cardItem.getAwayTeamImageUrl(), context);
 
             Bitmap image = Picasso.with(context).load(mainImageFile).resize(320, 240).get();
             Bitmap homeTeam = Picasso.with(context).load(homeTeamFile).resize(100, 100).get();
@@ -94,7 +112,9 @@ public class EventCardPresenter extends Presenter {
             canvas.drawBitmap(homeTeam, 20f, 20f, null);
             canvas.drawBitmap(awayTeam, 200f, 20f, null);
 
-            return new BitmapDrawable(mCardView.getResources(), result);
+            return new BitmapDrawable(context.getResources(), result);
         }
+
     }
 }
+

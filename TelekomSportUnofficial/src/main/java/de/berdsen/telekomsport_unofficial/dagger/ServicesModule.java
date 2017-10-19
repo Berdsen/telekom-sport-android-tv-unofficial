@@ -18,6 +18,7 @@ import de.berdsen.telekomsport_unofficial.model.TelekomApiConstants;
 import de.berdsen.telekomsport_unofficial.services.ImageCacheService;
 import de.berdsen.telekomsport_unofficial.services.RestService;
 import de.berdsen.telekomsport_unofficial.services.SessionService;
+import de.berdsen.telekomsport_unofficial.services.SportsService;
 import de.berdsen.telekomsport_unofficial.utils.ParseUtils;
 
 /**
@@ -33,6 +34,7 @@ public class ServicesModule {
     private RestService singletonRestService;
     private SessionService singletonSessionService;
     private ImageCacheService singletonImageCacheService;
+    private SportsService singletonSportsService;
 
     @Provides
     @Singleton
@@ -65,6 +67,14 @@ public class ServicesModule {
             singletonImageCacheService = new ImageCacheService(context);
         }
         return singletonImageCacheService;
+    }
+
+    @Provides
+    SportsService providesSportsService() {
+        if (singletonSportsService == null) {
+            singletonSportsService = new SportsService();
+        }
+        return singletonSportsService;
     }
 
     private void readTelekomConstants(Context context) {

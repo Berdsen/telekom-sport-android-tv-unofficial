@@ -10,7 +10,7 @@ import lombok.Data;
 public class AbstractBaseCardItem {
     private String title;
     private String description;
-    private final Object item;
+    protected final Object item;
 
     public AbstractBaseCardItem(Object item) {
         this.item = item;

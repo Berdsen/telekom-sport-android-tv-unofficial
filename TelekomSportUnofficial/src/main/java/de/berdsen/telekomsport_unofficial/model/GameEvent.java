@@ -1,5 +1,7 @@
 package de.berdsen.telekomsport_unofficial.model;
 
+import android.graphics.drawable.Drawable;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -33,4 +35,6 @@ public class GameEvent {
 
     @SerializedName("blacklist_tags")
     List<String> blacklistTags;
+
+    Drawable createdDrawable;
 }

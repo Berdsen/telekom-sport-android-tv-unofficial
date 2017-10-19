@@ -75,8 +75,8 @@ public class ParseUtils {
         return cardItem;
     }
 
-    public static EventCardItem createCardItem(GameEvent event, String baseUrl, ImageCacheService imageCacheService) {
-        EventCardItem cardItem = new EventCardItem(event, imageCacheService);
+    public static EventCardItem createCardItem(GameEvent event, String baseUrl) {
+        EventCardItem cardItem = new EventCardItem(event);
 
         EventDetails details = event.getMetadata().getDetails();
         String title = details.getHome().getNameShort() + " : " + details.getAway().getNameShort();
