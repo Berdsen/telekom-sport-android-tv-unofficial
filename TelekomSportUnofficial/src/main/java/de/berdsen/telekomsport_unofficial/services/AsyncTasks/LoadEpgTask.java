@@ -132,9 +132,9 @@ public class LoadEpgTask extends AsyncTask<Sport, Void, List<EpgData>> {
 
         for (EventLaneData entry : eventLaneUrlExtensions) {
             Request request = new Request.Builder().url(apiUrl + entry.getEventLaneUrlExtension()).build();
-            Response response = SafeLoadResponse(client, request);
+            Response response = Utils.safeLoadResponse(client, request);
 
-            EpgData epgData = LoadEpgDataFromJson(response);
+            EpgData epgData = Utils.loadDataFromJson(response, EpgData.class);
 
             if (epgData != null) {
                 if (epgData.getTitle() == null || epgData.getTitle().length() == 0) {
@@ -145,32 +145,6 @@ public class LoadEpgTask extends AsyncTask<Sport, Void, List<EpgData>> {
         }
 
         return returnValue;
-    }
-
-    private EpgData LoadEpgDataFromJson(Response response) {
-        String jsonData = "";
-
-        try {
-            jsonData = response.body().string();
-            Type genericType = new TypeToken<ResponseData<EpgData>>(){}.getType();
-            ResponseData<EpgData> currentEpg = new Gson().fromJson(jsonData, genericType);
-
-            return currentEpg.getData();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    private Response SafeLoadResponse(OkHttpClient client, Request requestToLoad) {
-        try {
-            return client.newCall(requestToLoad).execute();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return null;
     }
 
     private Document SafeParseDocument(Response response) {

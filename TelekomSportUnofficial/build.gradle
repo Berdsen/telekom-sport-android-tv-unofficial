@@ -33,6 +33,7 @@ dependencies {
     //compile 'com.google.android.exoplayer:exoplayer-smoothstreaming:r2.5.3'
     // lombok
     implementation 'org.projectlombok:lombok:1.16.18'
+    annotationProcessor 'org.projectlombok:lombok:1.16.18'
     // http client
     implementation 'com.squareup.okhttp3:okhttp:3.9.0'
     // leanback stuff
