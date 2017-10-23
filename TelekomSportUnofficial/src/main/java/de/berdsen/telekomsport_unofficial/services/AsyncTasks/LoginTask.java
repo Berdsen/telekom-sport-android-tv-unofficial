@@ -20,6 +20,7 @@ import java.util.Map;
 import de.berdsen.telekomsport_unofficial.model.TelekomApiConstants;
 import de.berdsen.telekomsport_unofficial.services.interfaces.LoginFinishedHandler;
 import de.berdsen.telekomsport_unofficial.services.model.LoginUserData;
+import de.berdsen.telekomsport_unofficial.utils.ApplicationConstants;
 import okhttp3.Cookie;
 import okhttp3.CookieJar;
 import okhttp3.HttpUrl;
@@ -63,13 +64,7 @@ public class LoginTask extends AsyncTask<LoginUserData, Void, Boolean> {
     }
 
     private void setUserAgentValue() {
-        String chrome_version = "Chrome/61.0.3163.100"; // chrome version
-        String base = "Mozilla/5.0 ";
-        base += "(Windows NT 10.0; Win64; x64) "; // windows version
-        base += "AppleWebKit/537.36 (KHTML, like Gecko) ";
-        base += "%CH_VER% Safari/537.36".replace("%CH_VER%", chrome_version);
-
-        USER_AGENT_VALUE = base; //"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36";
+        USER_AGENT_VALUE = ApplicationConstants.getUserAgentValue();
     }
 
     @Override

@@ -37,7 +37,7 @@ public class MainActivity extends AbstractBaseActivity {
 
         setContentView(R.layout.activity_sports_overview);
 
-        //doLogin();
+        doLogin();
     }
 
     private void doLogin() {

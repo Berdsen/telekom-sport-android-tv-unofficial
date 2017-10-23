@@ -37,7 +37,6 @@ public class ServicesModule {
     private SportsService singletonSportsService;
 
     @Provides
-    @Singleton
     TelekomApiConstants providesTelekomConstants(Context context) {
         if (singletonTelekomApiConstants == null) {
             readTelekomConstants(context);
