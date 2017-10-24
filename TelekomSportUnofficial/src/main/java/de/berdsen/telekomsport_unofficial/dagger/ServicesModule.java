@@ -45,9 +45,9 @@ public class ServicesModule {
     }
 
     @Provides
-    RestService providesRestService(Context context) {
+    RestService providesRestService(Context context, SessionService sessionService) {
         if (singletonRestService == null) {
-            initializeRestService(context);
+            initializeRestService(context, sessionService);
         }
         return singletonRestService;
     }
@@ -90,12 +90,12 @@ public class ServicesModule {
         }
     }
 
-    private void initializeRestService(Context context) {
+    private void initializeRestService(Context context, SessionService sessionService) {
         if (singletonTelekomApiConstants == null) {
             readTelekomConstants(context);
         }
 
-        singletonRestService = new RestService(singletonTelekomApiConstants);
+        singletonRestService = new RestService(singletonTelekomApiConstants, sessionService);
     }
 
     private void initializeSessionService(Context context, SharedPreferences preferences) {

@@ -91,4 +91,15 @@ public class SessionService {
 
         return false;
     }
+
+    public List<HttpCookie> getAuthCookies() {
+        try {
+            URI uri = new URI(constants.getBaseUrl());
+            return this.cookieManager.getCookieStore().get(uri);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 }

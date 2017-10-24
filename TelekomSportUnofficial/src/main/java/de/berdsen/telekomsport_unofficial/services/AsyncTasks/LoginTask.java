@@ -19,6 +19,7 @@ import java.util.Map;
 
 import de.berdsen.telekomsport_unofficial.model.TelekomApiConstants;
 import de.berdsen.telekomsport_unofficial.services.interfaces.LoginFinishedHandler;
+import de.berdsen.telekomsport_unofficial.services.model.CookieJarImpl;
 import de.berdsen.telekomsport_unofficial.services.model.LoginUserData;
 import de.berdsen.telekomsport_unofficial.utils.ApplicationConstants;
 import okhttp3.Cookie;
@@ -75,37 +76,7 @@ public class LoginTask extends AsyncTask<LoginUserData, Void, Boolean> {
             }
 
             OkHttpClient client = new OkHttpClient.Builder()
-                    .cookieJar(new CookieJar() {
-
-                        private final HashMap<HttpUrl, List<Cookie>> cookieStore = new HashMap<>();
-
-                        private HttpUrl getBaseUrl(HttpUrl url) {
-                            return new HttpUrl.Builder()
-                                    .scheme(url.scheme())
-                                    .host(url.host())
-                                    .build();
-                        }
-
-                        @Override
-                        public void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
-                            List<Cookie> newCookies = new ArrayList<Cookie>();
-
-                            for (Cookie c : cookies) {
-                                if (c.value().toString().equalsIgnoreCase("deleted")) {
-                                    Cookie e = c;
-                                } else {
-                                    newCookies.add(c);
-                                }
-                            }
-                            cookieStore.put(getBaseUrl(url), newCookies);
-                        }
-
-                        @Override
-                        public List<Cookie> loadForRequest(HttpUrl url) {
-                            List<Cookie> cookies = cookieStore.get(getBaseUrl(url));
-                            return cookies != null ? cookies : new ArrayList<Cookie>();
-                        }
-                    })
+                    .cookieJar(new CookieJarImpl())
                     .build();
 
             Request loginPage = new Request.Builder().url(constants.getLoginUrl()).build();
