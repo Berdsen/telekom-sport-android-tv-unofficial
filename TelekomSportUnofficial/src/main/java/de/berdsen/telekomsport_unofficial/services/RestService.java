@@ -3,37 +3,16 @@ package de.berdsen.telekomsport_unofficial.services;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 
-import com.google.gson.Gson;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.parser.Parser;
-import org.jsoup.select.Elements;
-
-import java.io.IOException;
-import java.net.HttpCookie;
-import java.util.ArrayList;
-import java.util.List;
-
 import de.berdsen.telekomsport_unofficial.model.GameEvent;
 import de.berdsen.telekomsport_unofficial.model.Sport;
 import de.berdsen.telekomsport_unofficial.model.TelekomApiConstants;
-import de.berdsen.telekomsport_unofficial.model.VideoStreamData;
+import de.berdsen.telekomsport_unofficial.services.AsyncTasks.GetVideoUrlTask;
 import de.berdsen.telekomsport_unofficial.services.AsyncTasks.LoadEpgTask;
 import de.berdsen.telekomsport_unofficial.services.AsyncTasks.LoadGameEventTask;
 import de.berdsen.telekomsport_unofficial.services.interfaces.EpgResolvedHandler;
 import de.berdsen.telekomsport_unofficial.services.interfaces.GameEventResolvedHandler;
 import de.berdsen.telekomsport_unofficial.services.interfaces.SportsResolvedHandler;
-import de.berdsen.telekomsport_unofficial.services.model.CookieJarImpl;
-import de.berdsen.telekomsport_unofficial.utils.ApplicationConstants;
-import okhttp3.Cookie;
-import okhttp3.HttpUrl;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
+import de.berdsen.telekomsport_unofficial.services.interfaces.VideoUrlResolvedHandler;
 
 /**
  * Created by berthm on 27.09.2017.
@@ -65,94 +44,9 @@ public class RestService {
         gameEventTask.execute(gameEvent);
     }
 
-    public String retrieveVideoUrl(Uri mediaSourceUri) {
-        //TODO: create Task from following source code
-        String userAgent = ApplicationConstants.getUserAgentValue();
-        OkHttpClient client = new OkHttpClient.Builder()
-                .cookieJar(new CookieJarImpl())
-                .build();
-
-        if (sessionService.isAuthenticated()) {
-            List<HttpCookie> cookies = sessionService.getAuthCookies();
-            List<Cookie> listOfCookies = new ArrayList<>();
-
-            for (HttpCookie c : cookies) {
-                Cookie parsedCookie = Cookie.parse(HttpUrl.parse(constants.getBaseUrl()), c.toString());
-                listOfCookies.add(parsedCookie);
-            }
-            client.cookieJar().saveFromResponse(HttpUrl.parse(constants.getBaseUrl()), listOfCookies);
-        }
-
-        final String POST_MEDIA_TYPE = "application/x-www-form-urlencoded";
-
-        RequestBody body = RequestBody.create(MediaType.parse(POST_MEDIA_TYPE), "");
-        Request postVideo = new Request.Builder()
-                .url(mediaSourceUri.toString())
-                .addHeader("User-Agent", userAgent)
-                .post(body)
-                .build();
-
-        try {
-            Response response = client.newCall(postVideo).execute();
-
-            String jsonData = response.body().string();
-            VideoStreamData videoStreamData = new Gson().fromJson(jsonData, VideoStreamData.class);
-
-            if ("success".equals(videoStreamData.getStatus())) {
-                // TODO: cleanup
-                return getUrlFromXml("https:" + videoStreamData.getStreamUrl().getUrls().get(0));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    private String getUrlFromXml(String s) {
-        String userAgent = ApplicationConstants.getUserAgentValue();
-        OkHttpClient client = new OkHttpClient.Builder()
-                .cookieJar(new CookieJarImpl())
-                .build();
-
-        if (sessionService.isAuthenticated()) {
-            List<HttpCookie> cookies = sessionService.getAuthCookies();
-            List<Cookie> listOfCookies = new ArrayList<>();
-
-            for (HttpCookie c : cookies) {
-                Cookie parsedCookie = Cookie.parse(HttpUrl.parse(constants.getBaseUrl()), c.toString());
-                listOfCookies.add(parsedCookie);
-            }
-            client.cookieJar().saveFromResponse(HttpUrl.parse(constants.getBaseUrl()), listOfCookies);
-        }
-
-        Request getXml = new Request.Builder()
-                .url(s)
-                .addHeader("User-Agent", userAgent)
-                .build();
-
-        try {
-            Response response = client.newCall(getXml).execute();
-            String xmlData = response.body().string();
-            Document xmlDocument = Jsoup.parse(xmlData, "", Parser.xmlParser());
-
-            String returnValue = "";
-
-            Elements urlAttributes = xmlDocument.getElementsByAttribute("url");
-            if (urlAttributes == null || urlAttributes.size() == 0) return returnValue;
-
-            returnValue += urlAttributes.get(0).attr("url");
-
-            Elements authAttributes = xmlDocument.getElementsByAttribute("auth");
-            if (authAttributes == null || authAttributes.size() == 0) return returnValue;
-
-            returnValue += "?hdnea=";
-            returnValue += urlAttributes.get(0).attr("auth");
-
-            return returnValue;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public void retrieveVideoUrl(@NonNull Uri mediaSourceUri, @NonNull VideoUrlResolvedHandler handler ) {
+        GetVideoUrlTask videoUrlTask = new GetVideoUrlTask(sessionService, constants);
+        videoUrlTask.handler = handler;
+        videoUrlTask.execute(mediaSourceUri);
     }
 }

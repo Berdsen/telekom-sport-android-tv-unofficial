@@ -1,25 +1,18 @@
 package de.berdsen.telekomsport_unofficial.ui.fragments;
 
-import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v17.leanback.app.VideoFragmentGlueHost;
-import android.support.v17.leanback.media.PlaybackGlue;
-import android.support.v17.leanback.widget.ArrayObjectAdapter;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.exoplayer2.ExoPlayerFactory;
-import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.ext.leanback.LeanbackPlayerAdapter;
-import com.google.android.exoplayer2.ext.okhttp.OkHttpDataSource;
 import com.google.android.exoplayer2.ext.okhttp.OkHttpDataSourceFactory;
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
-import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.source.dash.DashMediaSource;
 import com.google.android.exoplayer2.source.dash.DefaultDashChunkSource;
 import com.google.android.exoplayer2.source.hls.HlsMediaSource;
@@ -28,17 +21,10 @@ import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelection;
 import com.google.android.exoplayer2.trackselection.TrackSelector;
 import com.google.android.exoplayer2.upstream.BandwidthMeter;
-import com.google.android.exoplayer2.upstream.DataSource;
-import com.google.android.exoplayer2.upstream.DataSpec;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
-import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.upstream.HttpDataSource;
-import com.google.android.exoplayer2.upstream.TransferListener;
 
-import java.io.IOException;
-import java.net.CookieManager;
 import java.net.HttpCookie;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,12 +36,12 @@ import de.berdsen.telekomsport_unofficial.model.GameEvent;
 import de.berdsen.telekomsport_unofficial.model.GameEventDetails;
 import de.berdsen.telekomsport_unofficial.model.PlayerContent;
 import de.berdsen.telekomsport_unofficial.model.TelekomApiConstants;
-import de.berdsen.telekomsport_unofficial.model.VideoContent;
 import de.berdsen.telekomsport_unofficial.model.VideoDetails;
 import de.berdsen.telekomsport_unofficial.services.RestService;
 import de.berdsen.telekomsport_unofficial.services.SessionService;
 import de.berdsen.telekomsport_unofficial.services.SportsService;
 import de.berdsen.telekomsport_unofficial.services.interfaces.GameEventResolvedHandler;
+import de.berdsen.telekomsport_unofficial.services.interfaces.VideoUrlResolvedHandler;
 import de.berdsen.telekomsport_unofficial.services.model.CookieJarImpl;
 import de.berdsen.telekomsport_unofficial.ui.base.AbstractBaseVideoFragment;
 import de.berdsen.telekomsport_unofficial.ui.listener.VideoPlayerGlue;
@@ -156,6 +142,7 @@ public class VideoPlaybackFragment extends AbstractBaseVideoFragment {
             }
         } else {
             Toast.makeText(context, "Could not find playable content", Toast.LENGTH_LONG).show();
+            getFragmentManager().popBackStack();
         }
 
     }
@@ -186,17 +173,26 @@ public class VideoPlaybackFragment extends AbstractBaseVideoFragment {
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
-                String videoUrl = restService.retrieveVideoUrl(mediaSourceUri);
-                HttpDataSource.Factory factory = buildHttpDataSourceFactory();
-                final DashMediaSource dms = new DashMediaSource(Uri.parse(videoUrl), factory, new DefaultDashChunkSource.Factory(factory), null, null);
-                final ExtractorMediaSource ems = new ExtractorMediaSource(Uri.parse(videoUrl), factory, new DefaultExtractorsFactory(), null, null);
-                final HlsMediaSource hms = new HlsMediaSource(Uri.parse(videoUrl), factory, null, null);
-
-                currentView.post(new Runnable() {
+                restService.retrieveVideoUrl(mediaSourceUri, new VideoUrlResolvedHandler() {
                     @Override
-                    public void run() {
-                        mPlayer.prepare(hms);
-                        mPlayerGlue.play();
+                    public void resolvedVideoUrl(String urlString) {
+                        if (urlString == null || urlString.length() == 0) {
+                            Toast.makeText(context, "Could not get VideoUrl", Toast.LENGTH_LONG).show();
+                            return;
+                        }
+
+                        HttpDataSource.Factory factory = buildHttpDataSourceFactory();
+                        final DashMediaSource dms = new DashMediaSource(Uri.parse(urlString), factory, new DefaultDashChunkSource.Factory(factory), null, null);
+                        final ExtractorMediaSource ems = new ExtractorMediaSource(Uri.parse(urlString), factory, new DefaultExtractorsFactory(), null, null);
+                        final HlsMediaSource hms = new HlsMediaSource(Uri.parse(urlString), factory, null, null);
+
+                        currentView.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                mPlayer.prepare(hms);
+                                mPlayerGlue.play();
+                            }
+                        });
                     }
                 });
             }

@@ -34,6 +34,7 @@ import de.berdsen.telekomsport_unofficial.utils.ParseUtils;
  */
 
 public class SportsVideoViewFragment extends AbstractBaseBrowseFragment implements OnItemViewClickedListener {
+
     @Inject
     RestService restService;
 
@@ -113,22 +114,32 @@ public class SportsVideoViewFragment extends AbstractBaseBrowseFragment implemen
 
             sportsService.setSelectedGameEvent(event);
 
-            if (event.getTargetPlayable() /* && is live */) {
-                //TODO: if live event, just start video directly
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.sportsOverviewContainer, new VideoPlaybackFragment());
-                transaction.addToBackStack(null);
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.replace(R.id.sportsOverviewContainer, new VideoPlaybackFragment());
+            transaction.addToBackStack(null);
 
-                // Commit the transaction
-                transaction.commit();
-            } else {
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.sportsOverviewContainer, new SelectedVideoDetailsFragment());
-                transaction.addToBackStack(null);
-
-                // Commit the transaction
-                transaction.commit();
-            }
+            // Commit the transaction
+            transaction.commit();
         }
+    }
+
+    private void selectNextView(GameEvent event) {
+        if (event.getTargetPlayable() /* && is live */) {
+            //TODO: if live event, just start video directly
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.replace(R.id.sportsOverviewContainer, new VideoPlaybackFragment());
+            transaction.addToBackStack(null);
+
+            // Commit the transaction
+            transaction.commit();
+        } else {
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.replace(R.id.sportsOverviewContainer, new SelectedVideoDetailsFragment());
+            transaction.addToBackStack(null);
+
+            // Commit the transaction
+            transaction.commit();
+        }
+
     }
 }

@@ -11,8 +11,8 @@ import java.lang.reflect.Type;
 import de.berdsen.telekomsport_unofficial.model.BaseContent;
 import de.berdsen.telekomsport_unofficial.model.EpgData;
 import de.berdsen.telekomsport_unofficial.model.EventContent;
-import de.berdsen.telekomsport_unofficial.model.EventDetails;
 import de.berdsen.telekomsport_unofficial.model.GameEventDetails;
+import de.berdsen.telekomsport_unofficial.model.NoVideoContent;
 import de.berdsen.telekomsport_unofficial.model.PlayerContent;
 import de.berdsen.telekomsport_unofficial.model.ResponseData;
 import de.berdsen.telekomsport_unofficial.model.TextContent;
@@ -102,6 +102,7 @@ public class Utils {
 
         public JsonAdapterFactory() {
             super(BaseContent.class, "content_id");
+            registerSubtype(NoVideoContent.class, "1");
             registerSubtype(TextContent.class, "2");
             registerSubtype(VideoContent.class, "3");
             registerSubtype(EventContent.class, "4");
