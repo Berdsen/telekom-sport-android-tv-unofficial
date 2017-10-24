@@ -6,6 +6,7 @@ import de.berdsen.telekomsport_unofficial.ui.fragments.SelectedVideoDetailsFragm
 import de.berdsen.telekomsport_unofficial.ui.fragments.SettingsFragment;
 import de.berdsen.telekomsport_unofficial.ui.fragments.SportsOverviewFragment;
 import de.berdsen.telekomsport_unofficial.ui.fragments.SportsVideoViewFragment;
+import de.berdsen.telekomsport_unofficial.ui.fragments.VideoPlaybackFragment;
 
 /**
  * Created by berthm on 26.09.2017.
@@ -33,4 +34,10 @@ public abstract class FragmentBuilder {
             ServicesModule.class
     })
     public abstract SelectedVideoDetailsFragment selectedVideoDetailsFragment();
+
+    @ContributesAndroidInjector(modules = {
+            ServicesModule.class
+    })
+    public abstract VideoPlaybackFragment videoPlaybackFragment();
+
 }

@@ -19,7 +19,9 @@ import java.util.Map;
 
 import de.berdsen.telekomsport_unofficial.model.TelekomApiConstants;
 import de.berdsen.telekomsport_unofficial.services.interfaces.LoginFinishedHandler;
+import de.berdsen.telekomsport_unofficial.services.model.CookieJarImpl;
 import de.berdsen.telekomsport_unofficial.services.model.LoginUserData;
+import de.berdsen.telekomsport_unofficial.utils.ApplicationConstants;
 import okhttp3.Cookie;
 import okhttp3.CookieJar;
 import okhttp3.HttpUrl;
@@ -63,13 +65,7 @@ public class LoginTask extends AsyncTask<LoginUserData, Void, Boolean> {
     }
 
     private void setUserAgentValue() {
-        String chrome_version = "Chrome/61.0.3163.100"; // chrome version
-        String base = "Mozilla/5.0 ";
-        base += "(Windows NT 10.0; Win64; x64) "; // windows version
-        base += "AppleWebKit/537.36 (KHTML, like Gecko) ";
-        base += "%CH_VER% Safari/537.36".replace("%CH_VER%", chrome_version);
-
-        USER_AGENT_VALUE = base; //"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36";
+        USER_AGENT_VALUE = ApplicationConstants.getUserAgentValue();
     }
 
     @Override
@@ -80,37 +76,7 @@ public class LoginTask extends AsyncTask<LoginUserData, Void, Boolean> {
             }
 
             OkHttpClient client = new OkHttpClient.Builder()
-                    .cookieJar(new CookieJar() {
-
-                        private final HashMap<HttpUrl, List<Cookie>> cookieStore = new HashMap<>();
-
-                        private HttpUrl getBaseUrl(HttpUrl url) {
-                            return new HttpUrl.Builder()
-                                    .scheme(url.scheme())
-                                    .host(url.host())
-                                    .build();
-                        }
-
-                        @Override
-                        public void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
-                            List<Cookie> newCookies = new ArrayList<Cookie>();
-
-                            for (Cookie c : cookies) {
-                                if (c.value().toString().equalsIgnoreCase("deleted")) {
-                                    Cookie e = c;
-                                } else {
-                                    newCookies.add(c);
-                                }
-                            }
-                            cookieStore.put(getBaseUrl(url), newCookies);
-                        }
-
-                        @Override
-                        public List<Cookie> loadForRequest(HttpUrl url) {
-                            List<Cookie> cookies = cookieStore.get(getBaseUrl(url));
-                            return cookies != null ? cookies : new ArrayList<Cookie>();
-                        }
-                    })
+                    .cookieJar(new CookieJarImpl())
                     .build();
 
             Request loginPage = new Request.Builder().url(constants.getLoginUrl()).build();
