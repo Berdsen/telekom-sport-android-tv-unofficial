@@ -98,6 +98,16 @@ public class EventCardPresenter extends Presenter {
         private Drawable resolveImage(Context context, EventCardItem cardItem) throws IOException {
 
             File mainImageFile = imageCacheService.retrieveFileFromUrl(cardItem.getMainImageUrl(), context);
+
+            if (cardItem.getHomeTeamImageUrl() == null || cardItem.getAwayTeamImageUrl() == null) {
+                Bitmap image = Picasso.with(context).load(mainImageFile).resize(320, 240).get();
+                Bitmap result = Bitmap.createBitmap(image.getWidth(), image.getHeight(), image.getConfig());
+                Canvas canvas = new Canvas(result);
+
+                canvas.drawBitmap(image, 0f, 0f, null);
+                return new BitmapDrawable(context.getResources(), result);
+            }
+
             File homeTeamFile = imageCacheService.retrieveFileFromUrl(cardItem.getHomeTeamImageUrl(), context);
             File awayTeamFile = imageCacheService.retrieveFileFromUrl(cardItem.getAwayTeamImageUrl(), context);
 

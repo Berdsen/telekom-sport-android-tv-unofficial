@@ -79,14 +79,24 @@ public class ParseUtils {
         EventCardItem cardItem = new EventCardItem(event);
 
         EventDetails details = event.getMetadata().getDetails();
-        String title = details.getHome().getNameShort() + " : " + details.getAway().getNameShort();
-        String description = event.getMetadata().getScheduleStart().getOriginal();
+
+        String title;
+        String description;
+
+        if (details.getAway() == null || details.getHome() == null) {
+            title = event.getMetadata().getTitle();
+            description = event.getMetadata().getDescriptionRegular();
+        } else {
+
+            title = details.getHome().getNameShort() + " : " + details.getAway().getNameShort();
+            description = event.getMetadata().getScheduleStart().getOriginal();
+            cardItem.setHomeTeamImageUrl(baseUrl + event.getMetadata().getDetails().getHome().getLogo());
+            cardItem.setAwayTeamImageUrl(baseUrl + event.getMetadata().getDetails().getAway().getLogo());
+        }
 
         cardItem.setTitle(title);
         cardItem.setDescription(description);
         cardItem.setMainImageUrl(baseUrl + event.getMetadata().getImages().getFallback());
-        cardItem.setHomeTeamImageUrl(baseUrl + event.getMetadata().getDetails().getHome().getLogo());
-        cardItem.setAwayTeamImageUrl(baseUrl + event.getMetadata().getDetails().getAway().getLogo());
 
         return cardItem;
     }
