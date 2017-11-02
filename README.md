@@ -23,7 +23,11 @@ Afterwards you should find a new app in your apps list.
 
 This application is not official, so it might be, that it will get abondened at some time, or that the Telekom will provide an own application.
 Some of the API code is taken over from the kodi plugin, which you can find [here](https://github.com/asciidisco/plugin.video.telekom-sport)
+
 Many thanks to asciidisco because the api is not very obvious.
+
+Also I haven't written an android app for a very long time, so this app is in a very early alpha stage, written in some spare time of mine.
+So expect some bugs and create some issues in the issue tracker. I perhaps will fix them, as I got some time for that.
 
 ### Facing problems? ###
 
