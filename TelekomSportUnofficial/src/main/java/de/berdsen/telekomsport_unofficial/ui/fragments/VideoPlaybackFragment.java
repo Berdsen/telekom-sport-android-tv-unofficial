@@ -11,10 +11,6 @@ import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.ext.leanback.LeanbackPlayerAdapter;
 import com.google.android.exoplayer2.ext.okhttp.OkHttpDataSourceFactory;
-import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
-import com.google.android.exoplayer2.source.ExtractorMediaSource;
-import com.google.android.exoplayer2.source.dash.DashMediaSource;
-import com.google.android.exoplayer2.source.dash.DefaultDashChunkSource;
 import com.google.android.exoplayer2.source.hls.HlsMediaSource;
 import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
@@ -30,17 +26,12 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import de.berdsen.telekomsport_unofficial.model.BaseContent;
-import de.berdsen.telekomsport_unofficial.model.ContentGroup;
-import de.berdsen.telekomsport_unofficial.model.GameEvent;
 import de.berdsen.telekomsport_unofficial.model.GameEventDetails;
-import de.berdsen.telekomsport_unofficial.model.PlayerContent;
 import de.berdsen.telekomsport_unofficial.model.TelekomApiConstants;
 import de.berdsen.telekomsport_unofficial.model.VideoDetails;
 import de.berdsen.telekomsport_unofficial.services.RestService;
 import de.berdsen.telekomsport_unofficial.services.SessionService;
 import de.berdsen.telekomsport_unofficial.services.SportsService;
-import de.berdsen.telekomsport_unofficial.services.interfaces.GameEventResolvedHandler;
 import de.berdsen.telekomsport_unofficial.services.interfaces.VideoUrlResolvedHandler;
 import de.berdsen.telekomsport_unofficial.services.model.CookieJarImpl;
 import de.berdsen.telekomsport_unofficial.ui.base.AbstractBaseVideoFragment;

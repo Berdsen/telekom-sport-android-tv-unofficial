@@ -17,6 +17,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import de.berdsen.telekomsport_unofficial.AndroidApplication;
 import de.berdsen.telekomsport_unofficial.R;
 import de.berdsen.telekomsport_unofficial.model.Sport;
 import de.berdsen.telekomsport_unofficial.services.RestService;
@@ -42,6 +43,9 @@ public class SportsOverviewFragment extends AbstractBaseBrowseFragment implement
     @Inject
     SharedPreferences sharedPreferences;
 
+    @Inject
+    AndroidApplication androidApplication;
+
     private List<Sport> loadedSports;
 
     private ArrayObjectAdapter mRowsAdapter;
@@ -51,6 +55,7 @@ public class SportsOverviewFragment extends AbstractBaseBrowseFragment implement
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferencesChanged);
 
         mRowsAdapter = new ArrayObjectAdapter(new ListRowPresenter());
         mSportsRowAdapter = new ArrayObjectAdapter(new DefaultCardPresenter());
@@ -78,8 +83,20 @@ public class SportsOverviewFragment extends AbstractBaseBrowseFragment implement
                 }
             }
         });
-
     }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        sharedPreferences.unregisterOnSharedPreferenceChangeListener(sharedPreferencesChanged);
+    }
+
+    private SharedPreferences.OnSharedPreferenceChangeListener sharedPreferencesChanged = new SharedPreferences.OnSharedPreferenceChangeListener() {
+        @Override
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+            androidApplication.doLogin(sessionService, context);
+        }
+    };
 
     @Override
     public void onItemClicked(Presenter.ViewHolder itemViewHolder, Object item, RowPresenter.ViewHolder rowViewHolder, Row row) {
@@ -99,7 +116,6 @@ public class SportsOverviewFragment extends AbstractBaseBrowseFragment implement
 
                 // Commit the transaction
                 transaction.commit();
-
             } else {
                 if (!(cardItem.getItem() instanceof Sport)) {
                     Toast.makeText(context, "No sports entry selected", Toast.LENGTH_LONG).show();

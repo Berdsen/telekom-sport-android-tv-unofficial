@@ -1,8 +1,6 @@
 package de.berdsen.telekomsport_unofficial.ui.fragments;
 
 import android.app.FragmentTransaction;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v17.leanback.widget.Action;
 import android.support.v17.leanback.widget.ArrayObjectAdapter;
@@ -19,11 +17,7 @@ import android.support.v17.leanback.widget.RowPresenter;
 import android.support.v17.leanback.widget.SparseArrayObjectAdapter;
 import android.util.Log;
 
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
-
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.inject.Inject;
 

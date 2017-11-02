@@ -62,7 +62,7 @@ public class SessionService {
         lt.execute(userData);
     }
 
-    private void executeLogout() {
+    public void executeLogout() {
         try {
             URI uri = new URI(constants.getBaseUrl());
             List<HttpCookie> httpCookies = this.cookieManager.getCookieStore().get(uri);

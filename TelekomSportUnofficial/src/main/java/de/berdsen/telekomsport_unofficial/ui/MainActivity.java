@@ -3,13 +3,11 @@ package de.berdsen.telekomsport_unofficial.ui;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.widget.Toast;
 
 import javax.inject.Inject;
 
 import de.berdsen.telekomsport_unofficial.R;
 import de.berdsen.telekomsport_unofficial.services.SessionService;
-import de.berdsen.telekomsport_unofficial.services.interfaces.LoginFinishedHandler;
 import de.berdsen.telekomsport_unofficial.ui.base.AbstractBaseActivity;
 import de.berdsen.telekomsport_unofficial.ui.fragments.SportsOverviewFragment;
 
@@ -37,21 +35,8 @@ public class MainActivity extends AbstractBaseActivity {
 
         setContentView(R.layout.activity_sports_overview);
 
-        doLogin();
+        app.doLogin(sessionService, context);
     }
 
-    private void doLogin() {
-        sessionService.loginAsync(new LoginFinishedHandler() {
-            @Override
-            public void loginFailed() {
-                Toast.makeText(context, "Login Failed", Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void loginSucceeded() {
-                Toast.makeText(context, "Login Succeeded", Toast.LENGTH_LONG).show();
-            }
-        }, false);
-    }
 
 }
