@@ -19,4 +19,64 @@ public class GameEventDetails {
     @SerializedName("content")
     List<ContentGroup> contentGroups;
 
+    public VideoDetails getLiveContent() {
+
+        if (contentGroups == null) return null;
+
+        for (ContentGroup cg : contentGroups) {
+            for (BaseContent bc : cg.getContentEntries()) {
+                if (!(bc instanceof PlayerContent)) continue;
+
+                List<VideoDetails> vd = ((PlayerContent)bc).getVideoDetails();
+
+                for (VideoDetails details : vd) {
+                    if (details.isIslivestream())
+                        return details;
+                }
+
+            }
+        }
+
+        return null;
+    }
+
+    public VideoDetails getGameSummary() {
+
+        if (contentGroups == null) return null;
+
+        for (ContentGroup cg : contentGroups) {
+            for (BaseContent bc : cg.getContentEntries()) {
+                if (!(bc instanceof VideoContent)) continue;
+
+                List<ExtendedVideoDetails> vd = ((VideoContent)bc).getVideoDetails();
+
+                for (ExtendedVideoDetails details : vd) {
+                    if (details.getVideoType().getId() == 2)
+                        return details;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    public VideoDetails getGamePlayback() {
+
+        if (contentGroups == null) return null;
+
+        for (ContentGroup cg : contentGroups) {
+            for (BaseContent bc : cg.getContentEntries()) {
+                if (!(bc instanceof VideoContent)) continue;
+
+                List<ExtendedVideoDetails> vd = ((VideoContent)bc).getVideoDetails();
+
+                for (ExtendedVideoDetails details : vd) {
+                    if (details.getVideoType().getId() == 4)
+                        return details;
+                }
+            }
+        }
+
+        return null;
+    }
 }

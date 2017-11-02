@@ -71,25 +71,22 @@ public class VideoPlaybackFragment extends AbstractBaseVideoFragment {
     TelekomApiConstants apiConstants;
 
     private LeanbackPlayerAdapter mPlayerAdapter;
-    private GameEvent gameEvent;
+    private GameEventDetails gameEventDetails;
+    private VideoDetails videoDetails;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        this.gameEvent = sportsService.getSelectedGameEvent();
-        if (this.gameEvent == null) {
+        this.gameEventDetails = sportsService.getGameEventDetails();
+        this.videoDetails = sportsService.getSelectedVideo();
+
+        if (this.videoDetails == null) {
             Toast.makeText(context, "No Selected Game Event", Toast.LENGTH_LONG).show();
             return;
         }
 
-        restService.retrieveEventDetails(gameEvent, new GameEventResolvedHandler() {
-            @Override
-            public void onGameEventResolved(GameEvent event, GameEventDetails gameEventDetails) {
-                initializeAndStartPlayer(gameEventDetails);
-            }
-        });
-
+        initializeAndStartPlayer(gameEventDetails, videoDetails);
         // initializePlayer();
     }
 
@@ -97,7 +94,7 @@ public class VideoPlaybackFragment extends AbstractBaseVideoFragment {
     private SimpleExoPlayer mPlayer;
     private DefaultBandwidthMeter mBandwidthMeter;
 
-    private void initializeAndStartPlayer(GameEventDetails gameEventDetails) {
+    private void initializeAndStartPlayer(GameEventDetails gameEventDetails, VideoDetails videoDetails) {
         mBandwidthMeter = new DefaultBandwidthMeter();
         TrackSelection.Factory videoTrackSelectionFactory = new AdaptiveTrackSelection.Factory(mBandwidthMeter);
         TrackSelector mTrackSelector = new DefaultTrackSelector(videoTrackSelectionFactory);
@@ -108,43 +105,26 @@ public class VideoPlaybackFragment extends AbstractBaseVideoFragment {
         mPlayerGlue = new VideoPlayerGlue(getActivity(), mPlayerAdapter, null);
         mPlayerGlue.setHost(new VideoFragmentGlueHost(this));
 
-        play(gameEventDetails);
+        play(gameEventDetails, videoDetails);
 
         // ArrayObjectAdapter mRowsAdapter = initializeRelatedVideosRow();
         // setAdapter(mRowsAdapter);
     }
 
-    private void play(GameEventDetails videoDetails) {
-        mPlayerGlue.setTitle(videoDetails.getMetadata().getWeb().getTitle());
-        mPlayerGlue.setSubtitle(videoDetails.getMetadata().getWeb().getDescription());
+    private void play(GameEventDetails gameEventDetails, VideoDetails videoDetails) {
+        mPlayerGlue.setTitle(gameEventDetails.getMetadata().getWeb().getTitle());
+        mPlayerGlue.setSubtitle(gameEventDetails.getMetadata().getWeb().getDescription());
 
-
-        PlayerContent videoContent = null;
-
-        for (ContentGroup group : videoDetails.getContentGroups()) {
-
-            for (BaseContent content : group.getContentEntries()) {
-                if (!(content instanceof PlayerContent)) continue;
-
-                videoContent = (PlayerContent)content;
-                break;
-            }
-
-            if (videoContent != null) {
-                break;
-            }
-        }
-
-        if (videoContent != null) {
-            List<VideoDetails> detailsList = videoContent.getVideoDetails();
-            if (detailsList != null && detailsList.size() > 0) {
-                prepareMediaForPlaying(Uri.parse(apiConstants.getVideoUrl(Integer.toString(detailsList.get(0).getVideoID()))));
-            }
+        if (videoDetails != null) {
+            prepareMediaForPlaying(Uri.parse(apiConstants.getVideoUrl(Integer.toString(videoDetails.getVideoID()))));
         } else {
             Toast.makeText(context, "Could not find playable content", Toast.LENGTH_LONG).show();
             getFragmentManager().popBackStack();
         }
+    }
 
+    private View getCurrentView() {
+        return this.getView();
     }
 
     private void prepareMediaForPlaying(final Uri mediaSourceUri) {
@@ -169,7 +149,6 @@ public class VideoPlaybackFragment extends AbstractBaseVideoFragment {
         MediaSource mediaSource = new ExtractorMediaSource(mediaSourceUri, new OkHttpDataSourceFactory(client, userAgent, null, null), null, null, null);
         */
 
-        final View currentView = this.getView();
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -178,15 +157,17 @@ public class VideoPlaybackFragment extends AbstractBaseVideoFragment {
                     public void resolvedVideoUrl(String urlString) {
                         if (urlString == null || urlString.length() == 0) {
                             Toast.makeText(context, "Could not get VideoUrl", Toast.LENGTH_LONG).show();
+                            getFragmentManager().popBackStack();
                             return;
                         }
 
                         HttpDataSource.Factory factory = buildHttpDataSourceFactory();
-                        final DashMediaSource dms = new DashMediaSource(Uri.parse(urlString), factory, new DefaultDashChunkSource.Factory(factory), null, null);
-                        final ExtractorMediaSource ems = new ExtractorMediaSource(Uri.parse(urlString), factory, new DefaultExtractorsFactory(), null, null);
+
+                        //final DashMediaSource dms = new DashMediaSource(Uri.parse(urlString), factory, new DefaultDashChunkSource.Factory(factory), null, null);
+                        //final ExtractorMediaSource ems = new ExtractorMediaSource(Uri.parse(urlString), factory, new DefaultExtractorsFactory(), null, null);
                         final HlsMediaSource hms = new HlsMediaSource(Uri.parse(urlString), factory, null, null);
 
-                        currentView.post(new Runnable() {
+                        getCurrentView().post(new Runnable() {
                             @Override
                             public void run() {
                                 mPlayer.prepare(hms);
@@ -234,6 +215,7 @@ public class VideoPlaybackFragment extends AbstractBaseVideoFragment {
 
         return new OkHttpDataSourceFactory(client, userAgent, mBandwidthMeter);
     }
+
     private void initializePlayer() {
         // 1. Create a default TrackSelector
         Handler mainHandler = new Handler();
@@ -243,6 +225,12 @@ public class VideoPlaybackFragment extends AbstractBaseVideoFragment {
 
         // 2. Create the player
         SimpleExoPlayer player = ExoPlayerFactory.newSimpleInstance(context, trackSelector);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        this.mPlayer.release();
     }
 
 }

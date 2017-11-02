@@ -18,12 +18,15 @@ import javax.inject.Inject;
 import de.berdsen.telekomsport_unofficial.R;
 import de.berdsen.telekomsport_unofficial.model.EpgData;
 import de.berdsen.telekomsport_unofficial.model.GameEvent;
+import de.berdsen.telekomsport_unofficial.model.GameEventDetails;
 import de.berdsen.telekomsport_unofficial.model.Sport;
+import de.berdsen.telekomsport_unofficial.model.VideoDetails;
 import de.berdsen.telekomsport_unofficial.services.ImageCacheService;
 import de.berdsen.telekomsport_unofficial.services.RestService;
 import de.berdsen.telekomsport_unofficial.services.SessionService;
 import de.berdsen.telekomsport_unofficial.services.SportsService;
 import de.berdsen.telekomsport_unofficial.services.interfaces.EpgResolvedHandler;
+import de.berdsen.telekomsport_unofficial.services.interfaces.GameEventResolvedHandler;
 import de.berdsen.telekomsport_unofficial.ui.base.AbstractBaseBrowseFragment;
 import de.berdsen.telekomsport_unofficial.ui.presenter.EventCardItem;
 import de.berdsen.telekomsport_unofficial.ui.presenter.EventCardPresenter;
@@ -112,34 +115,48 @@ public class SportsVideoViewFragment extends AbstractBaseBrowseFragment implemen
                 return;
             }
 
-            sportsService.setSelectedGameEvent(event);
+            restService.retrieveEventDetails(event, decideNextView);
 
-            FragmentTransaction transaction = getFragmentManager().beginTransaction();
-            transaction.replace(R.id.sportsOverviewContainer, new VideoPlaybackFragment());
-            transaction.addToBackStack(null);
-
-            // Commit the transaction
-            transaction.commit();
+            /*
+            if (event.getTargetPlayable() && false / * is_live * / ) {
+                // go directly to play
+                restService.retrieveEventDetails(event, showVideoPlaybackPage);
+            } else {
+                // go to details page
+                restService.retrieveEventDetails(event, showEventDetailsPage);
+            }
+            */
         }
     }
 
-    private void selectNextView(GameEvent event) {
-        if (event.getTargetPlayable() /* && is live */) {
-            //TODO: if live event, just start video directly
-            FragmentTransaction transaction = getFragmentManager().beginTransaction();
-            transaction.replace(R.id.sportsOverviewContainer, new VideoPlaybackFragment());
-            transaction.addToBackStack(null);
+    private GameEventResolvedHandler decideNextView = new GameEventResolvedHandler() {
 
-            // Commit the transaction
-            transaction.commit();
-        } else {
-            FragmentTransaction transaction = getFragmentManager().beginTransaction();
-            transaction.replace(R.id.sportsOverviewContainer, new SelectedVideoDetailsFragment());
-            transaction.addToBackStack(null);
+        @Override
+        public void onGameEventResolved(GameEvent event, GameEventDetails eventDetails) {
+            if (eventDetails == null) return;
 
-            // Commit the transaction
-            transaction.commit();
+            sportsService.setGameEvent(event, eventDetails);
+
+            VideoDetails vd = eventDetails.getLiveContent();
+
+            if (vd != null) {
+                sportsService.setSelectedVideo(vd);
+
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.sportsOverviewContainer, new VideoPlaybackFragment());
+                transaction.addToBackStack(null);
+
+                // Commit the transaction
+                transaction.commit();
+            } else {
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.sportsOverviewContainer, new SelectedVideoDetailsFragment());
+                transaction.addToBackStack(null);
+
+                // Commit the transaction
+                transaction.commit();
+            }
         }
 
-    }
+    };
 }

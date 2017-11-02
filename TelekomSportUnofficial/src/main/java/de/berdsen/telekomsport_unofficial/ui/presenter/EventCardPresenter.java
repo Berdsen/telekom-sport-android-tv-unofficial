@@ -81,6 +81,7 @@ public class EventCardPresenter extends Presenter {
                         mCardView.post(new Runnable() {
                             @Override
                             public void run() {
+                                // TODO: sometimes pictures are not shown?
                                 mCardView.setMainImage(drawable);
                             }
                         });
