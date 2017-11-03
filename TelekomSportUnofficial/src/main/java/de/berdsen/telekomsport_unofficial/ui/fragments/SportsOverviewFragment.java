@@ -20,6 +20,7 @@ import javax.inject.Inject;
 import de.berdsen.telekomsport_unofficial.AndroidApplication;
 import de.berdsen.telekomsport_unofficial.R;
 import de.berdsen.telekomsport_unofficial.model.Sport;
+import de.berdsen.telekomsport_unofficial.services.PicassoCache;
 import de.berdsen.telekomsport_unofficial.services.RestService;
 import de.berdsen.telekomsport_unofficial.services.SessionService;
 import de.berdsen.telekomsport_unofficial.services.interfaces.SportsResolvedHandler;
@@ -44,6 +45,9 @@ public class SportsOverviewFragment extends AbstractBaseBrowseFragment implement
     SharedPreferences sharedPreferences;
 
     @Inject
+    PicassoCache picassoCache;
+
+    @Inject
     AndroidApplication androidApplication;
 
     private List<Sport> loadedSports;
@@ -58,8 +62,8 @@ public class SportsOverviewFragment extends AbstractBaseBrowseFragment implement
         sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferencesChanged);
 
         mRowsAdapter = new ArrayObjectAdapter(new ListRowPresenter());
-        mSportsRowAdapter = new ArrayObjectAdapter(new DefaultCardPresenter());
-        mSettingsRowAdapter = new ArrayObjectAdapter(new DefaultCardPresenter());
+        mSportsRowAdapter = new ArrayObjectAdapter(new DefaultCardPresenter(picassoCache));
+        mSettingsRowAdapter = new ArrayObjectAdapter(new DefaultCardPresenter(picassoCache));
 
         HeaderItem sportsHeader = new HeaderItem(0, "Sports");
         HeaderItem settingsHeader = new HeaderItem(1, "Settings");

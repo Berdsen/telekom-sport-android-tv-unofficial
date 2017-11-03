@@ -1,10 +1,13 @@
 package de.berdsen.telekomsport_unofficial.ui.fragments;
 
 import android.app.FragmentTransaction;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v17.leanback.app.DetailsFragmentBackgroundController;
 import android.support.v17.leanback.widget.Action;
 import android.support.v17.leanback.widget.ArrayObjectAdapter;
 import android.support.v17.leanback.widget.ClassPresenterSelector;
+import android.support.v17.leanback.widget.DetailsOverviewLogoPresenter;
 import android.support.v17.leanback.widget.DetailsOverviewRow;
 import android.support.v17.leanback.widget.FullWidthDetailsOverviewRowPresenter;
 import android.support.v17.leanback.widget.ListRow;
@@ -16,7 +19,9 @@ import android.support.v17.leanback.widget.Row;
 import android.support.v17.leanback.widget.RowPresenter;
 import android.support.v17.leanback.widget.SparseArrayObjectAdapter;
 import android.util.Log;
+import android.view.View;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.inject.Inject;
@@ -24,6 +29,7 @@ import javax.inject.Inject;
 import de.berdsen.telekomsport_unofficial.R;
 import de.berdsen.telekomsport_unofficial.model.GameEvent;
 import de.berdsen.telekomsport_unofficial.model.GameEventDetails;
+import de.berdsen.telekomsport_unofficial.services.PicassoCache;
 import de.berdsen.telekomsport_unofficial.services.RestService;
 import de.berdsen.telekomsport_unofficial.services.SportsService;
 import de.berdsen.telekomsport_unofficial.ui.base.AbstractBaseDetailsFragment;
@@ -46,10 +52,14 @@ public class SelectedVideoDetailsFragment extends AbstractBaseDetailsFragment im
     @Inject
     SportsService sportsService;
 
+    @Inject
+    PicassoCache picassoCache;
+
     private GameEvent selectedGameEvent;
     private GameEventDetails selectedGameEventDetails;
     private DetailsOverviewRow mRow;
     private ArrayList<Object> listOfActions;
+    private final DetailsFragmentBackgroundController backgroundController = new DetailsFragmentBackgroundController(this);
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -72,7 +82,7 @@ public class SelectedVideoDetailsFragment extends AbstractBaseDetailsFragment im
         mRow = new DetailsOverviewRow(this.selectedGameEventDetails);
 
         ClassPresenterSelector  presenterSelector = new ClassPresenterSelector();
-        FullWidthDetailsOverviewRowPresenter presenter = new FullWidthDetailsOverviewRowPresenter( new DetailsDescriptionPresenter() );
+        FullWidthDetailsOverviewRowPresenter presenter = new FullWidthDetailsOverviewRowPresenter( new DetailsDescriptionPresenter(this.selectedGameEvent));
 
         presenter.setOnActionClickedListener(this);
         presenterSelector.addClassPresenter(DetailsOverviewRow.class, presenter);
@@ -88,6 +98,41 @@ public class SelectedVideoDetailsFragment extends AbstractBaseDetailsFragment im
         // loadRelatedMedia(adapter);
 
         setOnItemViewClickedListener(this);
+
+        loadBackgroundImage();
+    }
+
+    private DetailsFragmentBackgroundController getBackgroundController() {
+        return backgroundController;
+    }
+
+    private View getViewWrapper() {
+        return getView();
+    }
+
+    private void loadBackgroundImage() {
+
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                try {
+                    final Bitmap bitmap = picassoCache.getPicassoCacheInstance().load("https://www.telekomsport.de//images/share_img_fb.jpg").get();
+
+                    getViewWrapper().post(new Runnable() {
+                        @Override
+                        public void run() {
+                            getBackgroundController().enableParallax();
+                            getBackgroundController().setCoverBitmap(bitmap);
+                        }
+                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        t.start();
     }
 
     private void initActions() {

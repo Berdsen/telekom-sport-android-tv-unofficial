@@ -10,7 +10,6 @@ import java.io.InputStreamReader;
 import de.berdsen.telekomsport_unofficial.model.EventDetails;
 import de.berdsen.telekomsport_unofficial.model.GameEvent;
 import de.berdsen.telekomsport_unofficial.model.Sport;
-import de.berdsen.telekomsport_unofficial.services.ImageCacheService;
 import de.berdsen.telekomsport_unofficial.ui.presenter.DefaultCardItem;
 import de.berdsen.telekomsport_unofficial.ui.presenter.EventCardItem;
 
@@ -92,6 +91,7 @@ public class ParseUtils {
             description = event.getMetadata().getScheduleStart().getOriginal();
             cardItem.setHomeTeamImageUrl(baseUrl + event.getMetadata().getDetails().getHome().getLogo());
             cardItem.setAwayTeamImageUrl(baseUrl + event.getMetadata().getDetails().getAway().getLogo());
+            cardItem.setDateTime(event.getMetadata().getScheduleStart().getOriginal());
         }
 
         cardItem.setTitle(title);

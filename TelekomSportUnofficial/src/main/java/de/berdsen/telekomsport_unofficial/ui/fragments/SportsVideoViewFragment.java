@@ -21,7 +21,7 @@ import de.berdsen.telekomsport_unofficial.model.GameEvent;
 import de.berdsen.telekomsport_unofficial.model.GameEventDetails;
 import de.berdsen.telekomsport_unofficial.model.Sport;
 import de.berdsen.telekomsport_unofficial.model.VideoDetails;
-import de.berdsen.telekomsport_unofficial.services.ImageCacheService;
+import de.berdsen.telekomsport_unofficial.services.PicassoCache;
 import de.berdsen.telekomsport_unofficial.services.RestService;
 import de.berdsen.telekomsport_unofficial.services.SessionService;
 import de.berdsen.telekomsport_unofficial.services.SportsService;
@@ -45,7 +45,7 @@ public class SportsVideoViewFragment extends AbstractBaseBrowseFragment implemen
     SessionService sessionService;
 
     @Inject
-    ImageCacheService imageCacheService;
+    PicassoCache picassoCache;
 
     @Inject
     SportsService sportsService;
@@ -90,7 +90,7 @@ public class SportsVideoViewFragment extends AbstractBaseBrowseFragment implemen
                 continue;
             }
 
-            ArrayObjectAdapter rowAdapter = new ArrayObjectAdapter(new EventCardPresenter(imageCacheService));
+            ArrayObjectAdapter rowAdapter = new ArrayObjectAdapter(new EventCardPresenter(picassoCache));
 
             HeaderItem headerItem = new HeaderItem(headerItemId++, epgData.getTitle());
 

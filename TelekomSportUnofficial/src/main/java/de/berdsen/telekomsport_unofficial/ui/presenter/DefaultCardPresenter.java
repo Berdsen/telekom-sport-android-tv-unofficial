@@ -8,17 +8,25 @@ import android.view.ViewGroup;
 
 import com.squareup.picasso.Picasso;
 
+import de.berdsen.telekomsport_unofficial.services.PicassoCache;
+
 /**
  * Created by berthm on 09.10.2017.
  */
 
 public class DefaultCardPresenter extends Presenter {
 
+    private PicassoCache picassoCache;
+
+    public DefaultCardPresenter(PicassoCache picassoCache) {
+        this.picassoCache = picassoCache;
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent) {
         ImageCardView cardView = new ImageCardView( parent.getContext() );
         cardView.setFocusable( true );
-        return new DefaultCardPresenterViewHolder(cardView);
+        return new DefaultCardPresenterViewHolder(cardView, picassoCache);
     }
 
     @Override
@@ -48,18 +56,21 @@ public class DefaultCardPresenter extends Presenter {
 
     private class DefaultCardPresenterViewHolder extends AbstractBaseCardViewHolder {
 
-        public DefaultCardPresenterViewHolder(ImageCardView cardView) {
+        private Picasso picasso;
+
+        public DefaultCardPresenterViewHolder(ImageCardView cardView, PicassoCache picassoCache) {
             super(cardView);
+            picasso = picassoCache.getPicassoCacheInstance();
         }
 
         public void updateCardViewImage(Context context, String link ) {
-            Picasso.with(context).load(link)
+            picasso.with(context).load(link)
                     .fit()/*.centerCrop()*/
                     .into(mCardView.getMainImageView());
         }
 
         public void updateCardViewImage(Context context, int imageId ) {
-            Picasso.with(context).load(imageId)
+            picasso.with(context).load(imageId)
                     .fit()
                     .into(mCardView.getMainImageView());
         }
