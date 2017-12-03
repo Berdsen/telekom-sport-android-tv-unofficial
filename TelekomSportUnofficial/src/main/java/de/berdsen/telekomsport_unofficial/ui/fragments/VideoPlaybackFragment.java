@@ -32,6 +32,7 @@ import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
 import com.google.android.exoplayer2.trackselection.TrackSelector;
 import com.google.android.exoplayer2.upstream.BandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
+import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.google.android.exoplayer2.upstream.HttpDataSource;
 import com.google.android.exoplayer2.util.Util;
 
@@ -52,6 +53,7 @@ import de.berdsen.telekomsport_unofficial.services.model.CookieJarImpl;
 import de.berdsen.telekomsport_unofficial.ui.base.AbstractBaseVideoFragment;
 import de.berdsen.telekomsport_unofficial.ui.listener.VideoPlayerGlue;
 import de.berdsen.telekomsport_unofficial.utils.ApplicationConstants;
+import de.berdsen.telekomsport_unofficial.utils.TrackSelectionHelper;
 import okhttp3.Cookie;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -103,57 +105,20 @@ public class VideoPlaybackFragment extends AbstractBaseVideoFragment {
         mBandwidthMeter = new DefaultBandwidthMeter();
 
         TrackSelection.Factory videoTrackSelectionFactory = new AdaptiveTrackSelection.Factory(mBandwidthMeter);
-        TrackSelector mTrackSelector = new DefaultTrackSelector(videoTrackSelectionFactory);
+        DefaultTrackSelector mTrackSelector = new DefaultTrackSelector(videoTrackSelectionFactory);
+
+        final TrackSelectionHelper trackSelectionHelper = new TrackSelectionHelper(mTrackSelector, videoTrackSelectionFactory);
 
         mPlayer = ExoPlayerFactory.newSimpleInstance(getActivity(), mTrackSelector);
         mPlayerAdapter = new LeanbackPlayerAdapter(context, mPlayer, 16);
 
-        mPlayerGlue = new VideoPlayerGlue(getActivity(), mPlayerAdapter, null);
-        mPlayerGlue.setHost(new VideoFragmentGlueHost(this));
-
-        mPlayer.addListener(new Player.EventListener() {
+        mPlayerGlue = new VideoPlayerGlue(getActivity(), mPlayerAdapter, new VideoPlayerGlue.OnActionClickedListener() {
             @Override
-            public void onTimelineChanged(Timeline timeline, Object manifest) {
-
-            }
-
-            @Override
-            public void onTracksChanged(TrackGroupArray trackGroups, TrackSelectionArray trackSelections) {
-                TrackSelection[] currentSelectedTrack = trackSelections.getAll();
-
-                TrackSelectionArray currentTrackSelections = mPlayer.getCurrentTrackSelections();
-            }
-
-            @Override
-            public void onLoadingChanged(boolean isLoading) {
-
-            }
-
-            @Override
-            public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
-
-            }
-
-            @Override
-            public void onRepeatModeChanged(int repeatMode) {
-
-            }
-
-            @Override
-            public void onPlayerError(ExoPlaybackException error) {
-
-            }
-
-            @Override
-            public void onPositionDiscontinuity() {
-
-            }
-
-            @Override
-            public void onPlaybackParametersChanged(PlaybackParameters playbackParameters) {
-
+            public void onQualityChanged() {
+                // TODO: select track quality
             }
         });
+        mPlayerGlue.setHost(new VideoFragmentGlueHost(this));
 
         play(gameEventDetails, videoDetails);
     }
@@ -236,6 +201,8 @@ public class VideoPlaybackFragment extends AbstractBaseVideoFragment {
             client.cookieJar().saveFromResponse(HttpUrl.parse(apiConstants.getBaseUrl()), listOfCookies);
         }
 
+        //TODO: check both datasource types and default bandwith
+        //return new DefaultHttpDataSourceFactory(userAgent, mBandwidthMeter);
         return new OkHttpDataSourceFactory(client, userAgent, mBandwidthMeter);
     }
 

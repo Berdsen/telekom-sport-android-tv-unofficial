@@ -52,10 +52,12 @@ public class VideoPlayerGlue extends PlaybackTransportControlGlue<LeanbackPlayer
     public interface OnActionClickedListener {
 
         /** Skip to the previous item in the queue. */
-        void onPrevious();
+        //void onPrevious();
 
         /** Skip to the next item in the queue. */
-        void onNext();
+        //void onNext();
+
+        void onQualityChanged();
     }
 
     private final OnActionClickedListener mActionListener;
@@ -121,6 +123,7 @@ public class VideoPlayerGlue extends PlaybackTransportControlGlue<LeanbackPlayer
         } else if (action == mHighQualityAction) {
             //TODO: change quality
             mHighQualityAction.nextIndex();
+            mActionListener.onQualityChanged();
 
             notifyActionChanged(
                     mHighQualityAction,
@@ -148,12 +151,12 @@ public class VideoPlayerGlue extends PlaybackTransportControlGlue<LeanbackPlayer
 
     @Override
     public void next() {
-        mActionListener.onNext();
+        //mActionListener.onNext();
     }
 
     @Override
     public void previous() {
-        mActionListener.onPrevious();
+        //mActionListener.onPrevious();
     }
 
     /** Skips backwards 30 seconds. */
