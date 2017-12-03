@@ -7,18 +7,33 @@ import android.support.v17.leanback.app.VideoFragmentGlueHost;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.android.exoplayer2.C;
+import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.ExoPlayerFactory;
+import com.google.android.exoplayer2.PlaybackParameters;
+import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.Timeline;
 import com.google.android.exoplayer2.ext.leanback.LeanbackPlayerAdapter;
 import com.google.android.exoplayer2.ext.okhttp.OkHttpDataSourceFactory;
+import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
+import com.google.android.exoplayer2.source.ExtractorMediaSource;
+import com.google.android.exoplayer2.source.MediaSource;
+import com.google.android.exoplayer2.source.TrackGroupArray;
+import com.google.android.exoplayer2.source.dash.DashMediaSource;
+import com.google.android.exoplayer2.source.dash.DefaultDashChunkSource;
 import com.google.android.exoplayer2.source.hls.HlsMediaSource;
+import com.google.android.exoplayer2.source.smoothstreaming.DefaultSsChunkSource;
+import com.google.android.exoplayer2.source.smoothstreaming.SsMediaSource;
 import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelection;
+import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
 import com.google.android.exoplayer2.trackselection.TrackSelector;
 import com.google.android.exoplayer2.upstream.BandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.HttpDataSource;
+import com.google.android.exoplayer2.util.Util;
 
 import java.net.HttpCookie;
 import java.util.ArrayList;
@@ -65,6 +80,10 @@ public class VideoPlaybackFragment extends AbstractBaseVideoFragment {
     private GameEventDetails gameEventDetails;
     private VideoDetails videoDetails;
 
+    private VideoPlayerGlue mPlayerGlue;
+    private SimpleExoPlayer mPlayer;
+    private DefaultBandwidthMeter mBandwidthMeter;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,15 +97,11 @@ public class VideoPlaybackFragment extends AbstractBaseVideoFragment {
         }
 
         initializeAndStartPlayer(gameEventDetails, videoDetails);
-        // initializePlayer();
     }
-
-    private VideoPlayerGlue mPlayerGlue;
-    private SimpleExoPlayer mPlayer;
-    private DefaultBandwidthMeter mBandwidthMeter;
 
     private void initializeAndStartPlayer(GameEventDetails gameEventDetails, VideoDetails videoDetails) {
         mBandwidthMeter = new DefaultBandwidthMeter();
+
         TrackSelection.Factory videoTrackSelectionFactory = new AdaptiveTrackSelection.Factory(mBandwidthMeter);
         TrackSelector mTrackSelector = new DefaultTrackSelector(videoTrackSelectionFactory);
 
@@ -96,10 +111,51 @@ public class VideoPlaybackFragment extends AbstractBaseVideoFragment {
         mPlayerGlue = new VideoPlayerGlue(getActivity(), mPlayerAdapter, null);
         mPlayerGlue.setHost(new VideoFragmentGlueHost(this));
 
-        play(gameEventDetails, videoDetails);
+        mPlayer.addListener(new Player.EventListener() {
+            @Override
+            public void onTimelineChanged(Timeline timeline, Object manifest) {
 
-        // ArrayObjectAdapter mRowsAdapter = initializeRelatedVideosRow();
-        // setAdapter(mRowsAdapter);
+            }
+
+            @Override
+            public void onTracksChanged(TrackGroupArray trackGroups, TrackSelectionArray trackSelections) {
+                TrackSelection[] currentSelectedTrack = trackSelections.getAll();
+
+                TrackSelectionArray currentTrackSelections = mPlayer.getCurrentTrackSelections();
+            }
+
+            @Override
+            public void onLoadingChanged(boolean isLoading) {
+
+            }
+
+            @Override
+            public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
+
+            }
+
+            @Override
+            public void onRepeatModeChanged(int repeatMode) {
+
+            }
+
+            @Override
+            public void onPlayerError(ExoPlaybackException error) {
+
+            }
+
+            @Override
+            public void onPositionDiscontinuity() {
+
+            }
+
+            @Override
+            public void onPlaybackParametersChanged(PlaybackParameters playbackParameters) {
+
+            }
+        });
+
+        play(gameEventDetails, videoDetails);
     }
 
     private void play(GameEventDetails gameEventDetails, VideoDetails videoDetails) {
@@ -114,77 +170,53 @@ public class VideoPlaybackFragment extends AbstractBaseVideoFragment {
         }
     }
 
-    private View getCurrentView() {
-        return this.getView();
-    }
-
     private void prepareMediaForPlaying(final Uri mediaSourceUri) {
-        /*
-        OkHttpDataSourceFactory ds = new OkHttpDataSourceFactory(client, userAgent, new TransferListener<DataSource>() {
+        restService.retrieveVideoUrl(mediaSourceUri, new VideoUrlResolvedHandler() {
             @Override
-            public void onTransferStart(DataSource source, DataSpec dataSpec) {
+            public void resolvedVideoUrl(String urlString) {
+                if (urlString == null || urlString.length() == 0) {
+                    Toast.makeText(context, "Could not get VideoUrl", Toast.LENGTH_LONG).show();
+                    getFragmentManager().popBackStack();
+                    return;
+                }
 
-            }
+                final MediaSource mediaSource = buildMediaSource(Uri.parse(urlString));
 
-            @Override
-            public void onBytesTransferred(DataSource source, int bytesTransferred) {
-
-            }
-
-            @Override
-            public void onTransferEnd(DataSource source) {
-
-            }
-        }, null);
-
-        MediaSource mediaSource = new ExtractorMediaSource(mediaSourceUri, new OkHttpDataSourceFactory(client, userAgent, null, null), null, null, null);
-        */
-
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                restService.retrieveVideoUrl(mediaSourceUri, new VideoUrlResolvedHandler() {
-                    @Override
-                    public void resolvedVideoUrl(String urlString) {
-                        if (urlString == null || urlString.length() == 0) {
-                            Toast.makeText(context, "Could not get VideoUrl", Toast.LENGTH_LONG).show();
-                            getFragmentManager().popBackStack();
-                            return;
-                        }
-
-                        HttpDataSource.Factory factory = buildHttpDataSourceFactory();
-
-                        //final DashMediaSource dms = new DashMediaSource(Uri.parse(urlString), factory, new DefaultDashChunkSource.Factory(factory), null, null);
-                        //final ExtractorMediaSource ems = new ExtractorMediaSource(Uri.parse(urlString), factory, new DefaultExtractorsFactory(), null, null);
-                        final HlsMediaSource hms = new HlsMediaSource(Uri.parse(urlString), factory, null, null);
-
-                        getCurrentView().post(new Runnable() {
-                            @Override
-                            public void run() {
-                                mPlayer.prepare(hms);
-                                mPlayerGlue.play();
-                            }
-                        });
-                    }
-                });
+                mPlayer.prepare(mediaSource);
+                mPlayerGlue.play();
             }
         });
+    }
 
-        t.start();
+    private MediaSource buildMediaSource(Uri uri) {
+        int type = Util.inferContentType(uri.getLastPathSegment());
+        HttpDataSource.Factory factory = buildHttpDataSourceFactory();
 
-
-        return;
-
-        /*
-        MediaSource mediaSource =
-                new ExtractorMediaSource(
-                        mediaSourceUri,
-                        ds,
-                        new DefaultExtractorsFactory(),
+        switch (type) {
+            case C.TYPE_SS:
+                return new SsMediaSource(
+                        uri,
+                        factory,
+                        new DefaultSsChunkSource.Factory(factory),
                         null,
                         null);
-        */
-        //mPlayer.prepare(mediaSource);
+            case C.TYPE_DASH:
+                return new DashMediaSource(
+                        uri,
+                        factory,
+                        new DefaultDashChunkSource.Factory(factory),
+                        null,
+                        null);
+            case C.TYPE_HLS:
+                return new HlsMediaSource(uri, factory, null, null);
+            case C.TYPE_OTHER:
+                return new ExtractorMediaSource(
+                        uri, factory, new DefaultExtractorsFactory(), null, null);
+            default:
+            {
+                throw new IllegalStateException("Unsupported type: " + type);
+            }
+        }
     }
 
     private HttpDataSource.Factory buildHttpDataSourceFactory() {
@@ -207,21 +239,11 @@ public class VideoPlaybackFragment extends AbstractBaseVideoFragment {
         return new OkHttpDataSourceFactory(client, userAgent, mBandwidthMeter);
     }
 
-    private void initializePlayer() {
-        // 1. Create a default TrackSelector
-        Handler mainHandler = new Handler();
-        BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
-        TrackSelection.Factory videoTrackSelectionFactory = new AdaptiveTrackSelection.Factory(bandwidthMeter);
-        TrackSelector trackSelector = new DefaultTrackSelector(videoTrackSelectionFactory);
-
-        // 2. Create the player
-        SimpleExoPlayer player = ExoPlayerFactory.newSimpleInstance(context, trackSelector);
-    }
-
     @Override
     public void onDetach() {
         super.onDetach();
+
+        this.mPlayer.stop();
         this.mPlayer.release();
     }
-
 }

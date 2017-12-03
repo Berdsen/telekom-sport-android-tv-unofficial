@@ -46,7 +46,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class VideoPlayerGlue extends PlaybackTransportControlGlue<LeanbackPlayerAdapter> {
 
-    private static final long TEN_SECONDS = TimeUnit.SECONDS.toMillis(10);
+    private static final long THIRTY_SECONDS = TimeUnit.SECONDS.toMillis(30);
 
     /** Listens for when skip to next and previous actions have been dispatched. */
     public interface OnActionClickedListener {
@@ -121,6 +121,7 @@ public class VideoPlayerGlue extends PlaybackTransportControlGlue<LeanbackPlayer
         } else if (action == mHighQualityAction) {
             //TODO: change quality
             mHighQualityAction.nextIndex();
+
             notifyActionChanged(
                     mHighQualityAction,
                     (ArrayObjectAdapter) getControlsRow().getSecondaryActionsAdapter());
@@ -155,17 +156,17 @@ public class VideoPlayerGlue extends PlaybackTransportControlGlue<LeanbackPlayer
         mActionListener.onPrevious();
     }
 
-    /** Skips backwards 10 seconds. */
+    /** Skips backwards 30 seconds. */
     public void rewind() {
-        long newPosition = getCurrentPosition() - TEN_SECONDS;
+        long newPosition = getCurrentPosition() - THIRTY_SECONDS;
         newPosition = (newPosition < 0) ? 0 : newPosition;
         getPlayerAdapter().seekTo(newPosition);
     }
 
-    /** Skips forward 10 seconds. */
+    /** Skips forward 30 seconds. */
     public void fastForward() {
         if (getDuration() > -1) {
-            long newPosition = getCurrentPosition() + TEN_SECONDS;
+            long newPosition = getCurrentPosition() + THIRTY_SECONDS;
             newPosition = (newPosition > getDuration()) ? getDuration() : newPosition;
             getPlayerAdapter().seekTo(newPosition);
         }
