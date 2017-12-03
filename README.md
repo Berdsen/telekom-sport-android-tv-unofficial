@@ -9,6 +9,20 @@ You can just watch videos you are eligible for with your account.
 
 Retrieving active streams from the Telekom Sport website and playing them, if you're eligible for.
 
+### Version 0.5.0 ###
+
+> more improvements in stability
+> reworked the ImageCacheService
+> displaying images seems to be no problem anymore
+> removed unnecessary player controls like thumb up, etc.
+> added quality action but without functionality for now
+> forward / backward times are adjusted to thirty instead of ten seconds
+
+### Version 0.4.0 ###
+
+> some improvements in stability
+> tried ImageCacheService for picture retrieval
+
 ### Version 0.3.0 ###
 
 > first alpha release  
@@ -17,7 +31,7 @@ Retrieving active streams from the Telekom Sport website and playing them, if yo
 > watching replay and game report possible
 
 ### Known Issues ###
-* sometimes pictures are not displayed
+* ~~sometimes pictures are not displayed~~
 * some errors might have a wrong error message
 * player controls are not implemented completely
 * after video finished the player screen keeps open
