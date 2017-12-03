@@ -17,6 +17,7 @@
 package de.berdsen.telekomsport_unofficial.ui.listener;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v17.leanback.media.PlaybackTransportControlGlue;
 import android.support.v17.leanback.widget.Action;
 import android.support.v17.leanback.widget.ArrayObjectAdapter;
@@ -45,27 +46,25 @@ import java.util.concurrent.TimeUnit;
  */
 public class VideoPlayerGlue extends PlaybackTransportControlGlue<LeanbackPlayerAdapter> {
 
-    private static final long TEN_SECONDS = TimeUnit.SECONDS.toMillis(10);
+    private static final long THIRTY_SECONDS = TimeUnit.SECONDS.toMillis(30);
 
     /** Listens for when skip to next and previous actions have been dispatched. */
     public interface OnActionClickedListener {
 
         /** Skip to the previous item in the queue. */
-        void onPrevious();
+        //void onPrevious();
 
         /** Skip to the next item in the queue. */
-        void onNext();
+        //void onNext();
+
+        void onQualityChanged();
     }
 
     private final OnActionClickedListener mActionListener;
 
-    private PlaybackControlsRow.RepeatAction mRepeatAction;
-    private PlaybackControlsRow.ThumbsUpAction mThumbsUpAction;
-    private PlaybackControlsRow.ThumbsDownAction mThumbsDownAction;
-    private PlaybackControlsRow.SkipPreviousAction mSkipPreviousAction;
-    private PlaybackControlsRow.SkipNextAction mSkipNextAction;
     private PlaybackControlsRow.FastForwardAction mFastForwardAction;
     private PlaybackControlsRow.RewindAction mRewindAction;
+    private QualityChangerAction mHighQualityAction;
 
     public VideoPlayerGlue(
             Context context,
@@ -75,16 +74,10 @@ public class VideoPlayerGlue extends PlaybackTransportControlGlue<LeanbackPlayer
 
         mActionListener = actionListener;
 
-        mSkipPreviousAction = new PlaybackControlsRow.SkipPreviousAction(context);
-        mSkipNextAction = new PlaybackControlsRow.SkipNextAction(context);
         mFastForwardAction = new PlaybackControlsRow.FastForwardAction(context);
         mRewindAction = new PlaybackControlsRow.RewindAction(context);
 
-        mThumbsUpAction = new PlaybackControlsRow.ThumbsUpAction(context);
-        mThumbsUpAction.setIndex(PlaybackControlsRow.ThumbsUpAction.INDEX_OUTLINE);
-        mThumbsDownAction = new PlaybackControlsRow.ThumbsDownAction(context);
-        mThumbsDownAction.setIndex(PlaybackControlsRow.ThumbsDownAction.INDEX_OUTLINE);
-        mRepeatAction = new PlaybackControlsRow.RepeatAction(context);
+        mHighQualityAction = new QualityChangerAction(context);
     }
 
     @Override
@@ -94,18 +87,14 @@ public class VideoPlayerGlue extends PlaybackTransportControlGlue<LeanbackPlayer
         // play/pause, previous, rewind, fast forward, next
         //   > /||      |<        <<        >>         >|
         super.onCreatePrimaryActions(adapter);
-        adapter.add(mSkipPreviousAction);
         adapter.add(mRewindAction);
         adapter.add(mFastForwardAction);
-        adapter.add(mSkipNextAction);
     }
 
     @Override
     protected void onCreateSecondaryActions(ArrayObjectAdapter adapter) {
         super.onCreateSecondaryActions(adapter);
-        adapter.add(mThumbsDownAction);
-        adapter.add(mThumbsUpAction);
-        adapter.add(mRepeatAction);
+        adapter.add(mHighQualityAction);
     }
 
     @Override
@@ -122,9 +111,7 @@ public class VideoPlayerGlue extends PlaybackTransportControlGlue<LeanbackPlayer
     private boolean shouldDispatchAction(Action action) {
         return action == mRewindAction
                 || action == mFastForwardAction
-                || action == mThumbsDownAction
-                || action == mThumbsUpAction
-                || action == mRepeatAction;
+                || action == mHighQualityAction;
     }
 
     private void dispatchAction(Action action) {
@@ -133,6 +120,14 @@ public class VideoPlayerGlue extends PlaybackTransportControlGlue<LeanbackPlayer
             rewind();
         } else if (action == mFastForwardAction) {
             fastForward();
+        } else if (action == mHighQualityAction) {
+            //TODO: change quality
+            mHighQualityAction.nextIndex();
+            mActionListener.onQualityChanged();
+
+            notifyActionChanged(
+                    mHighQualityAction,
+                    (ArrayObjectAdapter) getControlsRow().getSecondaryActionsAdapter());
         } else if (action instanceof PlaybackControlsRow.MultiAction) {
             PlaybackControlsRow.MultiAction multiAction = (PlaybackControlsRow.MultiAction) action;
             multiAction.nextIndex();
@@ -156,25 +151,25 @@ public class VideoPlayerGlue extends PlaybackTransportControlGlue<LeanbackPlayer
 
     @Override
     public void next() {
-        mActionListener.onNext();
+        //mActionListener.onNext();
     }
 
     @Override
     public void previous() {
-        mActionListener.onPrevious();
+        //mActionListener.onPrevious();
     }
 
-    /** Skips backwards 10 seconds. */
+    /** Skips backwards 30 seconds. */
     public void rewind() {
-        long newPosition = getCurrentPosition() - TEN_SECONDS;
+        long newPosition = getCurrentPosition() - THIRTY_SECONDS;
         newPosition = (newPosition < 0) ? 0 : newPosition;
         getPlayerAdapter().seekTo(newPosition);
     }
 
-    /** Skips forward 10 seconds. */
+    /** Skips forward 30 seconds. */
     public void fastForward() {
         if (getDuration() > -1) {
-            long newPosition = getCurrentPosition() + TEN_SECONDS;
+            long newPosition = getCurrentPosition() + THIRTY_SECONDS;
             newPosition = (newPosition > getDuration()) ? getDuration() : newPosition;
             getPlayerAdapter().seekTo(newPosition);
         }

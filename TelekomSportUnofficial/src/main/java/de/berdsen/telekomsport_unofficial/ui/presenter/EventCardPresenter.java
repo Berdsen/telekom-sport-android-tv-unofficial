@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
 import android.support.v17.leanback.widget.ImageCardView;
 import android.support.v17.leanback.widget.Presenter;
 import android.text.Layout;
@@ -16,6 +17,8 @@ import android.view.ViewGroup;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import de.berdsen.telekomsport_unofficial.services.PicassoCache;
 
@@ -67,6 +70,8 @@ public class EventCardPresenter extends Presenter {
         }
 
         public void updateImage(final Context context, final EventCardItem cardItem) {
+            final Handler handler = new Handler(context.getMainLooper());
+
             Thread loadImages = new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -79,10 +84,10 @@ public class EventCardPresenter extends Presenter {
                         } else {
                             drawable = alreadyExistentDrawable;
                         }
-                        mCardView.post(new Runnable() {
+
+                        handler.post(new Runnable() {
                             @Override
                             public void run() {
-                                // TODO: sometimes pictures are not shown?
                                 mCardView.setMainImage(drawable);
                             }
                         });
@@ -141,7 +146,7 @@ public class EventCardPresenter extends Presenter {
             textPaint.setAntiAlias(true);
             textPaint.setTextSize(30.0F);
             textPaint.setFakeBoldText(true);
-            textPaint.setColor(Color.WHITE);
+            textPaint.setColor(Color.YELLOW);
             StaticLayout sl= new StaticLayout(text, textPaint, b.getWidth()-8, Layout.Alignment.ALIGN_CENTER, 1.0f, 0.0f, false);
             c.translate(6, 40);
             sl.draw(c);
