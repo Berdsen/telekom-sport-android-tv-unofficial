@@ -3,6 +3,7 @@ package de.berdsen.telekomsport_unofficial.ui.fragments;
 import android.app.FragmentTransaction;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v17.leanback.app.DetailsFragmentBackgroundController;
 import android.support.v17.leanback.widget.Action;
 import android.support.v17.leanback.widget.ArrayObjectAdapter;
@@ -20,6 +21,7 @@ import android.support.v17.leanback.widget.RowPresenter;
 import android.support.v17.leanback.widget.SparseArrayObjectAdapter;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -59,7 +61,7 @@ public class SelectedVideoDetailsFragment extends AbstractBaseDetailsFragment im
     private GameEventDetails selectedGameEventDetails;
     private DetailsOverviewRow mRow;
     private ArrayList<Object> listOfActions;
-    private final DetailsFragmentBackgroundController backgroundController = new DetailsFragmentBackgroundController(this);
+    private DetailsFragmentBackgroundController backgroundController = new DetailsFragmentBackgroundController(this);
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -106,11 +108,8 @@ public class SelectedVideoDetailsFragment extends AbstractBaseDetailsFragment im
         return backgroundController;
     }
 
-    private View getViewWrapper() {
-        return getView();
-    }
-
     private void loadBackgroundImage() {
+        final Handler handler = new Handler(context.getMainLooper());
 
         Thread t = new Thread(new Runnable() {
             @Override
@@ -119,11 +118,15 @@ public class SelectedVideoDetailsFragment extends AbstractBaseDetailsFragment im
                 try {
                     final Bitmap bitmap = picassoCache.getPicassoCacheInstance().load("https://www.telekomsport.de//images/share_img_fb.jpg").get();
 
-                    getViewWrapper().post(new Runnable() {
+                    handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            getBackgroundController().enableParallax();
-                            getBackgroundController().setCoverBitmap(bitmap);
+                            try {
+                                getBackgroundController().enableParallax();
+                                getBackgroundController().setCoverBitmap(bitmap);
+                            } catch (Exception e) {
+                                Toast.makeText(context, "Could not set backround image: " + e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                            }
                         }
                     });
                 } catch (IOException e) {
