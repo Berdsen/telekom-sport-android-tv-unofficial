@@ -2,8 +2,6 @@ package de.berdsen.telekomsport_unofficial.utils;
 
 import android.content.Context;
 
-import org.jsoup.helper.StringUtil;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
