@@ -26,6 +26,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckedTextView;
+
 import com.google.android.exoplayer2.RendererCapabilities;
 import com.google.android.exoplayer2.source.TrackGroup;
 import com.google.android.exoplayer2.source.TrackGroupArray;
@@ -33,8 +34,8 @@ import com.google.android.exoplayer2.trackselection.FixedTrackSelection;
 import com.google.android.exoplayer2.trackselection.MappingTrackSelector;
 import com.google.android.exoplayer2.trackselection.MappingTrackSelector.MappedTrackInfo;
 import com.google.android.exoplayer2.trackselection.MappingTrackSelector.SelectionOverride;
-import com.google.android.exoplayer2.trackselection.RandomTrackSelection;
 import com.google.android.exoplayer2.trackselection.TrackSelection;
+
 import java.util.Arrays;
 
 import de.berdsen.telekomsport_unofficial.R;
@@ -48,7 +49,6 @@ final public class TrackSelectionHelper implements View.OnClickListener,
         DialogInterface.OnClickListener {
 
     private static final TrackSelection.Factory FIXED_FACTORY = new FixedTrackSelection.Factory();
-    private static final TrackSelection.Factory RANDOM_FACTORY = new RandomTrackSelection.Factory();
 
     private final MappingTrackSelector selector;
     private final TrackSelection.Factory adaptiveTrackSelectionFactory;
@@ -62,7 +62,6 @@ final public class TrackSelectionHelper implements View.OnClickListener,
 
     private CheckedTextView disableView;
     private CheckedTextView defaultView;
-    private CheckedTextView enableRandomAdaptationView;
     private CheckedTextView[][] trackViews;
 
     /**
@@ -171,17 +170,6 @@ final public class TrackSelectionHelper implements View.OnClickListener,
             }
         }
 
-        if (haveAdaptiveTracks) {
-            // View for using random adaptation.
-            enableRandomAdaptationView = (CheckedTextView) inflater.inflate(
-                    android.R.layout.simple_list_item_multiple_choice, root, false);
-            enableRandomAdaptationView.setBackgroundResource(selectableItemBackgroundResourceId);
-            enableRandomAdaptationView.setText(R.string.enable_random_adaptation);
-            enableRandomAdaptationView.setOnClickListener(this);
-            root.addView(inflater.inflate(R.layout.list_divider, root, false));
-            root.addView(enableRandomAdaptationView);
-        }
-
         updateViews();
         return view;
     }
@@ -193,15 +181,6 @@ final public class TrackSelectionHelper implements View.OnClickListener,
             for (int j = 0; j < trackViews[i].length; j++) {
                 trackViews[i][j].setChecked(override != null && override.groupIndex == i
                         && override.containsTrack(j));
-            }
-        }
-        if (enableRandomAdaptationView != null) {
-            boolean enableView = !isDisabled && override != null && override.length > 1;
-            enableRandomAdaptationView.setEnabled(enableView);
-            enableRandomAdaptationView.setFocusable(enableView);
-            if (enableView) {
-                enableRandomAdaptationView.setChecked(!isDisabled
-                        && override.factory instanceof RandomTrackSelection.Factory);
             }
         }
     }
@@ -228,8 +207,6 @@ final public class TrackSelectionHelper implements View.OnClickListener,
         } else if (view == defaultView) {
             isDisabled = false;
             override = null;
-        } else if (view == enableRandomAdaptationView) {
-            setOverride(override.groupIndex, override.tracks, !enableRandomAdaptationView.isChecked());
         } else {
             isDisabled = false;
             @SuppressWarnings("unchecked")
@@ -250,13 +227,11 @@ final public class TrackSelectionHelper implements View.OnClickListener,
                         override = null;
                         isDisabled = true;
                     } else {
-                        setOverride(groupIndex, getTracksRemoving(override, trackIndex),
-                                enableRandomAdaptationView.isChecked());
+                        setOverride(groupIndex, getTracksRemoving(override, trackIndex));
                     }
                 } else {
                     // Add the track to the override.
-                    setOverride(groupIndex, getTracksAdding(override, trackIndex),
-                            enableRandomAdaptationView.isChecked());
+                    setOverride(groupIndex, getTracksAdding(override, trackIndex));
                 }
             }
         }
@@ -264,9 +239,8 @@ final public class TrackSelectionHelper implements View.OnClickListener,
         updateViews();
     }
 
-    private void setOverride(int group, int[] tracks, boolean enableRandomAdaptation) {
-        TrackSelection.Factory factory = tracks.length == 1 ? FIXED_FACTORY
-                : (enableRandomAdaptation ? RANDOM_FACTORY : adaptiveTrackSelectionFactory);
+    private void setOverride(int group, int[] tracks) {
+        TrackSelection.Factory factory = tracks.length == 1 ? FIXED_FACTORY : adaptiveTrackSelectionFactory;
         override = new SelectionOverride(factory, group, tracks);
     }
 
