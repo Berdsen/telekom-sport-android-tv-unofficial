@@ -1,6 +1,6 @@
 # Telekom Sport for AndroidTV - Unofficial #
 
-This application will provide you access to the telekom sport streams on yout AndroidTV.  
+This application will provide you access to the telekom sport streams on your AndroidTV.  
 You can just watch videos you are eligible for with your account. 
 
 ## What is this repository for? ##
@@ -8,6 +8,15 @@ You can just watch videos you are eligible for with your account.
 ### Quick summary ###
 
 Retrieving active streams from the Telekom Sport website and playing them, if you're eligible for.
+
+### Version 0.6.0 ###
+
+> set app status to beta
+> added option to select video quality dependend on the available qualities of your network
+
+### Version 0.5.1 ###
+
+> Small fix to prevend crashing the app in Detailsscreen
 
 ### Version 0.5.0 ###
 
@@ -33,8 +42,9 @@ Retrieving active streams from the Telekom Sport website and playing them, if yo
 ### Known Issues ###
 * ~~sometimes pictures are not displayed~~
 * some errors might have a wrong error message
-* player controls are not implemented completely
+* ~~player controls are not implemented completely~~
 * after video finished the player screen keeps open
+* BayernTV is not playable at the moment
 
 ## How do I get set up? ##
 
