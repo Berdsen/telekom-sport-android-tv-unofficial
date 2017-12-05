@@ -13,6 +13,8 @@ import android.graphics.drawable.Drawable;
 import android.support.v17.leanback.widget.PlaybackControlsRow;
 import android.util.TypedValue;
 
+import de.berdsen.telekomsport_unofficial.utils.ApplicationUtils;
+
 /**
  * Created by berthm on 20.11.2017.
  */
@@ -20,9 +22,6 @@ import android.util.TypedValue;
 public class QualityChangerAction extends PlaybackControlsRow.MultiAction {
 
     public static final int INDEX_AUTO = 0;
-    //public static final int INDEX_LOW = 1;
-    //public static final int INDEX_MEDIUM = 2;
-    public static final int INDEX_HIGH = 3;
 
     /**
      * Constructor
@@ -33,19 +32,12 @@ public class QualityChangerAction extends PlaybackControlsRow.MultiAction {
         super(android.support.v17.leanback.R.id.lb_control_high_quality);
         BitmapDrawable drawable = (BitmapDrawable) getStyledDrawable(context, android.support.v17.leanback.R.styleable.lbPlaybackControlsActionIcons_high_quality);
 
-
-        Drawable[] drawables = new Drawable[4];
-        drawables[INDEX_AUTO] = drawable;
-        //drawables[INDEX_LOW] = new BitmapDrawable(context.getResources(), createBitmap(drawable.getBitmap(), Color.BLUE));
-        //drawables[INDEX_MEDIUM] = new BitmapDrawable(context.getResources(), createBitmap(drawable.getBitmap(), Color.GREEN));
-        drawables[INDEX_HIGH] = new BitmapDrawable(context.getResources(), createBitmap(drawable.getBitmap(), Color.RED));
+        Drawable[] drawables = new Drawable[1];
+        drawables[INDEX_AUTO] = new BitmapDrawable(context.getResources(), ApplicationUtils.colorBitmap(drawable.getBitmap(), Color.RED));
         setDrawables(drawables);
 
-        String[] labels = new String[4];
-        labels[INDEX_AUTO] = "Auto";
-        //labels[INDEX_LOW] = "Low";
-        //labels[INDEX_MEDIUM] = "Medium";
-        labels[INDEX_HIGH] = "High";
+        String[] labels = new String[1];
+        labels[INDEX_AUTO] = "QualityChooser";
         setLabels(labels);
     }
 
@@ -60,15 +52,6 @@ public class QualityChangerAction extends PlaybackControlsRow.MultiAction {
         Drawable drawable = array.getDrawable(index);
         array.recycle();
         return drawable;
-    }
-
-    static Bitmap createBitmap(Bitmap bitmap, int color) {
-        Bitmap dst = bitmap.copy(bitmap.getConfig(), true);
-        Canvas canvas = new Canvas(dst);
-        Paint paint = new Paint();
-        paint.setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.SRC_ATOP));
-        canvas.drawBitmap(bitmap, 0, 0, paint);
-        return dst;
     }
 }
 

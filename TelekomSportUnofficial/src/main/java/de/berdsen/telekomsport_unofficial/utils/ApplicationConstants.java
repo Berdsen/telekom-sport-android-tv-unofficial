@@ -14,6 +14,7 @@ public class ApplicationConstants {
         Windows,
         Android
     }
+
     public static String getUserAgentValue() {
         UserAgentType type = UserAgentType.Windows;
 
