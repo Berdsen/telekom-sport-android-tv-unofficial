@@ -9,8 +9,6 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 
-import javax.inject.Singleton;
-
 import dagger.Module;
 import dagger.Provides;
 import de.berdsen.telekomsport_unofficial.R;

@@ -2,9 +2,6 @@ package de.berdsen.telekomsport_unofficial.services.AsyncTasks;
 
 import android.os.AsyncTask;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -13,13 +10,11 @@ import org.jsoup.select.Elements;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.reflect.Type;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 import de.berdsen.telekomsport_unofficial.model.EpgData;
-import de.berdsen.telekomsport_unofficial.model.ResponseData;
 import de.berdsen.telekomsport_unofficial.model.Sport;
 import de.berdsen.telekomsport_unofficial.model.TelekomApiConstants;
 import de.berdsen.telekomsport_unofficial.services.interfaces.EpgResolvedHandler;
@@ -47,7 +42,7 @@ public class LoadEpgTask extends AsyncTask<Sport, Void, List<EpgData>> {
     protected List<EpgData> doInBackground(Sport... sports) {
 
         if (sports == null || sports.length == 0) {
-            return null;
+            return new ArrayList<>();
         }
 
         currentSport = sports[0];
@@ -55,8 +50,9 @@ public class LoadEpgTask extends AsyncTask<Sport, Void, List<EpgData>> {
         List<EventLaneData> eventLaneUrlExtensions = FindEventLaneUrls(currentSport);
 
         if (eventLaneUrlExtensions == null || eventLaneUrlExtensions.size() == 0) {
-            return null;
+            return new ArrayList<>();
         }
+
         return retrieveEpgData(eventLaneUrlExtensions);
     }
 

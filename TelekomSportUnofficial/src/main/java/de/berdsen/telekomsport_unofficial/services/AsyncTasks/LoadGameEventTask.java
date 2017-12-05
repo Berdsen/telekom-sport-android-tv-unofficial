@@ -2,15 +2,9 @@ package de.berdsen.telekomsport_unofficial.services.AsyncTasks;
 
 import android.os.AsyncTask;
 
-import com.google.gson.typeadapters.RuntimeTypeAdapterFactory;
-
-import de.berdsen.telekomsport_unofficial.model.BaseContent;
-import de.berdsen.telekomsport_unofficial.model.EventContent;
 import de.berdsen.telekomsport_unofficial.model.GameEvent;
 import de.berdsen.telekomsport_unofficial.model.GameEventDetails;
 import de.berdsen.telekomsport_unofficial.model.TelekomApiConstants;
-import de.berdsen.telekomsport_unofficial.model.TextContent;
-import de.berdsen.telekomsport_unofficial.model.VideoContent;
 import de.berdsen.telekomsport_unofficial.services.interfaces.GameEventResolvedHandler;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;

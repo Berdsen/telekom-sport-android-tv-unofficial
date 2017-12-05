@@ -17,7 +17,6 @@
 package de.berdsen.telekomsport_unofficial.ui.listener;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v17.leanback.media.PlaybackTransportControlGlue;
 import android.support.v17.leanback.widget.Action;
 import android.support.v17.leanback.widget.ArrayObjectAdapter;
