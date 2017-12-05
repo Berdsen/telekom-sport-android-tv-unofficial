@@ -2,24 +2,18 @@ package de.berdsen.telekomsport_unofficial.ui.fragments;
 
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v17.leanback.app.VideoFragmentGlueHost;
-import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.exoplayer2.C;
-import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.ExoPlayerFactory;
-import com.google.android.exoplayer2.PlaybackParameters;
-import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
-import com.google.android.exoplayer2.Timeline;
+import com.google.android.exoplayer2.demo.TrackSelectionHelper;
 import com.google.android.exoplayer2.ext.leanback.LeanbackPlayerAdapter;
 import com.google.android.exoplayer2.ext.okhttp.OkHttpDataSourceFactory;
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
-import com.google.android.exoplayer2.source.TrackGroupArray;
 import com.google.android.exoplayer2.source.dash.DashMediaSource;
 import com.google.android.exoplayer2.source.dash.DefaultDashChunkSource;
 import com.google.android.exoplayer2.source.hls.HlsMediaSource;
@@ -27,10 +21,8 @@ import com.google.android.exoplayer2.source.smoothstreaming.DefaultSsChunkSource
 import com.google.android.exoplayer2.source.smoothstreaming.SsMediaSource;
 import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
+import com.google.android.exoplayer2.trackselection.FixedTrackSelection;
 import com.google.android.exoplayer2.trackselection.TrackSelection;
-import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
-import com.google.android.exoplayer2.trackselection.TrackSelector;
-import com.google.android.exoplayer2.upstream.BandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.google.android.exoplayer2.upstream.HttpDataSource;
@@ -53,7 +45,6 @@ import de.berdsen.telekomsport_unofficial.services.model.CookieJarImpl;
 import de.berdsen.telekomsport_unofficial.ui.base.AbstractBaseVideoFragment;
 import de.berdsen.telekomsport_unofficial.ui.listener.VideoPlayerGlue;
 import de.berdsen.telekomsport_unofficial.utils.ApplicationConstants;
-import de.berdsen.telekomsport_unofficial.utils.TrackSelectionHelper;
 import okhttp3.Cookie;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -105,7 +96,15 @@ public class VideoPlaybackFragment extends AbstractBaseVideoFragment {
         mBandwidthMeter = new DefaultBandwidthMeter();
 
         TrackSelection.Factory videoTrackSelectionFactory = new AdaptiveTrackSelection.Factory(mBandwidthMeter);
-        DefaultTrackSelector mTrackSelector = new DefaultTrackSelector(videoTrackSelectionFactory);
+
+        final DefaultTrackSelector mTrackSelector = new DefaultTrackSelector(videoTrackSelectionFactory);
+
+        DefaultTrackSelector.Parameters parameters = mTrackSelector.getParameters();
+        parameters.withAllowMixedMimeAdaptiveness(true);
+        parameters.withAllowNonSeamlessAdaptiveness(true);
+        //parameters.withExceedRendererCapabilitiesIfNecessary(true);
+        //parameters.withExceedVideoConstraintsIfNecessary(true);
+        mTrackSelector.setParameters(parameters);
 
         final TrackSelectionHelper trackSelectionHelper = new TrackSelectionHelper(mTrackSelector, videoTrackSelectionFactory);
 
@@ -113,9 +112,29 @@ public class VideoPlaybackFragment extends AbstractBaseVideoFragment {
         mPlayerAdapter = new LeanbackPlayerAdapter(context, mPlayer, 16);
 
         mPlayerGlue = new VideoPlayerGlue(getActivity(), mPlayerAdapter, new VideoPlayerGlue.OnActionClickedListener() {
+            boolean autoMode = true;
+
+            private final TrackSelection.Factory FIXED_FACTORY = new FixedTrackSelection.Factory();
+
             @Override
             public void onQualityChanged() {
+
+                trackSelectionHelper.showSelectionDialog(getActivity(), "QualityChooser", mTrackSelector.getCurrentMappedTrackInfo(), 0);
+
+                /*
+                if (autoMode) {
+                    TrackGroupArray trackGroups = mTrackSelector.getCurrentMappedTrackInfo().getTrackGroups(0);
+
+                    if (trackGroups != null) {
+                        MappingTrackSelector.SelectionOverride override = new MappingTrackSelector.SelectionOverride(FIXED_FACTORY, 0, (trackGroups.length - 1));
+                        mTrackSelector.setSelectionOverride(0, trackGroups, override);
+                    }
+                } else {
+                    mTrackSelector.clearSelectionOverrides(0);
+                }
+                autoMode = !autoMode;
                 // TODO: select track quality
+                */
             }
         });
         mPlayerGlue.setHost(new VideoFragmentGlueHost(this));
@@ -202,7 +221,9 @@ public class VideoPlaybackFragment extends AbstractBaseVideoFragment {
         }
 
         //TODO: check both datasource types and default bandwith
+        //return new OkHttpDataSourceFactory(client, userAgent, mBandwidthMeter);
         //return new DefaultHttpDataSourceFactory(userAgent, mBandwidthMeter);
+
         return new OkHttpDataSourceFactory(client, userAgent, mBandwidthMeter);
     }
 

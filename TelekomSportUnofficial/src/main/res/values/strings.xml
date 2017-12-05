@@ -14,4 +14,7 @@
     <string name="settingsResetQuestion">Do you really want to reset all saved settings?</string>
     <string name="globalYes">Yes</string>
     <string name="globalNo">No</string>
+    <string name="selection_disabled">Disabled</string>
+    <string name="selection_default">Default</string>
+    <string name="enable_random_adaptation">Enable random adaptation</string>
 </resources>

@@ -20,8 +20,8 @@ import android.util.TypedValue;
 public class QualityChangerAction extends PlaybackControlsRow.MultiAction {
 
     public static final int INDEX_AUTO = 0;
-    public static final int INDEX_LOW = 1;
-    public static final int INDEX_MEDIUM = 2;
+    //public static final int INDEX_LOW = 1;
+    //public static final int INDEX_MEDIUM = 2;
     public static final int INDEX_HIGH = 3;
 
     /**
@@ -36,15 +36,15 @@ public class QualityChangerAction extends PlaybackControlsRow.MultiAction {
 
         Drawable[] drawables = new Drawable[4];
         drawables[INDEX_AUTO] = drawable;
-        drawables[INDEX_LOW] = new BitmapDrawable(context.getResources(), createBitmap(drawable.getBitmap(), Color.BLUE));
-        drawables[INDEX_MEDIUM] = new BitmapDrawable(context.getResources(), createBitmap(drawable.getBitmap(), Color.GREEN));
+        //drawables[INDEX_LOW] = new BitmapDrawable(context.getResources(), createBitmap(drawable.getBitmap(), Color.BLUE));
+        //drawables[INDEX_MEDIUM] = new BitmapDrawable(context.getResources(), createBitmap(drawable.getBitmap(), Color.GREEN));
         drawables[INDEX_HIGH] = new BitmapDrawable(context.getResources(), createBitmap(drawable.getBitmap(), Color.RED));
         setDrawables(drawables);
 
         String[] labels = new String[4];
         labels[INDEX_AUTO] = "Auto";
-        labels[INDEX_LOW] = "Low";
-        labels[INDEX_MEDIUM] = "Medium";
+        //labels[INDEX_LOW] = "Low";
+        //labels[INDEX_MEDIUM] = "Medium";
         labels[INDEX_HIGH] = "High";
         setLabels(labels);
     }

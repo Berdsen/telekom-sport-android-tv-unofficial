@@ -47,7 +47,7 @@ public class LoadEpgTask extends AsyncTask<Sport, Void, List<EpgData>> {
     protected List<EpgData> doInBackground(Sport... sports) {
 
         if (sports == null || sports.length == 0) {
-            return null;
+            return new ArrayList<>();
         }
 
         currentSport = sports[0];
@@ -55,8 +55,9 @@ public class LoadEpgTask extends AsyncTask<Sport, Void, List<EpgData>> {
         List<EventLaneData> eventLaneUrlExtensions = FindEventLaneUrls(currentSport);
 
         if (eventLaneUrlExtensions == null || eventLaneUrlExtensions.size() == 0) {
-            return null;
+            return new ArrayList<>();
         }
+
         return retrieveEpgData(eventLaneUrlExtensions);
     }
 
