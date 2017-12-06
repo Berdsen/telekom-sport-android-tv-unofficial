@@ -9,6 +9,11 @@ You can just watch videos you are eligible for with your account.
 
 Retrieving active streams from the Telekom Sport website and playing them, if you're eligible for.
 
+### Version 0.7.0 ###
+
+> embedded question before exit
+> (hopefully) fixed FCBTv, at least for the Livestream 
+
 ### Version 0.6.0 ###
 
 > set app status to beta
@@ -44,7 +49,7 @@ Retrieving active streams from the Telekom Sport website and playing them, if yo
 * some errors might have a wrong error message
 * ~~player controls are not implemented completely~~
 * after video finished the player screen keeps open
-* BayernTV is not playable at the moment
+* ~~BayernTV is not playable at the moment~~
 
 ## How do I get set up? ##
 
