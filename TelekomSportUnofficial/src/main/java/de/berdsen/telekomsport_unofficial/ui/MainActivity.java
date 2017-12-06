@@ -1,6 +1,10 @@
 package de.berdsen.telekomsport_unofficial.ui;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
@@ -38,5 +42,34 @@ public class MainActivity extends AbstractBaseActivity {
         app.doLogin(sessionService, context);
     }
 
+    @Override
+    public void onBackPressed() {
+        FragmentManager fragmentManager = getFragmentManager();
 
+        final Activity mainActivity = this;
+
+        if (fragmentManager.getBackStackEntryCount() == 0) {
+            AlertDialog dialog = new AlertDialog.Builder(mainActivity)
+                    .setTitle(R.string.exit_question_title)
+                    .setMessage(R.string.exit_question_message)
+                    .setPositiveButton(R.string.globalYes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            mainActivity.finish();
+                        }
+                    })
+                    .setNegativeButton(R.string.globalNo, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            // Do nothing
+                        }
+                    })
+                    .create();
+
+            dialog.show();
+
+        } else {
+            super.onBackPressed();
+        }
+    }
 }

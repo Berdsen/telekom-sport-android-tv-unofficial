@@ -14,7 +14,6 @@ public final class Sport implements Parcelable {
     private final String title;
     private final String imageUrlExtension;
     private final String pageExtension;
-    private final String epgExtension;
 
     private String baseUrl;
 
@@ -22,14 +21,12 @@ public final class Sport implements Parcelable {
         this.title = title;
         this.imageUrlExtension = imageUrlExtension;
         this.pageExtension = pageExtension;
-        this.epgExtension = epgExtension;
     }
 
     protected Sport(Parcel in) {
         title = in.readString();
         imageUrlExtension = in.readString();
         pageExtension = in.readString();
-        epgExtension = in.readString();
         baseUrl = in.readString();
     }
 
@@ -60,7 +57,6 @@ public final class Sport implements Parcelable {
         parcel.writeString(title);
         parcel.writeString(imageUrlExtension);
         parcel.writeString(pageExtension);
-        parcel.writeString(epgExtension);
         parcel.writeString(baseUrl);
     }
 
@@ -75,5 +71,4 @@ public final class Sport implements Parcelable {
             return new Sport[size];
         }
     };
-
 }
