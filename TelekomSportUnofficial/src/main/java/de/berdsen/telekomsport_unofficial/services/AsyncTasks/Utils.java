@@ -86,7 +86,7 @@ public class Utils {
 
             return currentGenericData.getData();
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -107,6 +107,7 @@ public class Utils {
             registerSubtype(VideoContent.class, "3");
             registerSubtype(EventContent.class, "4");
             registerSubtype(PlayerContent.class, "5");
+            registerSubtype(BaseContent.class, "689");
         }
     }
 

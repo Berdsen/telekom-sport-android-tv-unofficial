@@ -15,4 +15,10 @@ public class VideoStreamData {
 
     @SerializedName("data")
     StreamUrl streamUrl;
+
+    @SerializedName("message")
+    String errorMessage;
+
+    @SerializedName("code")
+    int errorCode;
 }
