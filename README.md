@@ -72,6 +72,4 @@ So expect some bugs and create some issues in the issue tracker. I perhaps will 
 
 ### Facing problems? ###
 
-* Issue Tracker  
-https://bitbucket.org/Berdsen/telekom-sport-android-tv-unofficial/issues?status=new&status=open
-
+Use the issue tracker!
