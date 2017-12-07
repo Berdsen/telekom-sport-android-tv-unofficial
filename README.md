@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/Berdsen/telekom-sport-android-tv-unofficial.svg?branch=master)](https://travis-ci.org/Berdsen/telekom-sport-android-tv-unofficial)
+
 # Telekom Sport for AndroidTV - Unofficial #
 
 This application will provide you access to the telekom sport streams on your AndroidTV.  
