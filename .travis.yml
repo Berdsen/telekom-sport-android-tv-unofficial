@@ -10,6 +10,9 @@ env:
 branches:
   only:
   - master
+#   should match branches like Alpha/0.1.2-abc0123
+#   - /[a-zA-Z]*\/[0-9]\.[0-9].[0-9]-[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]
+  - /[a-zA-Z0-9]+\/\d.\d.\d-[0-9a-f]+/
 before_cache: 
   -rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
   -rm -fr $HOME/.gradle/caches/*/plugin-resolution/
@@ -59,7 +62,7 @@ before_deploy:
 deploy:
   provider: releases
   api_key: $GITHUB_ACCESS_TOKEN
-  file: "$TRAVIS_BUILD_DIR/build/outputs/apk/release/TelekomSportUnofficial-$TRAVIS_TAG.apk"
+  file: "$TRAVIS_BUILD_DIR/TelekomSportUnofficial/build/outputs/apk/release/TelekomSportUnofficial-$VERSION_ID.apk"
   skip_cleanup: true
   on:
     tags: true
