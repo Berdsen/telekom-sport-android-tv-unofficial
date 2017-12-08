@@ -1,69 +1,60 @@
 language: android
 sudo: required
 jdk: oraclejdk8
-
-before_cache:
- -rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
- -rm -fr $HOME/.gradle/caches/*/plugin-resolution/
-
-cache:
- directories:
-  -$HOME/.gradle/caches/
-  -$HOME/.gradle/wrapper/
-
 env:
- global:
- - ANDROID_API=26
- - EMULATOR_API=22
- - ANDROID_BUILD_TOOLS=26.0.2
- - ADB_INSTALL_TIMEOUT=5 # minutes
- 
+  global:
+  - ANDROID_API=26
+  - EMULATOR_API=22
+  - ANDROID_BUILD_TOOLS=26.0.2
+  - ADB_INSTALL_TIMEOUT=5
 branches:
- only: 
+  only:
   - master
-
-android:
- components:
-# - tools
-# - platform-tools
-# - build-tools-$ANDROID_BUILD_TOOLS
-# - android-$EMULATOR_API_LEVEL
-# - android-$ANDROID_API
-# - extra-google-m2repository
-# - extra-android-m2repository # for design library
-# - tools
- 
- - tools
- - platform-tools
- - build-tools-$ANDROID_BUILD_TOOLS
- - android-$EMULATOR_API
- - android-$ANDROID_API
- - sys-img-armeabi-v7a-android-$EMULATOR_API
- - sys-img-armeabi-v7a-android-tv-$EMULATOR_API
-# - add-on
-# - extra
- licenses:
- - android-sdk-preview-license-.+
- - android-sdk-license-.+
-
+before_cache: 
+  -rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
+  -rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+cache:
+  directories: 
+    -$HOME/.gradle/caches/
+    -$HOME/.gradle/wrapper/
 before_install:
 - mkdir "$ANDROID_HOME/licenses" || true
 - echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
 - echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > "$ANDROID_HOME/licenses/android-sdk-preview-license"
 - chmod +x gradlew
-- ./gradlew dependencies || true
- 
-# when a different device is needed, take a look into the following command, for getting available sdk and targets
-# android list sdk --all --extended
-#- echo no | android create avd -n test -k "system-images;android-22;android-tv;armeabi-v7a"
-
-# Emulator Management: Create, Start and Wait
+- "./gradlew dependencies || true"
+- mkdir keys
+- git clone "https://$BITBUCKET_USERNAME:$BITBUCKET_PASSWORD@bitbucket.org/$BITBUCKET_USERNAME/$BITBUCKET_REPONAME.git" keys
+android:
+  components:
+  - tools
+  - platform-tools
+  - build-tools-$ANDROID_BUILD_TOOLS
+  - android-$EMULATOR_API
+  - android-$ANDROID_API
+  - sys-img-armeabi-v7a-android-$EMULATOR_API
+  - sys-img-armeabi-v7a-android-tv-$EMULATOR_API
+  licenses:
+  - android-sdk-preview-license-.+
+  - android-sdk-license-.+
 before_script:
 - android list target
 - echo no | android create avd --force -n test -t android-22 -g android-tv --abi armeabi-v7a
 - emulator -avd test -no-audio -no-window &
 - android-wait-for-emulator
 - adb shell input keyevent 82 &
-
-# script:
-# - "./gradlew clean build connectedCheck -PdisablePreDex --stacktrace"
+script:
+- "./gradlew clean build connectedCheck -PdisablePreDex --stacktrace"
+before_deploy:
+- cd TelekomSportUnofficial/build/outputs/apk/release
+- jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore $TRAVIS_BUILD_DIR/keys/$KEYSTORE_FILENAME -storepass $KEYSTORE_PASSWORD -keypass $KEYSTORE_KEY_PASSWORD TelekomSportUnofficial-release-unsigned.apk $KEYSTORE_KEY_ALIAS
+# Verification
+- jarsigner -verify TelekomSportUnofficial-release-unsigned.apk
+- "${ANDROID_HOME}/build-tools/$ANDROID_BUILD_TOOLS/zipalign -v 4 TelekomSportUnofficial-release-unsigned.apk TelekomSportUnofficial-$TRAVIS_TAG.apk"
+deploy:
+  provider: releases
+  api_key: $GITHUB_ACCESS_TOKEN
+  file: "$TRAVIS_BUILD_DIR/build/outputs/apk/release/TelekomSportUnofficial-$TRAVIS_TAG.apk"
+  skip_cleanup: true
+  on:
+    tags: true
