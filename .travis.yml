@@ -1,13 +1,6 @@
 language: android
 sudo: required
 jdk: oraclejdk8
-before_cache: 
-  -rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
-  -rm -fr $HOME/.gradle/caches/*/plugin-resolution/
-cache:
-  directories: 
-    -$HOME/.gradle/caches/
-    -$HOME/.gradle/wrapper/
 env:
   global:
   - ANDROID_API=26
@@ -17,6 +10,24 @@ env:
 branches:
   only:
   - master
+before_cache: 
+  -rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
+  -rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+cache:
+  directories: 
+    -$HOME/.gradle/caches/
+    -$HOME/.gradle/wrapper/
+before_install:
+- mkdir "$ANDROID_HOME/licenses" || true
+- echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
+- echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > "$ANDROID_HOME/licenses/android-sdk-preview-license"
+- chmod +x gradlew
+- "./gradlew dependencies || true"
+- mkdir keys
+- git clone "https://$BITBUCKET_USERNAME:$BITBUCKET_PASSWORD@bitbucket.org/$BITBUCKET_USERNAME/$BITBUCKET_REPONAME.git" keys
+- cd keys
+- ls
+- cd ..
 android:
   components:
   - tools
@@ -29,17 +40,6 @@ android:
   licenses:
   - android-sdk-preview-license-.+
   - android-sdk-license-.+
-before_install:
-- mkdir "$ANDROID_HOME/licenses" || true
-- echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
-- echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > "$ANDROID_HOME/licenses/android-sdk-preview-license"
-- chmod +x gradlew
-- "./gradlew dependencies || true"
-- mkdir keys
-- git clone https://$BITBUCKET_USERNAME:$BITBUCKET_PASSWORD@bitbucket.org/$BITBUCKET_USERNAME/$BITBUCKET_REPONAME.git keys
-- cd keys
-- ls
-- cd ..
 before_script:
 - android list target
 - echo no | android create avd --force -n test -t android-22 -g android-tv --abi armeabi-v7a
