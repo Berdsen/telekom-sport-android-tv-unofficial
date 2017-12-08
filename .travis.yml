@@ -25,9 +25,6 @@ before_install:
 - "./gradlew dependencies || true"
 - mkdir keys
 - git clone "https://$BITBUCKET_USERNAME:$BITBUCKET_PASSWORD@bitbucket.org/$BITBUCKET_USERNAME/$BITBUCKET_REPONAME.git" keys
-- cd keys
-- ls
-- cd ..
 android:
   components:
   - tools
@@ -48,3 +45,16 @@ before_script:
 - adb shell input keyevent 82 &
 script:
 - "./gradlew clean build connectedCheck -PdisablePreDex --stacktrace"
+before_deploy:
+- cd app/build/outputs/apk/
+- jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore $TRAVIS_BUILD_DIR/keys/$KEYSTORE_FILENAME -storepass $KEYSTORE_PASSWORD -keypass $KEYSTORE_KEY_PASSWORD app-release-unsigned.apk $KEYSTORE_KEY_ALIAS
+# Verification
+- jarsigner -verify app-release-unsigned.apk
+- "${ANDROID_HOME}/build-tools/$ANDROID_BUILD_TOOLS/zipalign -v 4 app-release-unsigned.apk TelekomSportUnofficial-$TRAVIS_TAG.apk"
+deploy:
+  provider: releases
+  api_key: $GITHUB_ACCESS_TOKEN
+  file: "TelekomSportUnofficial-$TRAVIS_TAG.apk"
+  skip_cleanup: true
+  on:
+    tags: true
