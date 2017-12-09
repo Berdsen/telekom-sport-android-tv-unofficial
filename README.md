@@ -1,10 +1,12 @@
 [![Build Status](https://travis-ci.org/Berdsen/telekom-sport-android-tv-unofficial.svg?branch=master&style=flat-square)](https://travis-ci.org/Berdsen/telekom-sport-android-tv-unofficial)
 [![GitHub release](https://img.shields.io/github/release/Berdsen/telekom-sport-android-tv-unofficial.svg?style=flat-square)]()
 [![Github All Releases](https://img.shields.io/github/downloads/Berdsen/telekom-sport-android-tv-unofficial/total.svg?style=flat-square)]()
+[![license](https://img.shields.io/github/license/Berdsen/telekom-sport-android-tv-unofficial.svg?style=flat-square)]()
+<!-- 
 [![Maintainability](https://api.codeclimate.com/v1/badges/ef14274d082dfdbc002e/maintainability)](https://codeclimate.com/github/Berdsen/telekom-sport-android-tv-unofficial/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/ef14274d082dfdbc002e/test_coverage)](https://codeclimate.com/github/Berdsen/telekom-sport-android-tv-unofficial/test_coverage)
 [![Issue Count](https://codeclimate.com/github/Berdsen/telekom-sport-android-tv-unofficial/badges/issue_count.svg)](https://codeclimate.com/github/Berdsen/telekom-sport-android-tv-unofficial)
-[![license](https://img.shields.io/github/license/Berdsen/telekom-sport-android-tv-unofficial.svg?style=flat-square)]()
+-->
 
 # Telekom Sport for AndroidTV - Unofficial #
 
