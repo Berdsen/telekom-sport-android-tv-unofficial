@@ -1,4 +1,10 @@
-[![Build Status](https://travis-ci.org/Berdsen/telekom-sport-android-tv-unofficial.svg?branch=master)](https://travis-ci.org/Berdsen/telekom-sport-android-tv-unofficial)
+[![Build Status](https://travis-ci.org/Berdsen/telekom-sport-android-tv-unofficial.svg?branch=master&style=flat-square)](https://travis-ci.org/Berdsen/telekom-sport-android-tv-unofficial)
+[![GitHub release](https://img.shields.io/github/release/Berdsen/telekom-sport-android-tv-unofficial.svg?style=flat-square)]()
+[![Github All Releases](https://img.shields.io/github/downloads/Berdsen/telekom-sport-android-tv-unofficial/total.svg?style=flat-square)]()
+[![Maintainability](https://api.codeclimate.com/v1/badges/ef14274d082dfdbc002e/maintainability)](https://codeclimate.com/github/Berdsen/telekom-sport-android-tv-unofficial/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/ef14274d082dfdbc002e/test_coverage)](https://codeclimate.com/github/Berdsen/telekom-sport-android-tv-unofficial/test_coverage)
+[![Issue Count](https://codeclimate.com/github/Berdsen/telekom-sport-android-tv-unofficial/badges/issue_count.svg)](https://codeclimate.com/github/Berdsen/telekom-sport-android-tv-unofficial)
+[![license](https://img.shields.io/github/license/Berdsen/telekom-sport-android-tv-unofficial.svg?style=flat-square)]()
 
 # Telekom Sport for AndroidTV - Unofficial #
 
@@ -13,38 +19,38 @@ Retrieving active streams from the Telekom Sport website and playing them, if yo
 
 ### Version 0.7.0 ###
 
-> embedded question before exit
-> (hopefully) fixed FCBTv, at least for the Livestream 
+* embedded question before exit
+* (hopefully) fixed FCBTv, at least for the Livestream 
 
 ### Version 0.6.0 ###
 
-> set app status to beta
-> added option to select video quality dependend on the available qualities of your network
+* set app status to beta
+* added option to select video quality dependend on the available qualities of your network
 
 ### Version 0.5.1 ###
 
-> Small fix to prevend crashing the app in Detailsscreen
+* Small fix to prevend crashing the app in Detailsscreen
 
 ### Version 0.5.0 ###
 
-> more improvements in stability
-> reworked the ImageCacheService
-> displaying images seems to be no problem anymore
-> removed unnecessary player controls like thumb up, etc.
-> added quality action but without functionality for now
-> forward / backward times are adjusted to thirty instead of ten seconds
+* more improvements in stability
+* reworked the ImageCacheService
+* displaying images seems to be no problem anymore
+* removed unnecessary player controls like thumb up, etc.
+* added quality action but without functionality for now
+* forward / backward times are adjusted to thirty instead of ten seconds
 
 ### Version 0.4.0 ###
 
-> some improvements in stability
-> tried ImageCacheService for picture retrieval
+* some improvements in stability
+* tried ImageCacheService for picture retrieval
 
 ### Version 0.3.0 ###
 
-> first alpha release  
-> login possible  
-> watching live content possible  
-> watching replay and game report possible
+* first alpha release  
+* login possible  
+* watching live content possible  
+* watching replay and game report possible
 
 ### Known Issues ###
 * ~~sometimes pictures are not displayed~~
