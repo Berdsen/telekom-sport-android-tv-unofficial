@@ -9,5 +9,5 @@ import de.berdsen.telekomsport_unofficial.model.Sport;
  */
 
 public interface SportsResolvedHandler {
-     void resolvedSports(List<Sport> sports);
+     void resolvedSports(List<Sport> sports, List<Sport> competitions);
 }

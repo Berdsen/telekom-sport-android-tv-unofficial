@@ -5,10 +5,43 @@
   "loginEndpoint": "https://accounts.login.idm.telekom.com/sso",
   "videoUrlExtension": "/service/player/streamAccess",
   "videoUrlParams": "?videoId=%s&label=2780_hls",
-  "sports": [{
-      "title": "3. Liga",
-      "imageUrlExtension": "/images/packete/3liga.png",
-      "pageExtension": "/fussball/3-liga"
+  "sports": [
+    {
+      "title": "Basketball",
+      "imageUrlExtension": "https://cdn.pixabay.com/photo/2015/09/16/00/13/basketball-941996_960_720.png",
+      "pageExtension": "/basketball"
+    },
+    {
+      "title": "Eishockey",
+      "imageUrlExtension": "https://cdn.pixabay.com/photo/2015/12/09/04/36/ice-hockey-1084197_960_720.jpg",
+      "pageExtension": "/eishockey/del"
+    },
+    {
+      "title": "Fussball",
+      "imageUrlExtension": "https://cdn.pixabay.com/photo/2016/05/20/21/57/football-1406106_960_720.jpg",
+      "pageExtension": "/fussball"
+    },
+    {
+      "title": "Fighting",
+      "imageUrlExtension": "https://cdn.pixabay.com/photo/2012/10/25/23/32/box-62867_960_720.jpg",
+      "pageExtension": "/fighting"
+    },
+    {
+      "title": "Sky",
+      "imageUrlExtension": "/images/ssk.png",
+      "pageExtension": "/sky"
+    },
+    {
+      "title": "FCB Tv",
+      "imageUrlExtension": "/images/packete/fcbayerntv.png",
+      "pageExtension": "/fc-bayern-tv-live"
+    }
+  ],
+  "competitions": [
+    {
+      "title": "Easycredit BBL",
+      "imageUrlExtension": "/images/packete/easyCredit.png",
+      "pageExtension": "/basketball/bbl"
     },
     {
       "title": "Basketball Turkish Airlines Euroleague",
@@ -21,29 +54,29 @@
       "pageExtension": "/basketball/eurocup"
     },
     {
-      "title": "Deutsche Eishockey Liga",
-      "imageUrlExtension": "/images/packete/del.png",
-      "pageExtension": "/eishockey/del"
-    },
-    {
-      "title": "Easycredit BBL",
-      "imageUrlExtension": "/images/packete/easyCredit.png",
-      "pageExtension": "/basketball/bbl"
-    },
-    {
-      "title": "FC Bayern.TV",
-      "imageUrlExtension": "/images/packete/fcbayerntv.png",
-      "pageExtension": "/fc-bayern-tv-live"
-    },
-    {
       "title": "FIBA Eurobasket",
       "imageUrlExtension": "http://www.fiba.basketball/img/12104_logo_landscape.png",
       "pageExtension": "/basketball/eurobasket2017"
     },
     {
+      "title": "Deutsche Eishockey Liga",
+      "imageUrlExtension": "/images/packete/del.png",
+      "pageExtension": "/eishockey/del"
+    },
+    {
+      "title": "3. Liga",
+      "imageUrlExtension": "/images/packete/3liga.png",
+      "pageExtension": "/fussball/3-liga"
+    },
+    {
       "title": "Frauen-Bundesliga",
       "imageUrlExtension": "/images/packete/frauenbundesliga.png",
       "pageExtension": "/fussball/frauen-bundesliga"
+    },
+    {
+      "title": "FC Bayern.TV",
+      "imageUrlExtension": "/images/packete/fcbayerntv.png",
+      "pageExtension": "/fc-bayern-tv-live"
     },
     {
       "title": "Sky Bundesliga",
@@ -59,5 +92,31 @@
       "title": "Sky Handball Bundesliga",
       "imageUrlExtension": "/images/packete/DKB.png",
       "pageExtension": "/sky/handball-bundesliga"
-    }]
+    },
+    {
+      "title": "Boxen",
+      "imageUrlExtension": "/images/packete/ran-fighting.png",
+      "pageExtension": "/fighting/boxen"
+    },
+    {
+      "title": "MMA",
+      "imageUrlExtension": "/images/packete/ran-fighting.png",
+      "pageExtension": "/fighting/mma"
+    },
+    {
+      "title": "Wrestling",
+      "imageUrlExtension": "/images/packete/ran-fighting.png",
+      "pageExtension": "/fighting/wrestling"
+    },
+    {
+      "title": "Weitere Kampfsportarten",
+      "imageUrlExtension": "/images/packete/ran-fighting.png",
+      "pageExtension": "/fighting/bestoftherest"
+    },
+    {
+      "title": "UFC",
+      "imageUrlExtension": "/images/packete/ufc.png",
+      "pageExtension": "/fighting/ufc"
+    }
+  ]
 }

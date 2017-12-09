@@ -51,9 +51,11 @@ public class SportsOverviewFragment extends AbstractBaseBrowseFragment implement
     AndroidApplication androidApplication;
 
     private List<Sport> loadedSports;
+    private List<Sport> loadedCompetitions;
 
     private ArrayObjectAdapter mRowsAdapter;
     private ArrayObjectAdapter mSportsRowAdapter;
+    private ArrayObjectAdapter mCompetitionsRowAdapter;
     private ArrayObjectAdapter mSettingsRowAdapter;
 
     @Override
@@ -63,27 +65,35 @@ public class SportsOverviewFragment extends AbstractBaseBrowseFragment implement
 
         mRowsAdapter = new ArrayObjectAdapter(new ListRowPresenter());
         mSportsRowAdapter = new ArrayObjectAdapter(new DefaultCardPresenter(picassoCache));
+        mCompetitionsRowAdapter = new ArrayObjectAdapter(new DefaultCardPresenter(picassoCache));
         mSettingsRowAdapter = new ArrayObjectAdapter(new DefaultCardPresenter(picassoCache));
 
         HeaderItem sportsHeader = new HeaderItem(0, "Sports");
-        HeaderItem settingsHeader = new HeaderItem(1, "Settings");
+        HeaderItem competitionsHeader = new HeaderItem(1, "Competitions");
+        HeaderItem settingsHeader = new HeaderItem(2, "Settings");
         mRowsAdapter.add(new ListRow(sportsHeader, mSportsRowAdapter));
+        mRowsAdapter.add(new ListRow(competitionsHeader, mCompetitionsRowAdapter));
         mRowsAdapter.add(new ListRow(settingsHeader, mSettingsRowAdapter));
 
         mSettingsRowAdapter.add(ParseUtils.createCardItem("Preferences", "Application settings", R.drawable.perm_group_system_tools));
 
-        setTitle("Select Sport");
+        setTitle(getString(R.string.app_name));
         setAdapter(mRowsAdapter);
         setHeadersState(HEADERS_DISABLED);
         setOnItemViewClickedListener(this);
 
         restService.retrieveSportsList(new SportsResolvedHandler() {
             @Override
-            public void resolvedSports(List<Sport> sports) {
+            public void resolvedSports(List<Sport> sports, List<Sport> competitions) {
                 loadedSports = sports;
+                loadedCompetitions = competitions;
 
                 for (Sport s : loadedSports) {
                     mSportsRowAdapter.add(ParseUtils.createCardItem(s));
+                }
+
+                for (Sport s : loadedCompetitions) {
+                    mCompetitionsRowAdapter.add(ParseUtils.createCardItem(s));
                 }
             }
         });

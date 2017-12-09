@@ -18,8 +18,9 @@ public final class TelekomApiConstants implements Serializable {
     private final String videoUrlExtension;
     private final String videoUrlParams;
     private final List<Sport> sports;
+    private final List<Sport> competitions;
 
-    public TelekomApiConstants(String baseUrl, String apiUrlExtension, String loginUrlExtension, String loginEndpoint, String videoUrlExtension, String videoUrlParams, List<Sport> sports) {
+    public TelekomApiConstants(String baseUrl, String apiUrlExtension, String loginUrlExtension, String loginEndpoint, String videoUrlExtension, String videoUrlParams, List<Sport> sports, List<Sport> competitions) {
         this.baseUrl = baseUrl;
         this.apiUrlExtension = apiUrlExtension;
         this.loginUrlExtension = loginUrlExtension;
@@ -27,10 +28,14 @@ public final class TelekomApiConstants implements Serializable {
         this.videoUrlExtension = videoUrlExtension;
         this.videoUrlParams = videoUrlParams;
         this.sports = sports;
+        this.competitions= competitions;
     }
 
     public void initBaseUrl() {
         for(Sport s : this.sports) {
+            s.setBaseUrl(baseUrl);
+        }
+        for(Sport s : this.competitions) {
             s.setBaseUrl(baseUrl);
         }
     }

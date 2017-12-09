@@ -1,7 +1,8 @@
 [![Build Status](https://travis-ci.org/Berdsen/telekom-sport-android-tv-unofficial.svg?branch=master&style=flat-square)](https://travis-ci.org/Berdsen/telekom-sport-android-tv-unofficial)
-[![GitHub release](https://img.shields.io/github/release/Berdsen/telekom-sport-android-tv-unofficial.svg?style=flat-square)](https://github.com/Berdsen/telekom-sport-android-tv-unofficial/releases/latest)
 [![Github All Releases](https://img.shields.io/github/downloads/Berdsen/telekom-sport-android-tv-unofficial/total.svg?style=flat-square)]()
+[![GitHub release](https://img.shields.io/github/release/Berdsen/telekom-sport-android-tv-unofficial.svg?style=flat-square)](https://github.com/Berdsen/telekom-sport-android-tv-unofficial/releases/latest)
 [![license](https://img.shields.io/github/license/Berdsen/telekom-sport-android-tv-unofficial.svg?style=flat-square)]()
+
 <!-- 
 [![Maintainability](https://api.codeclimate.com/v1/badges/ef14274d082dfdbc002e/maintainability)](https://codeclimate.com/github/Berdsen/telekom-sport-android-tv-unofficial/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/ef14274d082dfdbc002e/test_coverage)](https://codeclimate.com/github/Berdsen/telekom-sport-android-tv-unofficial/test_coverage)
@@ -11,13 +12,35 @@
 # Telekom Sport for AndroidTV - Unofficial #
 
 This application will provide you access to the telekom sport streams on your AndroidTV.  
-You can just watch videos you are eligible for with your account. 
+You can just watch videos you are eligible for with your account. So you need to buy the desired packages at [TelekomSport](https://www.telekomsport.de/buchen)
 
-## What is this repository for? ##
+With this application you can watch the following sports on your AndroidTV
+* Basketball
+** Easycredit BBL
+** Euroleague
+** Eurocup
+** FIBA Events
+* Soccer
+** Men's Football Third League
+** Women's Football Bundesliga
+* Ice Hockey
+** DEL
+* FCB Tv (might be)
+* Fighting (currently not supported)
+** Boxing
+** MMA
+** Wrestling
+** UFC
+** others
 
-### Quick summary ###
+## Quick summary ##
 
 Retrieving active streams from the Telekom Sport website and playing them, if you're eligible for.
+
+### Version 0.8.0 ###
+
+* added main categories as extra lane
+* added missing sports like fighting
 
 ### Version 0.7.0 ###
 
@@ -70,7 +93,7 @@ Easiest way is to install ES File Manager through Google Play Store and afterwar
 to the TV and execute the APK within the ES File Manager application.
 Afterwards you should find a new app in your apps list.
 
-### Disclaimer ###
+## Disclaimer ##
 
 This application is not official, so it might be, that it will get abondened at some time, or that the Telekom will provide an own application.  
 Some of the API code is taken over from the kodi plugin, which you can find [here](https://github.com/asciidisco/plugin.video.telekom-sport)
@@ -80,6 +103,6 @@ Many thanks to asciidisco because the api is not very clear and obvious.
 Also I haven't written an android app for a very long time, so this app is in a very early alpha stage, written in some spare time of mine.
 So expect some bugs and create some issues in the issue tracker. I perhaps will fix them, as I got some time for that.
 
-### Facing problems? ###
+## Facing problems? ##
 
-Use the issue tracker!
+Use the issue tracker and [create an issue.](https://github.com/Berdsen/telekom-sport-android-tv-unofficial/issues/new)

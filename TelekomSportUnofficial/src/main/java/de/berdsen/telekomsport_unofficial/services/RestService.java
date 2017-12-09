@@ -29,7 +29,7 @@ public class RestService {
     }
 
     public void retrieveSportsList(@NonNull SportsResolvedHandler handler) {
-        handler.resolvedSports(constants.getSports());
+        handler.resolvedSports(constants.getSports(), constants.getCompetitions());
     }
 
     public void retrieveSportVideos(@NonNull Sport lookupSport, @NonNull EpgResolvedHandler handler) {
