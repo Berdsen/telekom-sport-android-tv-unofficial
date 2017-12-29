@@ -3,6 +3,7 @@ package de.berdsen.telekomsport_unofficial.ui.fragments;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v17.leanback.app.VideoFragmentGlueHost;
+import android.text.Html;
 import android.widget.Toast;
 
 import com.google.android.exoplayer2.C;
@@ -124,7 +125,7 @@ public class VideoPlaybackFragment extends AbstractBaseVideoFragment {
 
     private void play(GameEventDetails gameEventDetails, VideoDetails videoDetails) {
         mPlayerGlue.setTitle(gameEventDetails.getMetadata().getWeb().getTitle());
-        mPlayerGlue.setSubtitle(gameEventDetails.getMetadata().getWeb().getDescription());
+        mPlayerGlue.setSubtitle(Html.fromHtml(gameEventDetails.getMetadata().getWeb().getDescription()));
 
         if (videoDetails != null) {
             prepareMediaForPlaying(Uri.parse(apiConstants.getVideoUrl(Integer.toString(videoDetails.getVideoID()))));

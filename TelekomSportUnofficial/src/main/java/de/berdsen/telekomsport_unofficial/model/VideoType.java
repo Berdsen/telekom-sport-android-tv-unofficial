@@ -18,4 +18,17 @@ public class VideoType {
 
     @SerializedName("icon")
     String icon;
+
+    public SpecifiedVideoType specifiedVideoType() {
+        switch (id) {
+            case 2:
+                return SpecifiedVideoType.Summary;
+            case 4:
+                return SpecifiedVideoType.Playback;
+            case 8:
+                return SpecifiedVideoType.Magazine;
+            default:
+                return SpecifiedVideoType.Unknown;
+        }
+    }
 }
