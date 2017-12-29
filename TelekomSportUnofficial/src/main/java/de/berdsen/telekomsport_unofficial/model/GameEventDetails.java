@@ -40,8 +40,7 @@ public class GameEventDetails {
         return null;
     }
 
-    public VideoDetails getGameSummary() {
-
+    public VideoDetails getSpecificVideoDetails(SpecifiedVideoType lookupVideoType) {
         if (contentGroups == null) return null;
 
         for (ContentGroup cg : contentGroups) {
@@ -51,27 +50,7 @@ public class GameEventDetails {
                 List<ExtendedVideoDetails> vd = ((VideoContent)bc).getVideoDetails();
 
                 for (ExtendedVideoDetails details : vd) {
-                    if (details.getVideoType().getId() == 2)
-                        return details;
-                }
-            }
-        }
-
-        return null;
-    }
-
-    public VideoDetails getGamePlayback() {
-
-        if (contentGroups == null) return null;
-
-        for (ContentGroup cg : contentGroups) {
-            for (BaseContent bc : cg.getContentEntries()) {
-                if (!(bc instanceof VideoContent)) continue;
-
-                List<ExtendedVideoDetails> vd = ((VideoContent)bc).getVideoDetails();
-
-                for (ExtendedVideoDetails details : vd) {
-                    if (details.getVideoType().getId() == 4)
+                    if (details.getVideoType().specifiedVideoType() == lookupVideoType)
                         return details;
                 }
             }

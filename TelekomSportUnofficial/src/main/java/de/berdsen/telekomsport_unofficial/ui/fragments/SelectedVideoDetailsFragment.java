@@ -29,6 +29,7 @@ import javax.inject.Inject;
 import de.berdsen.telekomsport_unofficial.R;
 import de.berdsen.telekomsport_unofficial.model.GameEvent;
 import de.berdsen.telekomsport_unofficial.model.GameEventDetails;
+import de.berdsen.telekomsport_unofficial.model.SpecifiedVideoType;
 import de.berdsen.telekomsport_unofficial.services.PicassoCache;
 import de.berdsen.telekomsport_unofficial.services.RestService;
 import de.berdsen.telekomsport_unofficial.services.SportsService;
@@ -45,6 +46,7 @@ public class SelectedVideoDetailsFragment extends AbstractBaseDetailsFragment im
 
     private static final int GAMEREPORT = 100;
     private static final int REPLAY = 101;
+    private static final int MAGAZINE = 102;
 
     @Inject
     RestService restService;
@@ -139,27 +141,19 @@ public class SelectedVideoDetailsFragment extends AbstractBaseDetailsFragment im
     private void initActions() {
 
         this.listOfActions = new ArrayList<>();
-        int tempSize = 0;
 
         if (this.selectedGameEventDetails != null) {
-            if (selectedGameEventDetails.getGameSummary() != null) {
-                tempSize++;
-                listOfActions.add(new Action(GAMEREPORT, "Game Report"));
-            }
+            addAction(SpecifiedVideoType.Summary, GAMEREPORT, "Game Report", "");
+            addAction(SpecifiedVideoType.Playback, REPLAY, "Replay", "");
+            addAction(SpecifiedVideoType.Magazine, MAGAZINE, "Magazine", "");
 
-            if (selectedGameEventDetails.getGamePlayback() != null) {
-                tempSize++;
-                listOfActions.add(new Action(REPLAY, "Replay", ""));
-            }
         }
-
-        final int size = tempSize;
 
         mRow.setActionsAdapter(new SparseArrayObjectAdapter() {
 
             @Override
             public int size() {
-                return size;
+                return listOfActions.size();
             }
 
             @Override
@@ -172,6 +166,12 @@ public class SelectedVideoDetailsFragment extends AbstractBaseDetailsFragment im
         });
     }
 
+    private void addAction(SpecifiedVideoType specifiedVideoType, int actionId, String label, String label1) {
+        if (this.selectedGameEventDetails.getSpecificVideoDetails(specifiedVideoType) != null) {
+            listOfActions.add(new Action(actionId, label, label1));
+        }
+    }
+
     @Override
     public void onItemClicked(Presenter.ViewHolder itemViewHolder, Object item, RowPresenter.ViewHolder rowViewHolder, Row row) {
 
@@ -179,10 +179,22 @@ public class SelectedVideoDetailsFragment extends AbstractBaseDetailsFragment im
 
     @Override
     public void onActionClicked(Action action) {
-        if (action.getId() == GAMEREPORT) {
-            sportsService.setSelectedVideo(selectedGameEventDetails.getGameSummary());
-        } else if (action.getId() == REPLAY) {
-            sportsService.setSelectedVideo(selectedGameEventDetails.getGamePlayback());
+        SpecifiedVideoType videoType = SpecifiedVideoType.Unknown;
+
+        switch ((int)action.getId()) {
+            case GAMEREPORT:
+                videoType = SpecifiedVideoType.Summary;
+                break;
+            case REPLAY:
+                videoType = SpecifiedVideoType.Playback;
+                break;
+            case MAGAZINE:
+                videoType = SpecifiedVideoType.Magazine;
+                break;
+        }
+
+        if (videoType != SpecifiedVideoType.Unknown) {
+            sportsService.setSelectedVideo(selectedGameEventDetails.getSpecificVideoDetails(videoType));
         }
 
         if (sportsService.getSelectedVideo() != null) {
