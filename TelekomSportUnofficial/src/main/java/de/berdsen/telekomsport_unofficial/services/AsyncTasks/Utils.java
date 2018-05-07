@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 
 import de.berdsen.telekomsport_unofficial.model.BaseContent;
+import de.berdsen.telekomsport_unofficial.model.BoxScoreContent;
 import de.berdsen.telekomsport_unofficial.model.EpgData;
 import de.berdsen.telekomsport_unofficial.model.EventContent;
 import de.berdsen.telekomsport_unofficial.model.GameEventDetails;
@@ -108,6 +109,7 @@ public class Utils {
             registerSubtype(EventContent.class, "4");
             registerSubtype(PlayerContent.class, "5");
             registerSubtype(BaseContent.class, "689");
+            registerSubtype(BoxScoreContent.class, "1142");
         }
     }
 
