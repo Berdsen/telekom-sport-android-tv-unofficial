@@ -1,6 +1,6 @@
 {
   "baseUrl": "https://www.telekomsport.de",
-  "apiUrlExtension": "/api/v1",
+  "apiUrlExtension": "/api/v2",
   "loginUrlExtension": "/service/auth/web/login?headto=%s/info",
   "loginEndpoint": "https://accounts.login.idm.telekom.com/sso",
   "videoUrlExtension": "/service/player/streamAccess",
@@ -33,90 +33,90 @@
     },
     {
       "title": "FCB Tv",
-      "imageUrlExtension": "/images/packete/fcbayerntv.png",
+      "imageUrlExtension": "/images/editorial/Logos/Bewerb-Logos/FCBTVLive-Logo-3C-2.png",
       "pageExtension": "/fc-bayern-tv-live"
     }
   ],
   "competitions": [
     {
       "title": "Easycredit BBL",
-      "imageUrlExtension": "/images/packete/easyCredit.png",
+      "imageUrlExtension": "/images/editorial/Logos/Bewerb-Logos/bbl.png",
       "pageExtension": "/basketball/bbl"
     },
     {
       "title": "Basketball Turkish Airlines Euroleague",
-      "imageUrlExtension": "/images/packete/euroleague.png",
+      "imageUrlExtension": "/images/editorial/Logos/Bewerb-Logos/euroleague.png",
       "pageExtension": "/basketball/euroleague"
     },
     {
       "title": "Basketball 7Days Eurocup",
-      "imageUrlExtension": "http://www.eurocupbasketball.com/_euroleague/themes/default/images/main-logo-ec.png",
+      "imageUrlExtension": "/images/editorial/Logos/Bewerb-Logos/eurocup.png",
       "pageExtension": "/basketball/eurocup"
     },
     {
-      "title": "FIBA Eurobasket",
-      "imageUrlExtension": "http://www.fiba.basketball/img/12104_logo_landscape.png",
-      "pageExtension": "/basketball/eurobasket2017"
+      "title": "Basketball Länderspiele",
+      "imageUrlExtension": "/images/editorial/Logos/Bewerb-Logos/bbl-laenderspiele.png",
+      "pageExtension": "/basketball/laenderspiele"
     },
     {
       "title": "Deutsche Eishockey Liga",
-      "imageUrlExtension": "/images/packete/del.png",
+      "imageUrlExtension": "/images/editorial/Logos/Bewerb-Logos/del.png",
       "pageExtension": "/eishockey/del"
     },
     {
       "title": "3. Liga",
-      "imageUrlExtension": "/images/packete/3liga.png",
+      "imageUrlExtension": "/images/editorial/Logos/Bewerb-Logos/3_liga_gro__.png",
       "pageExtension": "/fussball/3-liga"
     },
     {
       "title": "Frauen-Bundesliga",
-      "imageUrlExtension": "/images/packete/frauenbundesliga.png",
+      "imageUrlExtension": "/images/editorial/Logos/Bewerb-Logos/allianz.png",
       "pageExtension": "/fussball/frauen-bundesliga"
     },
     {
       "title": "FC Bayern.TV",
-      "imageUrlExtension": "/images/packete/fcbayerntv.png",
+      "imageUrlExtension": "/images/editorial/Logos/Bewerb-Logos/FCBTVLive-Logo-3C-2.png",
       "pageExtension": "/fc-bayern-tv-live"
     },
     {
       "title": "Sky Bundesliga",
-      "imageUrlExtension": "/images/packete/sky-bundesliga.png",
+      "imageUrlExtension": "/images/editorial/Logos/Sky/bl_logo_SKY.png",
       "pageExtension": "/sky/bundesliga"
     },
     {
       "title": "Sky Champions League",
-      "imageUrlExtension": "/images/packete/sky-cl.png",
+      "imageUrlExtension": "/images/editorial/Logos/Sky/ucl_logo_sky.png",
       "pageExtension": "/sky/champions-league"
     },
     {
       "title": "Sky Handball Bundesliga",
-      "imageUrlExtension": "/images/packete/DKB.png",
+      "imageUrlExtension": "/images/editorial/Logos/Sky/hbl_logo_sky.png",
       "pageExtension": "/sky/handball-bundesliga"
     },
     {
       "title": "Boxen",
-      "imageUrlExtension": "/images/packete/ran-fighting.png",
+      "imageUrlExtension": "/images/editorial/Logos/Bewerb-Logos/boxen_2x.png",
       "pageExtension": "/fighting/boxen"
     },
     {
       "title": "MMA",
-      "imageUrlExtension": "/images/packete/ran-fighting.png",
+      "imageUrlExtension": "/images/editorial/Logos/Bewerb-Logos/mma_2x.png",
       "pageExtension": "/fighting/mma"
     },
     {
       "title": "Wrestling",
-      "imageUrlExtension": "/images/packete/ran-fighting.png",
+      "imageUrlExtension": "/images/editorial/Logos/Bewerb-Logos/wrestling_2x.png",
       "pageExtension": "/fighting/wrestling"
     },
     {
-      "title": "Weitere Kampfsportarten",
-      "imageUrlExtension": "/images/packete/ran-fighting.png",
-      "pageExtension": "/fighting/bestoftherest"
+      "title": "UFC",
+      "imageUrlExtension": "/images/editorial/Logos/Bewerb-Logos/ufc_2x.png",
+      "pageExtension": "/fighting/ufc"
     },
     {
-      "title": "UFC",
-      "imageUrlExtension": "/images/packete/ufc.png",
-      "pageExtension": "/fighting/ufc"
+      "title": "Weitere Kampfsportarten",
+      "imageUrlExtension": "/images/editorial/Logos/Bewerb-Logos/weitere-kampsportarten.png",
+      "pageExtension": "/fighting/bestoftherest"
     }
   ]
 }
