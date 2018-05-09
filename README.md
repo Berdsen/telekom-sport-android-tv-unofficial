@@ -1,14 +1,3 @@
-[![Build Status](https://travis-ci.org/Berdsen/telekom-sport-android-tv-unofficial.svg?branch=master&style=flat-square)](https://travis-ci.org/Berdsen/telekom-sport-android-tv-unofficial)
-[![Github All Releases](https://img.shields.io/github/downloads/Berdsen/telekom-sport-android-tv-unofficial/total.svg?style=flat-square)]()
-[![GitHub release](https://img.shields.io/github/release/Berdsen/telekom-sport-android-tv-unofficial.svg?style=flat-square)](https://github.com/Berdsen/telekom-sport-android-tv-unofficial/releases/latest)
-[![license](https://img.shields.io/github/license/Berdsen/telekom-sport-android-tv-unofficial.svg?style=flat-square)]()
-
-<!-- 
-[![Maintainability](https://api.codeclimate.com/v1/badges/ef14274d082dfdbc002e/maintainability)](https://codeclimate.com/github/Berdsen/telekom-sport-android-tv-unofficial/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/ef14274d082dfdbc002e/test_coverage)](https://codeclimate.com/github/Berdsen/telekom-sport-android-tv-unofficial/test_coverage)
-[![Issue Count](https://codeclimate.com/github/Berdsen/telekom-sport-android-tv-unofficial/badges/issue_count.svg)](https://codeclimate.com/github/Berdsen/telekom-sport-android-tv-unofficial)
--->
-
 # Telekom Sport for AndroidTV - Unofficial #
 
 This application will provide you access to the telekom sport streams on your AndroidTV.  
@@ -36,6 +25,19 @@ With this application you can watch the following sports on your AndroidTV
 ## Quick summary ##
 
 Retrieving active streams from the Telekom Sport website and playing them, if you're eligible for.
+
+### Version 0.10.0 ###
+
+* updated API usage to v2 (experimental)
+
+### Version 0.9.1 ###
+
+* added boxscore type (no visible feature)
+* the boxscoretype fixes the videoDetailsFragment
+
+### Version 0.9.0 ###
+
+* added magazine type and made it playable (tested with bbl)
 
 ### Version 0.8.0 ###
 
