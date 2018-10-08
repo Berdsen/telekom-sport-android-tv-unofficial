@@ -44,6 +44,11 @@
       "pageExtension": "/basketball/bbl"
     },
     {
+      "title": "Easycredit BBL Pokal",
+      "imageUrlExtension": "/images/editorial/Logos/Bewerb-Logos/bbl-pokal-black-mini.png",
+      "pageExtension": "/basketball/bbl_pokal"
+    },
+    {
       "title": "Basketball Turkish Airlines Euroleague",
       "imageUrlExtension": "/images/editorial/Logos/Bewerb-Logos/euroleague.png",
       "pageExtension": "/basketball/euroleague"
