@@ -16,6 +16,7 @@ import de.berdsen.telekomsport_unofficial.model.GameEventDetails;
 import de.berdsen.telekomsport_unofficial.model.NoVideoContent;
 import de.berdsen.telekomsport_unofficial.model.PlayerContent;
 import de.berdsen.telekomsport_unofficial.model.ResponseData;
+import de.berdsen.telekomsport_unofficial.model.StatisticsContent;
 import de.berdsen.telekomsport_unofficial.model.TextContent;
 import de.berdsen.telekomsport_unofficial.model.VideoContent;
 import okhttp3.OkHttpClient;
@@ -110,6 +111,7 @@ public class Utils {
             registerSubtype(PlayerContent.class, "5");
             registerSubtype(BaseContent.class, "689");
             registerSubtype(BoxScoreContent.class, "1142");
+            registerSubtype(StatisticsContent.class, "2138");
         }
     }
 
