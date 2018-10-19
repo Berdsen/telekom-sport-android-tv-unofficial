@@ -3,16 +3,13 @@ package de.berdsen.telekomsport_unofficial.services.AsyncTasks;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import com.google.gson.typeadapters.RuntimeTypeAdapterFactory;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
 
 import de.berdsen.telekomsport_unofficial.model.BaseContent;
 import de.berdsen.telekomsport_unofficial.model.BoxScoreContent;
-import de.berdsen.telekomsport_unofficial.model.EpgData;
 import de.berdsen.telekomsport_unofficial.model.EventContent;
-import de.berdsen.telekomsport_unofficial.model.GameEventDetails;
 import de.berdsen.telekomsport_unofficial.model.NoVideoContent;
 import de.berdsen.telekomsport_unofficial.model.PlayerContent;
 import de.berdsen.telekomsport_unofficial.model.ResponseData;
@@ -29,44 +26,11 @@ import okhttp3.Response;
 
 public class Utils {
 
+    private static Gson gsonInstance;
+
     public static Response safeLoadResponse(OkHttpClient client, Request requestToLoad) {
         try {
             return client.newCall(requestToLoad).execute();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    public static EpgData loadEpgDataFromJson(Response response) {
-        String jsonData = "";
-
-        try {
-            jsonData = response.body().string();
-            Type genericType = new TypeToken<ResponseData<EpgData>>(){}.getType();
-            ResponseData<EpgData> currentGenericData = createGson().fromJson(jsonData, genericType);
-
-            return currentGenericData.getData();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    public static GameEventDetails loadEventDetailsDataFromJson(Response response) {
-        String jsonData = "";
-
-        try {
-            jsonData = response.body().string();
-            Type genericType = new TypeToken<ResponseData<GameEventDetails>>(){}.getType();
-
-            ResponseData<GameEventDetails> currentGenericData = createGson().fromJson(jsonData, genericType);
-
-            return currentGenericData.getData();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -82,9 +46,7 @@ public class Utils {
 
             Type type = TypeToken.getParameterized(ResponseData.class, classType).getType();
 
-            // Type genericType = new TypeToken<ResponseData<T>>(){}.getType();
-
-            ResponseData<T> currentGenericData = createGson().fromJson(jsonData, type);
+            ResponseData<T> currentGenericData = getGsonInstance().fromJson(jsonData, type);
 
             return currentGenericData.getData();
 
@@ -95,24 +57,24 @@ public class Utils {
         return null;
     }
 
-    private static Gson createGson() {
-        return new GsonBuilder()
-                .registerTypeAdapterFactory(new JsonAdapterFactory())
-                .create();
+    private static Gson getGsonInstance() {
+         return gsonInstance == null ? gsonInstance = new GsonBuilder().registerTypeAdapterFactory(new JsonAdapterFactory()).create() : gsonInstance;
     }
-    private static final class JsonAdapterFactory extends RuntimeTypeAdapterFactory<BaseContent> {
+
+    private static final class JsonAdapterFactory extends ModelTypeAdapterFactory<BaseContent> {
 
         public JsonAdapterFactory() {
-            super(BaseContent.class, "content_id");
-            registerSubtype(NoVideoContent.class, "1");
-            registerSubtype(TextContent.class, "2");
-            registerSubtype(VideoContent.class, "3");
-            registerSubtype(EventContent.class, "4");
-            registerSubtype(PlayerContent.class, "5");
-            registerSubtype(BaseContent.class, "689");
-            registerSubtype(BoxScoreContent.class, "1142");
-            registerSubtype(StatisticsContent.class, "2138");
+            super(BaseContent.class);
+            registerSubtype(NoVideoContent.class, "noVideo"); // noVideo // content_id = 1
+            registerSubtype(TextContent.class, "eventText"); // eventText // content_id = 2
+            registerSubtype(VideoContent.class, "eventVideos"); // eventVideos // content_id = 3
+            registerSubtype(EventContent.class, "relatedEvents"); // relatedEvents // content_id = 4
+            registerSubtype(PlayerContent.class, "player"); // player // content_id = 5
+            //registerSubtype(PlayerContent.class, "noVideoPost"); // noVideoPost // content_id = 6
+            //registerSubtype(BaseContent.class, "eventLane"); // eventLane // content_id = 689
+            registerSubtype(BoxScoreContent.class, "boxScore"); //boxScore // content_id = 1142
+            registerSubtype(StatisticsContent.class, "statistics"); // statistics // content_id = 2138 || content_id = 2141
         }
     }
-
 }
+

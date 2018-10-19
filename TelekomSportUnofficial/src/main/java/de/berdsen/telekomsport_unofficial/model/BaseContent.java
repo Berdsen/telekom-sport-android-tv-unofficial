@@ -20,6 +20,9 @@ public class BaseContent {
     @SerializedName("type_id")
     int typeId;
 
+    @SerializedName("type_subdirectory")
+    String typeSubdirectory;
+
     @SerializedName("title")
     String title;
 
