@@ -15,6 +15,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import de.berdsen.telekomsport_unofficial.AndroidApplication;
 import de.berdsen.telekomsport_unofficial.R;
 import de.berdsen.telekomsport_unofficial.model.EpgData;
 import de.berdsen.telekomsport_unofficial.model.GameEvent;
@@ -50,6 +51,9 @@ public class SportsVideoViewFragment extends AbstractBaseBrowseFragment implemen
     @Inject
     SportsService sportsService;
 
+    @Inject
+    AndroidApplication androidApplication;
+
     public static final String SELECTED_SPORT_PARAMETER = "__SELECTED_SPORT__";
 
     private ArrayObjectAdapter mRowsAdapter;
@@ -68,16 +72,19 @@ public class SportsVideoViewFragment extends AbstractBaseBrowseFragment implemen
     }
 
     private void createLayout(final Sport givenSport) {
+
         mRowsAdapter = new ArrayObjectAdapter(new ListRowPresenter());
 
         setOnItemViewClickedListener(this);
         setTitle(givenSport.getTitle());
         setAdapter(mRowsAdapter);
 
+        androidApplication.setLoading(true);
         restService.retrieveSportVideos(givenSport, new EpgResolvedHandler() {
 
             @Override
             public void epgDataResolved(Sport resolvedSport, List<EpgData> epgList) {
+                androidApplication.setLoading(false);
                 createListEntries(givenSport, epgList);
             }
         });
@@ -115,6 +122,7 @@ public class SportsVideoViewFragment extends AbstractBaseBrowseFragment implemen
                 return;
             }
 
+            androidApplication.setLoading(true);
             restService.retrieveEventDetails(event, decideNextView);
 
             /*
@@ -133,6 +141,9 @@ public class SportsVideoViewFragment extends AbstractBaseBrowseFragment implemen
 
         @Override
         public void onGameEventResolved(GameEvent event, GameEventDetails eventDetails) {
+
+            androidApplication.setLoading(false);
+
             if (eventDetails == null) return;
 
             sportsService.setGameEvent(event, eventDetails);

@@ -33,6 +33,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import de.berdsen.telekomsport_unofficial.AndroidApplication;
 import de.berdsen.telekomsport_unofficial.model.GameEventDetails;
 import de.berdsen.telekomsport_unofficial.model.TelekomApiConstants;
 import de.berdsen.telekomsport_unofficial.model.VideoDetails;
@@ -67,6 +68,9 @@ public class VideoPlaybackFragment extends AbstractBaseVideoFragment {
 
     @Inject
     TelekomApiConstants apiConstants;
+
+    @Inject
+    AndroidApplication androidApplication;
 
     private LeanbackPlayerAdapter mPlayerAdapter;
     private GameEventDetails gameEventDetails;
@@ -136,9 +140,12 @@ public class VideoPlaybackFragment extends AbstractBaseVideoFragment {
     }
 
     private void prepareMediaForPlaying(final Uri mediaSourceUri) {
+        androidApplication.setLoading(true);
         restService.retrieveVideoUrl(mediaSourceUri, new VideoUrlResolvedHandler() {
             @Override
             public void resolvedVideoUrl(String urlString) {
+
+                androidApplication.setLoading(false);
                 if (urlString == null || urlString.length() == 0) {
                     Toast.makeText(context, "Could not get VideoUrl", Toast.LENGTH_LONG).show();
                     getFragmentManager().popBackStack();

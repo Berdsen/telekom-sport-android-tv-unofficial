@@ -82,9 +82,12 @@ public class SportsOverviewFragment extends AbstractBaseBrowseFragment implement
         setHeadersState(HEADERS_DISABLED);
         setOnItemViewClickedListener(this);
 
+        this.androidApplication.setLoading(true);
+
         restService.retrieveSportsList(new SportsResolvedHandler() {
             @Override
             public void resolvedSports(List<Sport> sports, List<Sport> competitions) {
+                androidApplication.setLoading(false);
                 loadedSports = sports;
                 loadedCompetitions = competitions;
 

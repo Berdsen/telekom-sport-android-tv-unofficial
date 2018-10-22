@@ -7,6 +7,8 @@ import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import javax.inject.Inject;
 
@@ -38,6 +40,8 @@ public class MainActivity extends AbstractBaseActivity {
         transaction.commit();
 
         setContentView(R.layout.activity_sports_overview);
+
+        app.initializeSpinner((ProgressBar)findViewById(R.id.appSpinner));
 
         app.doLogin(sessionService, context);
     }
