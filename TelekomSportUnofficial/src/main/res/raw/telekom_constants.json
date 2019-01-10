@@ -1,5 +1,5 @@
 {
-  "baseUrl": "https://www.telekomsport.de",
+  "baseUrl": "https://www.magentasport.de",
   "apiUrlExtension": "/api/v2",
   "loginUrlExtension": "/service/auth/web/login?headto=%s/info",
   "loginEndpoint": "https://accounts.login.idm.telekom.com/sso",

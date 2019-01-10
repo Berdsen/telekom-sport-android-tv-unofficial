@@ -7,8 +7,8 @@ android {
         applicationId "de.berdsen.telekomsport_unofficial"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 120
-        versionName "0.12.0"
+        versionCode 130
+        versionName "0.13.0"
     }
     buildTypes {
         release {
