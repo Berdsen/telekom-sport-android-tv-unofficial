@@ -3,7 +3,6 @@ sudo: required
 jdk: oraclejdk8
 env:
   global:
-  - ANDROID_HOME=$HOME/android-sdk
   - ANDROID_TOOLS=$HOME/android-sdk/tools
   - ANDROID_API=26
   - EMULATOR_API=22
@@ -13,7 +12,7 @@ branches:
   only:
   - master
 #   should match branches like Alpha/0.1.2-abc0123
-  - /[a-zA-Z0-9]+\/\d.\d.\d-[0-9a-f]+/
+  - /[a-zA-Z0-9]+\/\d.\d+.\d+-[0-9a-f]+/
 before_cache: 
   # Do not cache a few Gradle files/directories (see https://docs.travis-ci.com/user/languages/java/#Caching)
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -45,42 +44,22 @@ before_install:
   - "./gradlew dependencies || true"
   - mkdir keys
   - git clone "https://$BITBUCKET_USERNAME:$BITBUCKET_PASSWORD@bitbucket.org/$BITBUCKET_USERNAME/$BITBUCKET_REPONAME.git" keys
-install:
-  # Download and unzip the Android SDK tools (if not already there thanks to the cache mechanism)
-  # Latest version available here: https://developer.android.com/studio/index.html#downloads
-  - if test ! -e $HOME/android-sdk-dl/sdk-tools.zip ; then curl https://dl.google.com/android/repository/sdk-tools-linux-3859397.zip > $HOME/android-sdk-dl/sdk-tools.zip ; fi
-  - unzip -qq -n $HOME/android-sdk-dl/sdk-tools.zip -d $HOME/android-sdk
-
-  # Install or update Android SDK components (will not do anything if already up to date thanks to the cache mechanism)
-  - echo y | $ANDROID_TOOLS/bin/sdkmanager "tools" > /dev/null
-  - echo y | $ANDROID_TOOLS/bin/sdkmanager "platform-tools" > /dev/null
-  - echo y | $ANDROID_TOOLS/bin/sdkmanager "build-tools;$ANDROID_BUILD_TOOLS" > /dev/null
-  - echo y | $ANDROID_TOOLS/bin/sdkmanager "platforms;android-$ANDROID_API" > /dev/null
-  - echo y | $ANDROID_TOOLS/bin/sdkmanager "platforms;android-$EMULATOR_API" > /dev/null
-  - echo y | $ANDROID_TOOLS/bin/sdkmanager "system-images;android-$EMULATOR_API;default;armeabi-v7a" > /dev/null
-  - echo y | $ANDROID_TOOLS/bin/sdkmanager "system-images;android-$EMULATOR_API;android-tv;armeabi-v7a" > /dev/null
-  - echo y | $ANDROID_TOOLS/bin/sdkmanager "extras;google;m2repository" > /dev/null
- # commentedChapter:
-  # android:
-  #   components:
-  #   - tools
-  #   - platform-tools
-  #   - build-tools-$ANDROID_BUILD_TOOLS
-  #   - android-$EMULATOR_API
-  #   - android-$ANDROID_API
-  #   - sys-img-armeabi-v7a-android-$EMULATOR_API
-  #   - sys-img-armeabi-v7a-android-tv-$EMULATOR_API
-  #   licenses:
-  #   - android-sdk-preview-license-.+
-  #   - android-sdk-license-.+
+android:
+  components:
+  - tools
+  - platform-tools
+  - build-tools-$ANDROID_BUILD_TOOLS
+  - android-$EMULATOR_API
+  - android-$ANDROID_API
+  - sys-img-armeabi-v7a-android-$EMULATOR_API
+  - sys-img-armeabi-v7a-android-tv-$EMULATOR_API
+  licenses:
+  - android-sdk-preview-license-.+
+  - android-sdk-license-.+
 before_script:
-  - $ANDROID_TOOLS/android list target
-  - echo no | $ANDROID_TOOLS/android create avd --force -n test -k "system-images;android-$EMULATOR_API;android-tv;armeabi-v7a"
-  - $ANDROID_HOME/emulator/emulator -avd test -no-audio -no-window &
-  - android-wait-for-emulator
-  - adb shell input keyevent 82 &
+  - android list target
 script:
-  - "./gradlew clean build connectedCheck -PdisablePreDex --stacktrace"
+  - "./gradlew clean build -PdisablePreDex --stacktrace"
 before_deploy:
   - cd TelekomSportUnofficial/build/outputs/apk/release
   - jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore $TRAVIS_BUILD_DIR/keys/$KEYSTORE_FILENAME -storepass $KEYSTORE_PASSWORD -keypass $KEYSTORE_KEY_PASSWORD TelekomSportUnofficial-release-unsigned.apk $KEYSTORE_KEY_ALIAS

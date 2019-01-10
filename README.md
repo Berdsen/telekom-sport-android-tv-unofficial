@@ -1,3 +1,8 @@
+[![Build Status](https://travis-ci.org/Berdsen/telekom-sport-android-tv-unofficial.svg?branch=master&style=flat-square)](https://travis-ci.org/Berdsen/telekom-sport-android-tv-unofficial)
+[![Github All Releases](https://img.shields.io/github/downloads/Berdsen/telekom-sport-android-tv-unofficial/total.svg?style=flat-square)]()
+[![GitHub release](https://img.shields.io/github/release/Berdsen/telekom-sport-android-tv-unofficial.svg?style=flat-square)](https://github.com/Berdsen/telekom-sport-android-tv-unofficial/releases/latest)
+[![license](https://img.shields.io/github/license/Berdsen/telekom-sport-android-tv-unofficial.svg?style=flat-square)]()
+
 # Telekom Sport for AndroidTV - Unofficial #
 
 This application will provide you access to the telekom sport streams on your AndroidTV.  
@@ -5,26 +10,46 @@ You can just watch videos you are eligible for with your account. So you need to
 
 With this application you can watch the following sports on your AndroidTV
 * Basketball
-** Easycredit BBL
-** Euroleague
-** Eurocup
-** FIBA Events
+  * Easycredit BBL
+  * Euroleague
+  * Eurocup
+  * FIBA Events
 * Soccer
-** Men's Football Third League
-** Women's Football Bundesliga
+  * Men's Football Third League
+  * Women's Football Bundesliga
 * Ice Hockey
-** DEL
+  * DEL
 * FCB Tv (might be)
 * Fighting (currently not supported)
-** Boxing
-** MMA
-** Wrestling
-** UFC
-** others
+  * Boxing
+  * MMA
+  * Wrestling
+  * UFC
+  * others
 
 ## Quick summary ##
 
 Retrieving active streams from the Telekom Sport website and playing them, if you're eligible for.
+
+### Version 0.13.0 ###
+
+* updated base url to use magentasport.de
+
+### Version 0.12.0 ###
+
+* Added a loading spinner and updated environment dependencies
+
+### Version 0.11.0 ###
+
+* Added an own TypeAdapterFactory for more stability when api objects will be changed (again)
+
+### Version 0.10.2 ###
+
+* Bugfix. Added StatisticsContent class
+
+### Version 0.10.1 ###
+
+* Added BBL Pokal lane
 
 ### Version 0.10.0 ###
 
