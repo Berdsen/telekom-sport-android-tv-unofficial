@@ -143,11 +143,11 @@ public class VideoPlaybackFragment extends AbstractBaseVideoFragment {
         androidApplication.setLoading(true);
         restService.retrieveVideoUrl(mediaSourceUri, new VideoUrlResolvedHandler() {
             @Override
-            public void resolvedVideoUrl(String urlString) {
+            public void resolvedVideoUrl(String urlString, String errorMessage) {
 
                 androidApplication.setLoading(false);
                 if (urlString == null || urlString.length() == 0) {
-                    Toast.makeText(context, "Could not get VideoUrl", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, "Error: " + errorMessage, Toast.LENGTH_LONG).show();
                     getFragmentManager().popBackStack();
                     return;
                 }

@@ -14,7 +14,7 @@ public class VideoStreamData {
     String status;
 
     @SerializedName("data")
-    StreamUrl streamUrl;
+    Object streamUrl;
 
     @SerializedName("message")
     String errorMessage;

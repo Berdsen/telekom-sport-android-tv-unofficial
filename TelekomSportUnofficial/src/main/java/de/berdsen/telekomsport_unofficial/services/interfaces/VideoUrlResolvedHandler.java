@@ -5,5 +5,5 @@ package de.berdsen.telekomsport_unofficial.services.interfaces;
  */
 
 public interface VideoUrlResolvedHandler {
-    void resolvedVideoUrl(String urlString);
+    void resolvedVideoUrl(String urlString, String errorMessage);
 }

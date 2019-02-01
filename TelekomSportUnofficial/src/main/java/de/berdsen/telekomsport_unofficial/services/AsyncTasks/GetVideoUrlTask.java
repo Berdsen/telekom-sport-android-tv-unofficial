@@ -15,6 +15,7 @@ import java.net.HttpCookie;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.berdsen.telekomsport_unofficial.model.StreamUrl;
 import de.berdsen.telekomsport_unofficial.model.TelekomApiConstants;
 import de.berdsen.telekomsport_unofficial.model.VideoStreamData;
 import de.berdsen.telekomsport_unofficial.services.SessionService;
@@ -37,6 +38,7 @@ public class GetVideoUrlTask extends AsyncTask<Uri, Void, String> {
 
     private final SessionService sessionService;
     private final TelekomApiConstants constants;
+    private String errorMessage;
 
     public VideoUrlResolvedHandler handler;
 
@@ -47,6 +49,8 @@ public class GetVideoUrlTask extends AsyncTask<Uri, Void, String> {
 
     @Override
     protected String doInBackground(Uri... uris) {
+        errorMessage = "";
+
         if (uris == null || uris.length == 0) {
             return null;
         }
@@ -87,7 +91,10 @@ public class GetVideoUrlTask extends AsyncTask<Uri, Void, String> {
 
             if ("success".equals(videoStreamData.getStatus())) {
                 // TODO: cleanup
-                return getUrlFromXml("https:" + videoStreamData.getStreamUrl().getUrls().get(0));
+                StreamUrl url = StreamUrl.parse(videoStreamData.getStreamUrl());
+                return getUrlFromXml("https:" + url.getUrls().get(0));
+            } else {
+                errorMessage = videoStreamData.getErrorMessage();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -147,6 +154,6 @@ public class GetVideoUrlTask extends AsyncTask<Uri, Void, String> {
     protected void onPostExecute(String s) {
         if (handler == null) return;
 
-        handler.resolvedVideoUrl(s);
+        handler.resolvedVideoUrl(s, errorMessage);
     }
 }
