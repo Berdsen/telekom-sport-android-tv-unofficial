@@ -1,26 +1,26 @@
 package de.berdsen.telekomsport_unofficial.ui.base;
 
-import android.app.Activity;
 import android.app.Application;
-import android.app.Fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 
 import javax.inject.Inject;
 
 import dagger.android.AndroidInjection;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
-import dagger.android.HasFragmentInjector;
+import dagger.android.support.HasSupportFragmentInjector;
 import de.berdsen.telekomsport_unofficial.AndroidApplication;
 
 /**
  * Created by berthm on 28.09.2017.
  */
 
-public abstract class AbstractBaseActivity extends Activity implements HasFragmentInjector {
+public abstract class AbstractBaseActivity extends FragmentActivity implements HasSupportFragmentInjector {
 
     @Inject
     protected AndroidApplication app;
@@ -38,7 +38,7 @@ public abstract class AbstractBaseActivity extends Activity implements HasFragme
     DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
 
     @Override
-    public AndroidInjector<Fragment> fragmentInjector() {
+    public AndroidInjector<Fragment> supportFragmentInjector() {
         return fragmentDispatchingAndroidInjector;
     }
 

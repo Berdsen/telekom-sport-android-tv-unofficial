@@ -1,10 +1,9 @@
 package de.berdsen.telekomsport_unofficial.ui.fragments;
 
-import android.app.FragmentTransaction;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v17.leanback.app.DetailsFragmentBackgroundController;
+import android.support.v17.leanback.app.DetailsSupportFragmentBackgroundController;
 import android.support.v17.leanback.widget.Action;
 import android.support.v17.leanback.widget.ArrayObjectAdapter;
 import android.support.v17.leanback.widget.ClassPresenterSelector;
@@ -18,6 +17,7 @@ import android.support.v17.leanback.widget.Presenter;
 import android.support.v17.leanback.widget.Row;
 import android.support.v17.leanback.widget.RowPresenter;
 import android.support.v17.leanback.widget.SparseArrayObjectAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -61,7 +61,7 @@ public class SelectedVideoDetailsFragment extends AbstractBaseDetailsFragment im
     private GameEventDetails selectedGameEventDetails;
     private DetailsOverviewRow mRow;
     private ArrayList<Object> listOfActions;
-    private DetailsFragmentBackgroundController backgroundController = new DetailsFragmentBackgroundController(this);
+    private DetailsSupportFragmentBackgroundController backgroundController = new DetailsSupportFragmentBackgroundController(this);
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -104,7 +104,7 @@ public class SelectedVideoDetailsFragment extends AbstractBaseDetailsFragment im
         loadBackgroundImage();
     }
 
-    private DetailsFragmentBackgroundController getBackgroundController() {
+    private DetailsSupportFragmentBackgroundController getBackgroundController() {
         return backgroundController;
     }
 

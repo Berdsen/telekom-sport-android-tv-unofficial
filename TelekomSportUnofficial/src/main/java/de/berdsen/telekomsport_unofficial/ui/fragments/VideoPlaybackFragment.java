@@ -3,6 +3,7 @@ package de.berdsen.telekomsport_unofficial.ui.fragments;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v17.leanback.app.VideoFragmentGlueHost;
+import android.support.v17.leanback.app.VideoSupportFragmentGlueHost;
 import android.text.Html;
 import android.widget.Toast;
 
@@ -122,7 +123,7 @@ public class VideoPlaybackFragment extends AbstractBaseVideoFragment {
             }
         });
 
-        mPlayerGlue.setHost(new VideoFragmentGlueHost(this));
+        mPlayerGlue.setHost(new VideoSupportFragmentGlueHost(this));
 
         play(gameEventDetails, videoDetails);
     }

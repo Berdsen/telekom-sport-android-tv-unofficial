@@ -1,13 +1,12 @@
 package de.berdsen.telekomsport_unofficial.ui;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.View;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.widget.ProgressBar;
 
 import javax.inject.Inject;
@@ -30,7 +29,7 @@ public class MainActivity extends AbstractBaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
         // Replace whatever is in the fragment_container view with this fragment,
         // and add the transaction to the back stack so the user can navigate back
@@ -48,9 +47,9 @@ public class MainActivity extends AbstractBaseActivity {
 
     @Override
     public void onBackPressed() {
-        FragmentManager fragmentManager = getFragmentManager();
+        FragmentManager fragmentManager = getSupportFragmentManager();
 
-        final Activity mainActivity = this;
+        final FragmentActivity mainActivity = this;
 
         if (fragmentManager.getBackStackEntryCount() == 0) {
             AlertDialog dialog = new AlertDialog.Builder(mainActivity)

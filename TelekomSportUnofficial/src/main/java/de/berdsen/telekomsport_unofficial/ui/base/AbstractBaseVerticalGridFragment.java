@@ -3,18 +3,18 @@ package de.berdsen.telekomsport_unofficial.ui.base;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v17.leanback.app.VerticalGridFragment;
+import android.support.v17.leanback.app.VerticalGridSupportFragment;
 import android.support.v17.leanback.widget.VerticalGridPresenter;
 
 import javax.inject.Inject;
 
-import dagger.android.AndroidInjection;
+import dagger.android.support.AndroidSupportInjection;
 
 /**
  * Created by Berdsen on 08.10.2017.
  */
 
-public abstract class AbstractBaseVerticalGridFragment extends VerticalGridFragment {
+public abstract class AbstractBaseVerticalGridFragment extends VerticalGridSupportFragment {
 
     @Inject
     protected Context context;
@@ -37,7 +37,7 @@ public abstract class AbstractBaseVerticalGridFragment extends VerticalGridFragm
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        AndroidInjection.inject(this);
+        AndroidSupportInjection.inject(this);
         super.onCreate(savedInstanceState);
     }
 }
