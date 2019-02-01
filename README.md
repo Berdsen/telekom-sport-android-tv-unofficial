@@ -31,6 +31,10 @@ With this application you can watch the following sports on your AndroidTV
 
 Retrieving active streams from the Telekom Sport website and playing them, if you're eligible for.
 
+### Version 0.13.1 ###
+
+* Fixed crashing when trying to view a stream, without being authorized for the stream
+
 ### Version 0.13.0 ###
 
 * updated base url to use magentasport.de
