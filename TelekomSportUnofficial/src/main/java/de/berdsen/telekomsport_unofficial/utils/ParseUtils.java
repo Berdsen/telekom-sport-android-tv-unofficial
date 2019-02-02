@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -31,7 +32,7 @@ public class ParseUtils {
                 int size = is.available();
                 byte[] buffer = new byte[size];
                 is.read(buffer);
-                json = new String(buffer, "UTF-8");
+                json = new String(buffer, StandardCharsets.UTF_8);
             }
         } catch( IOException e ) {
             return null;
@@ -77,10 +78,7 @@ public class ParseUtils {
     }
 
     public static boolean isNullOrWhitespace(String input) {
-        if (input == null || input.trim().equals("")) {
-            return true;
-        }
-        return false;
+        return input == null || input.trim().equals("");
     }
 
     public static EventCardItem createCardItem(GameEvent event, String baseUrl) {

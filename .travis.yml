@@ -11,6 +11,7 @@ env:
 branches:
   only:
   - master
+  - develop
 #   should match branches like Alpha/0.1.2-abc0123
   - /[a-zA-Z0-9]+\/\d.\d+.\d+-[0-9a-f]+/
 before_cache: 

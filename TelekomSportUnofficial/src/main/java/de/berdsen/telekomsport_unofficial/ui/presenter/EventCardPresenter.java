@@ -104,7 +104,7 @@ public class EventCardPresenter extends Presenter {
 
         private Drawable resolveImage(Context context, EventCardItem cardItem) throws IOException {
 
-            Bitmap image = picasso.with(context).load(cardItem.getMainImageUrl()).resize(320, 240).get();
+            Bitmap image = picasso.get().load(cardItem.getMainImageUrl()).resize(320, 240).get();
 
             if (cardItem.getHomeTeamImageUrl() == null || cardItem.getAwayTeamImageUrl() == null) {
                 Bitmap result = Bitmap.createBitmap(image.getWidth(), image.getHeight(), image.getConfig());
@@ -114,8 +114,8 @@ public class EventCardPresenter extends Presenter {
                 return new BitmapDrawable(context.getResources(), result);
             }
 
-            Bitmap homeTeam = picasso.with(context).load(cardItem.getHomeTeamImageUrl()).resize(100, 100).get();
-            Bitmap awayTeam = picasso.with(context).load(cardItem.getAwayTeamImageUrl()).resize(100, 100).get();
+            Bitmap homeTeam = picasso.get().load(cardItem.getHomeTeamImageUrl()).resize(100, 100).get();
+            Bitmap awayTeam = picasso.get().load(cardItem.getAwayTeamImageUrl()).resize(100, 100).get();
 
             Bitmap dateTime = createTextBitmap(320, 100, cardItem.getDateTime());
 

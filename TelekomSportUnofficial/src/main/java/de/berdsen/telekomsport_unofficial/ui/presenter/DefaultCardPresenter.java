@@ -40,9 +40,9 @@ public class DefaultCardPresenter extends Presenter {
         cardView.setMainImageDimensions( 320, 240 );
 
         if (cardItem.getImageResourceId() != 0) {
-            holder.updateCardViewImage( cardView.getContext(), cardItem.getImageResourceId() );
+            holder.updateCardViewImage( cardItem.getImageResourceId() );
         } else if (!TextUtils.isEmpty(cardItem.getImageUrl())){
-            holder.updateCardViewImage( cardView.getContext(), cardItem.getImageUrl() );
+            holder.updateCardViewImage( cardItem.getImageUrl() );
         }
     }
 
@@ -63,14 +63,14 @@ public class DefaultCardPresenter extends Presenter {
             picasso = picassoCache.getPicassoCacheInstance();
         }
 
-        public void updateCardViewImage(Context context, String link ) {
-            picasso.with(context).load(link)
+        public void updateCardViewImage(String link ) {
+            picasso.get().load(link)
                     .fit()/*.centerCrop()*/
                     .into(mCardView.getMainImageView());
         }
 
-        public void updateCardViewImage(Context context, int imageId ) {
-            picasso.with(context).load(imageId)
+        public void updateCardViewImage(int imageId ) {
+            picasso.get().load(imageId)
                     .fit()
                     .into(mCardView.getMainImageView());
         }
