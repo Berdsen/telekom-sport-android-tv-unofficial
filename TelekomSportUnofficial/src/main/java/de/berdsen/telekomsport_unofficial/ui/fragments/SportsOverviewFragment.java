@@ -63,7 +63,10 @@ public class SportsOverviewFragment extends AbstractBaseBrowseFragment implement
         super.onCreate(savedInstanceState);
         sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferencesChanged);
 
-        mRowsAdapter = new ArrayObjectAdapter(new ListRowPresenter());
+        ListRowPresenter presenter = new ListRowPresenter();
+        presenter.setShadowEnabled(false);
+
+        mRowsAdapter = new ArrayObjectAdapter(presenter);
         mSportsRowAdapter = new ArrayObjectAdapter(new DefaultCardPresenter(picassoCache));
         mCompetitionsRowAdapter = new ArrayObjectAdapter(new DefaultCardPresenter(picassoCache));
         mSettingsRowAdapter = new ArrayObjectAdapter(new DefaultCardPresenter(picassoCache));
