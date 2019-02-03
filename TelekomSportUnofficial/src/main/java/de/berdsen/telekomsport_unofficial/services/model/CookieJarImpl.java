@@ -27,7 +27,7 @@ public class CookieJarImpl implements CookieJar {
         List<Cookie> newCookies = new ArrayList<Cookie>();
 
         for (Cookie c : cookies) {
-            if (c.value().toString().equalsIgnoreCase("deleted")) {
+            if (c.value().equalsIgnoreCase("deleted")) {
                 Cookie e = c;
             } else {
                 newCookies.add(c);

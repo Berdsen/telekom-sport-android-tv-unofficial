@@ -1,10 +1,11 @@
 package de.berdsen.telekomsport_unofficial.ui.presenter;
 
-import android.content.Context;
+ import android.graphics.Color;
 import android.support.v17.leanback.widget.ImageCardView;
 import android.support.v17.leanback.widget.Presenter;
 import android.text.TextUtils;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
@@ -17,6 +18,9 @@ import de.berdsen.telekomsport_unofficial.services.PicassoCache;
 public class DefaultCardPresenter extends Presenter {
 
     private PicassoCache picassoCache;
+    private final int WIDTH = 320;
+    private final int HEIGHT = 240;
+    private final int PADDING = 5;
 
     public DefaultCardPresenter(PicassoCache picassoCache) {
         this.picassoCache = picassoCache;
@@ -35,14 +39,17 @@ public class DefaultCardPresenter extends Presenter {
         DefaultCardPresenterViewHolder holder = (DefaultCardPresenterViewHolder) viewHolder;
         ImageCardView cardView = holder.getCardView();
 
+        cardView.getMainImageView().setScaleType(ImageView.ScaleType.CENTER);
+        cardView.setBackgroundColor(Color.TRANSPARENT);
+
         cardView.setTitleText(cardItem.getTitle());
         cardView.setContentDescription(cardItem.getDescription());
-        cardView.setMainImageDimensions( 320, 240 );
+        cardView.setMainImageDimensions( WIDTH, HEIGHT);
 
         if (cardItem.getImageResourceId() != 0) {
-            holder.updateCardViewImage( cardView.getContext(), cardItem.getImageResourceId() );
+            holder.updateCardViewImage( cardItem.getImageResourceId() );
         } else if (!TextUtils.isEmpty(cardItem.getImageUrl())){
-            holder.updateCardViewImage( cardView.getContext(), cardItem.getImageUrl() );
+            holder.updateCardViewImage( cardItem.getImageUrl() );
         }
     }
 
@@ -63,15 +70,17 @@ public class DefaultCardPresenter extends Presenter {
             picasso = picassoCache.getPicassoCacheInstance();
         }
 
-        public void updateCardViewImage(Context context, String link ) {
-            picasso.with(context).load(link)
-                    .fit()/*.centerCrop()*/
+        public void updateCardViewImage(String link ) {
+            picasso.load(link)
+                    .resize(WIDTH - PADDING, HEIGHT - PADDING)
+                    .centerInside()
                     .into(mCardView.getMainImageView());
         }
 
-        public void updateCardViewImage(Context context, int imageId ) {
-            picasso.with(context).load(imageId)
-                    .fit()
+        public void updateCardViewImage(int imageId ) {
+            picasso.load(imageId)
+                    .resize(WIDTH - PADDING, HEIGHT - PADDING)
+                    .centerInside()
                     .into(mCardView.getMainImageView());
         }
     }

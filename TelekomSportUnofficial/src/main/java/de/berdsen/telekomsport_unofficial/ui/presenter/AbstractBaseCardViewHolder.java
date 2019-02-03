@@ -13,7 +13,7 @@ public class AbstractBaseCardViewHolder extends Presenter.ViewHolder {
 
     public AbstractBaseCardViewHolder(ImageCardView cardView) {
         super(cardView);
-        mCardView = (ImageCardView) cardView;
+        mCardView = cardView;
     }
 
     public ImageCardView getCardView() {

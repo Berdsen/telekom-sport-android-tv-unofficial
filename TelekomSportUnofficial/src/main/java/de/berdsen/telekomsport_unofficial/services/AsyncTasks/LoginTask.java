@@ -103,10 +103,8 @@ public class LoginTask extends AsyncTask<LoginUserData, Void, Boolean> {
                 postParameter.put(KEY_USERNAME, userdataArray[0].getUsername());
             }
 
-            if (postParameter.containsKey(KEY_PERSIST_SESSION)) {
-                // postParameter.put("persist_session", "1");
-                postParameter.remove(KEY_PERSIST_SESSION);
-            }
+            // postParameter.put("persist_session", "1");
+            postParameter.remove(KEY_PERSIST_SESSION);
 
             if (!postParameter.containsKey(KEY_SUBMIT)) {
                 postParameter.put(KEY_SUBMIT, "");

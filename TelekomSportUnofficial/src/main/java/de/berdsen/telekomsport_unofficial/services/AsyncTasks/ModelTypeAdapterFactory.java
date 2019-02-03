@@ -56,7 +56,7 @@ public class ModelTypeAdapterFactory<T> implements TypeAdapterFactory {
         final TypeAdapter<R> baseClassDelegate = gson.getDelegateAdapter(this, TypeToken.get((Class<R>) baseType));
 
         return new TypeAdapter<R>() {
-            @Override public R read(JsonReader in) throws IOException {
+            @Override public R read(JsonReader in) {
                 JsonElement jsonElement = Streams.parse(in);
                 JsonElement labelJsonElement = jsonElement.getAsJsonObject().remove(typeFieldName);
                 if (labelJsonElement == null) {

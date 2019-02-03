@@ -13,7 +13,6 @@ import dagger.Module;
 import dagger.Provides;
 import de.berdsen.telekomsport_unofficial.R;
 import de.berdsen.telekomsport_unofficial.model.TelekomApiConstants;
-import de.berdsen.telekomsport_unofficial.services.ImageCacheService;
 import de.berdsen.telekomsport_unofficial.services.PicassoCache;
 import de.berdsen.telekomsport_unofficial.services.RestService;
 import de.berdsen.telekomsport_unofficial.services.SessionService;
@@ -32,7 +31,6 @@ public class ServicesModule {
     private TelekomApiConstants singletonTelekomApiConstants;
     private RestService singletonRestService;
     private SessionService singletonSessionService;
-    private ImageCacheService singletonImageCacheService;
     private PicassoCache singletonPicassoCache;
     private SportsService singletonSportsService;
 
@@ -58,14 +56,6 @@ public class ServicesModule {
             initializeSessionService(context, preferences);
         }
         return singletonSessionService;
-    }
-
-    @Provides
-    ImageCacheService providesImageCacheService(Context context) {
-        if (singletonImageCacheService == null) {
-            singletonImageCacheService = new ImageCacheService(context);
-        }
-        return singletonImageCacheService;
     }
 
     @Provides
