@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">Telekom Sport - Unofficial</string>
+    <string name="settingsTitle">Benutzeineinstellungen</string>
+    <string name="settingsBreadcrumb" translatable="false">Telekomsport - Unofficial</string>
+    <string name="settingsDescription">Hier können die Benutzereinstellungen angepasst werden</string>
+    <string name="settingsPassword">Passwort</string>
+    <string name="settingsUsername">Benutzername</string>
+    <string name="emptyString" />
+    <string name="settingsSave">Speichern</string>
+    <string name="settingsCancel">Abbruch</string>
+    <string name="settingsSaveDescription">Speichert die vorgenommenen Einstellungen</string>
+    <string name="settingsCancelDescription">Verwirft die vorgenommenen Einstellungen seit dem letzten Speichern</string>
+    <string name="settingsReset">Zurücksetzen</string>
+    <string name="settingsResetQuestion">Möchten sie wirklich alle Einstellungen zurücksetzen?</string>
+    <string name="globalYes">Ja</string>
+    <string name="globalNo">Nein</string>
+    <string name="selection_disabled">Deaktiviert</string>
+    <string name="selection_default">Default</string>
+    <string name="enable_random_adaptation">Aktiviere zufällige Adaption</string>
+    <string name="exit_question_title">Anwendung verlassen</string>
+    <string name="exit_question_message">Möchten sie die Anwendung wirklich verlassen?</string>
+    <string name="overview_preferencesTitle">Einstellungen</string>
+    <string name="overview_preferencesDescription">Anwendungseinstellungen</string>
+    <string name="overview_aboutTitle">Über</string>
+    <string name="overview_aboutDescription">Informationen zur Anwendung</string>
+    <string name="overview_sportsTitle">Sport nach Typ</string>
+    <string name="overview_competitionsTitle">Wettbewerbe</string>
+    <string name="overview_settingsTitle">Einstellungen</string>
+    <string name="error_NoSportSelected">Es wurde kein Sporteintrag selektiert</string>
+    <string name="selectedVideoDetails_backgroudImageError">Das Hintergrundbild konnte nicht gesetzt werden:</string>
+    <string name="selectedVideoDetails_gameReport">Spielbericht</string>
+    <string name="selectedVideoDetails_replay">Wiederholung</string>
+    <string name="selectedVideoDetails_magazine">Magazin</string>
+    <string name="videoPlayback_noVideoDetailsError">Kein Event selektiert</string>
+    <string name="videoPlayback_qualityChooser">Qualitätswähler</string>
+    <string name="videoPlayback_noPlayableContentError">Kein wiedergebbarer Inhalt</string>
+</resources>

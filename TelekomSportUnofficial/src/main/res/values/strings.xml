@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">Telekom Sport - Unofficial</string>
+    <string name="app_name" translatable="false">Telekom Sport - Unofficial</string>
     <string name="settingsTitle">User Settings</string>
-    <string name="settingsBreadcrumb">Telekomsport - Unofficial</string>
+    <string name="settingsBreadcrumb" translatable="false">Telekomsport - Unofficial</string>
     <string name="settingsDescription">Here you can adjust your user settings</string>
     <string name="settingsPassword">Password</string>
     <string name="settingsUsername">Username</string>

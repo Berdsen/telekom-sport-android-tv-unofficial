@@ -2,12 +2,18 @@ package de.berdsen.telekomsport_unofficial.ui.base;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 
+import java.util.Locale;
+
+import javax.annotation.Resource;
 import javax.inject.Inject;
 
 import dagger.android.AndroidInjection;
@@ -46,5 +52,21 @@ public abstract class AbstractBaseActivity extends FragmentActivity implements H
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        //TODO: read language from Preferences
+        String lngCode = "en";
+        Locale newLocale = new Locale(lngCode);
+        Locale.setDefault(newLocale);
+
+        Resources res = newBase.getResources();
+        Configuration config = new Configuration(res.getConfiguration());
+        config.setLocale(newLocale);
+
+        newBase = newBase.createConfigurationContext(config);
+
+        super.attachBaseContext(newBase);
     }
 }
