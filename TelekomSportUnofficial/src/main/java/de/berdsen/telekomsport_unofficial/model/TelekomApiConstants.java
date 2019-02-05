@@ -1,6 +1,7 @@
 package de.berdsen.telekomsport_unofficial.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import lombok.Data;
@@ -11,6 +12,7 @@ import lombok.Data;
 
 @Data
 public final class TelekomApiConstants implements Serializable {
+    private final Date versionDate;
     private final String baseUrl;
     private final String apiUrlExtension;
     private final String loginUrlExtension;
@@ -20,7 +22,8 @@ public final class TelekomApiConstants implements Serializable {
     private final List<Sport> sports;
     private final List<Sport> competitions;
 
-    public TelekomApiConstants(String baseUrl, String apiUrlExtension, String loginUrlExtension, String loginEndpoint, String videoUrlExtension, String videoUrlParams, List<Sport> sports, List<Sport> competitions) {
+    public TelekomApiConstants(Date versionDate, String baseUrl, String apiUrlExtension, String loginUrlExtension, String loginEndpoint, String videoUrlExtension, String videoUrlParams, List<Sport> sports, List<Sport> competitions) {
+        this.versionDate = versionDate;
         this.baseUrl = baseUrl;
         this.apiUrlExtension = apiUrlExtension;
         this.loginUrlExtension = loginUrlExtension;
