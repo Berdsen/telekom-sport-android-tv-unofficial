@@ -6,6 +6,7 @@
   "loginEndpoint": "https://accounts.login.idm.telekom.com/sso",
   "videoUrlExtension": "/service/player/streamAccess",
   "videoUrlParams": "?videoId=%s&label=2780_hls",
+  "bannerImageUrl": "https://www.telekomsport.de/images/share_img_fb.jpg",
   "sports": [
     {
       "title": "Basketball",

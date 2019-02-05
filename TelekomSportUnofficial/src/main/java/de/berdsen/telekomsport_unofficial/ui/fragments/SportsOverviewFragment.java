@@ -1,5 +1,6 @@
 package de.berdsen.telekomsport_unofficial.ui.fragments;
 
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -71,14 +72,15 @@ public class SportsOverviewFragment extends AbstractBaseBrowseFragment implement
         mCompetitionsRowAdapter = new ArrayObjectAdapter(new DefaultCardPresenter(picassoCache));
         mSettingsRowAdapter = new ArrayObjectAdapter(new DefaultCardPresenter(picassoCache));
 
-        HeaderItem sportsHeader = new HeaderItem(0, "Sports");
-        HeaderItem competitionsHeader = new HeaderItem(1, "Competitions");
-        HeaderItem settingsHeader = new HeaderItem(2, "Settings");
+        HeaderItem sportsHeader = new HeaderItem(0, getString(R.string.overview_sportsTitle));
+        HeaderItem competitionsHeader = new HeaderItem(1, getString(R.string.overview_competitionsTitle));
+        HeaderItem settingsHeader = new HeaderItem(2, getString(R.string.overview_settingsTitle));
         mRowsAdapter.add(new ListRow(sportsHeader, mSportsRowAdapter));
         mRowsAdapter.add(new ListRow(competitionsHeader, mCompetitionsRowAdapter));
         mRowsAdapter.add(new ListRow(settingsHeader, mSettingsRowAdapter));
 
-        mSettingsRowAdapter.add(ParseUtils.createCardItem("Preferences", "Application settings", R.drawable.perm_group_system_tools));
+        mSettingsRowAdapter.add(ParseUtils.createCardItem(getString(R.string.overview_preferencesTitle), getString(R.string.overview_preferencesDescription), R.drawable.perm_group_system_tools));
+        mSettingsRowAdapter.add(ParseUtils.createCardItem(getString(R.string.overview_aboutTitle), getString(R.string.overview_aboutDescription), R.drawable.perm_group_system_tools));
 
         setTitle(getString(R.string.app_name));
         setAdapter(mRowsAdapter);
@@ -129,16 +131,18 @@ public class SportsOverviewFragment extends AbstractBaseBrowseFragment implement
 
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
+                Fragment fragment = cardItem.getTitle() == getString(R.string.overview_preferencesTitle) ? new SettingsFragment() : new AboutFragment();
+
                 // Replace whatever is in the fragment_container view with this fragment,
                 // and add the transaction to the back stack so the user can navigate back
-                transaction.replace(R.id.sportsOverviewContainer, new SettingsFragment());
+                transaction.replace(R.id.sportsOverviewContainer, fragment);
                 transaction.addToBackStack(null);
 
                 // Commit the transaction
                 transaction.commit();
             } else {
                 if (!(cardItem.getItem() instanceof Sport)) {
-                    Toast.makeText(context, "No sports entry selected", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, getString(R.string.error_NoSportSelected), Toast.LENGTH_LONG).show();
                     return;
                 }
 
