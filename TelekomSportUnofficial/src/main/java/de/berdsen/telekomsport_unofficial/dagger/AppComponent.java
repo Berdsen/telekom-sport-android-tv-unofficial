@@ -8,7 +8,7 @@ import dagger.android.AndroidInjectionModule;
 import de.berdsen.telekomsport_unofficial.AndroidApplication;
 
 /**
- * Created by berthm on 26.09.2017.
+ * Created by Berdsen on 26.09.2017.
  */
 
 @Singleton

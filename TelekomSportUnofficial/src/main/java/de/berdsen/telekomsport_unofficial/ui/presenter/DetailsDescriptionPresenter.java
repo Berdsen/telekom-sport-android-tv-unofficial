@@ -11,7 +11,7 @@ import de.berdsen.telekomsport_unofficial.model.GameEventDetails;
 import de.berdsen.telekomsport_unofficial.model.TextContent;
 
 /**
- * Created by berthm on 01.11.2017.
+ * Created by Berdsen on 01.11.2017.
  */
 
 public class DetailsDescriptionPresenter extends AbstractDetailsDescriptionPresenter {

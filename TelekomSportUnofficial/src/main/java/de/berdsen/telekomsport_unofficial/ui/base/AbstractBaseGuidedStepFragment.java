@@ -9,7 +9,7 @@ import javax.inject.Inject;
 import dagger.android.support.AndroidSupportInjection;
 
 /**
- * Created by berthm on 09.10.2017.
+ * Created by Berdsen on 09.10.2017.
  */
 
 public abstract class AbstractBaseGuidedStepFragment extends GuidedStepSupportFragment {

@@ -17,7 +17,7 @@ import dagger.android.support.HasSupportFragmentInjector;
 import de.berdsen.telekomsport_unofficial.AndroidApplication;
 
 /**
- * Created by berthm on 28.09.2017.
+ * Created by Berdsen on 28.09.2017.
  */
 
 public abstract class AbstractBaseActivity extends FragmentActivity implements HasSupportFragmentInjector {

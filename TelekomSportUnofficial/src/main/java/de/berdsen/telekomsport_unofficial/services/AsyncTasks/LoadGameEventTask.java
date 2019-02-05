@@ -11,7 +11,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /**
- * Created by berthm on 20.10.2017.
+ * Created by Berdsen on 20.10.2017.
  */
 
 public class LoadGameEventTask extends AsyncTask<GameEvent, Void, GameEventDetails> {

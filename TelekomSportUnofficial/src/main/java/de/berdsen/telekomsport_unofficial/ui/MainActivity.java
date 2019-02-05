@@ -17,7 +17,7 @@ import de.berdsen.telekomsport_unofficial.ui.base.AbstractBaseActivity;
 import de.berdsen.telekomsport_unofficial.ui.fragments.SportsOverviewFragment;
 
 /**
- * Created by berthm on 28.09.2017.
+ * Created by Berdsen on 28.09.2017.
  */
 
 public class MainActivity extends AbstractBaseActivity {

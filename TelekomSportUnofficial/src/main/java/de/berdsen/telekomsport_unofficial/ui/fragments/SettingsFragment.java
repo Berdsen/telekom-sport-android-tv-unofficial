@@ -16,7 +16,7 @@ import de.berdsen.telekomsport_unofficial.ui.base.AbstractBaseGuidedStepFragment
 import de.berdsen.telekomsport_unofficial.utils.ApplicationConstants;
 
 /**
- * Created by berthm on 09.10.2017.
+ * Created by Berdsen on 09.10.2017.
  */
 
 public class SettingsFragment extends AbstractBaseGuidedStepFragment

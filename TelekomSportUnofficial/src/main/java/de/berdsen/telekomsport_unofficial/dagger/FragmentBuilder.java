@@ -9,7 +9,7 @@ import de.berdsen.telekomsport_unofficial.ui.fragments.SportsVideoViewFragment;
 import de.berdsen.telekomsport_unofficial.ui.fragments.VideoPlaybackFragment;
 
 /**
- * Created by berthm on 26.09.2017.
+ * Created by Berdsen on 26.09.2017.
  */
 
 @Module

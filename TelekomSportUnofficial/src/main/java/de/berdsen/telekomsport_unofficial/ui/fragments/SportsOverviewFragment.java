@@ -30,7 +30,7 @@ import de.berdsen.telekomsport_unofficial.ui.presenter.DefaultCardPresenter;
 import de.berdsen.telekomsport_unofficial.utils.ParseUtils;
 
 /**
- * Created by berthm on 06.10.2017.
+ * Created by Berdsen on 06.10.2017.
  */
 
 public class SportsOverviewFragment extends AbstractBaseBrowseFragment implements OnItemViewClickedListener {

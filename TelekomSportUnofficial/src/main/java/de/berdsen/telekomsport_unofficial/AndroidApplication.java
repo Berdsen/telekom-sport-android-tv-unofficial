@@ -19,7 +19,7 @@ import de.berdsen.telekomsport_unofficial.services.SessionService;
 import de.berdsen.telekomsport_unofficial.services.interfaces.LoginFinishedHandler;
 
 /**
- * Created by berthm on 26.09.2017.
+ * Created by Berdsen on 26.09.2017.
  */
 
 public class AndroidApplication extends Application implements HasActivityInjector {

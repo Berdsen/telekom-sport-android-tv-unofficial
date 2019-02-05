@@ -23,7 +23,7 @@ import java.text.SimpleDateFormat;
 import de.berdsen.telekomsport_unofficial.services.PicassoCache;
 
 /**
- * Created by berthm on 16.10.2017.
+ * Created by Berdsen on 16.10.2017.
  */
 
 //TODO: implement this

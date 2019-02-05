@@ -12,7 +12,7 @@ import com.squareup.picasso.Picasso;
 import de.berdsen.telekomsport_unofficial.services.PicassoCache;
 
 /**
- * Created by berthm on 09.10.2017.
+ * Created by Berdsen on 09.10.2017.
  */
 
 public class DefaultCardPresenter extends Presenter {

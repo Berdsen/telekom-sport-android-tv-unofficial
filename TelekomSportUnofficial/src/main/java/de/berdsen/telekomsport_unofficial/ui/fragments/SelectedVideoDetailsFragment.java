@@ -37,7 +37,7 @@ import de.berdsen.telekomsport_unofficial.ui.base.AbstractBaseDetailsFragment;
 import de.berdsen.telekomsport_unofficial.ui.presenter.DetailsDescriptionPresenter;
 
 /**
- * Created by berthm on 19.10.2017.
+ * Created by Berdsen on 19.10.2017.
  */
 
 public class SelectedVideoDetailsFragment extends AbstractBaseDetailsFragment implements OnItemViewClickedListener, OnActionClickedListener {
