@@ -135,11 +135,9 @@ public class SportsOverviewFragment extends AbstractBaseBrowseFragment implement
 
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
-                Fragment fragment = cardItem.getTitle() == getString(R.string.overview_preferencesTitle) ? new SettingsFragment() : new AboutFragment();
-
                 // Replace whatever is in the fragment_container view with this fragment,
                 // and add the transaction to the back stack so the user can navigate back
-                transaction.replace(R.id.sportsOverviewContainer, fragment);
+                transaction.replace(R.id.sportsOverviewContainer, new SettingsFragment());
                 transaction.addToBackStack(null);
 
                 // Commit the transaction
