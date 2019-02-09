@@ -30,7 +30,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 /**
- * Created by berthm on 05.10.2017.
+ * Created by Berdsen on 05.10.2017.
  */
 public class LoginTask extends AsyncTask<LoginUserData, Void, Boolean> {
 

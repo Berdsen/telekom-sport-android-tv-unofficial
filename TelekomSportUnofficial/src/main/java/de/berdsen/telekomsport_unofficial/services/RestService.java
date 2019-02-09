@@ -15,7 +15,7 @@ import de.berdsen.telekomsport_unofficial.services.interfaces.SportsResolvedHand
 import de.berdsen.telekomsport_unofficial.services.interfaces.VideoUrlResolvedHandler;
 
 /**
- * Created by berthm on 27.09.2017.
+ * Created by Berdsen on 27.09.2017.
  */
 
 public class RestService {

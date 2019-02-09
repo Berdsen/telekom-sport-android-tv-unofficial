@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.Getter;
 
 /**
- * Created by berthm on 16.10.2017.
+ * Created by Berdsen on 16.10.2017.
  */
 
 @Data

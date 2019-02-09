@@ -35,6 +35,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import de.berdsen.telekomsport_unofficial.AndroidApplication;
+import de.berdsen.telekomsport_unofficial.R;
 import de.berdsen.telekomsport_unofficial.model.GameEventDetails;
 import de.berdsen.telekomsport_unofficial.model.TelekomApiConstants;
 import de.berdsen.telekomsport_unofficial.model.VideoDetails;
@@ -51,7 +52,7 @@ import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 
 /**
- * Created by berthm on 19.10.2017.
+ * Created by Berdsen on 19.10.2017.
  */
 
 public class VideoPlaybackFragment extends AbstractBaseVideoFragment {
@@ -89,7 +90,7 @@ public class VideoPlaybackFragment extends AbstractBaseVideoFragment {
         this.videoDetails = sportsService.getSelectedVideo();
 
         if (this.videoDetails == null) {
-            Toast.makeText(context, "No Selected Game Event", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, getString(R.string.videoPlayback_noVideoDetailsError), Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -119,7 +120,7 @@ public class VideoPlaybackFragment extends AbstractBaseVideoFragment {
 
             @Override
             public void onQualityChanged() {
-                trackSelectionHelper.showSelectionDialog(getActivity(), "QualityChooser", mTrackSelector.getCurrentMappedTrackInfo(), 0);
+                trackSelectionHelper.showSelectionDialog(getActivity(), getString(R.string.videoPlayback_qualityChooser), mTrackSelector.getCurrentMappedTrackInfo(), 0);
             }
         });
 
@@ -135,7 +136,7 @@ public class VideoPlaybackFragment extends AbstractBaseVideoFragment {
         if (videoDetails != null) {
             prepareMediaForPlaying(Uri.parse(apiConstants.getVideoUrl(Integer.toString(videoDetails.getVideoID()))));
         } else {
-            Toast.makeText(context, "Could not find playable content", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, getString(R.string.videoPlayback_noPlayableContentError), Toast.LENGTH_LONG).show();
             getFragmentManager().popBackStack();
         }
     }

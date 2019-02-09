@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">Telekom Sport - Unofficial</string>
+    <string name="app_name" translatable="false">Telekom Sport - Unofficial</string>
     <string name="settingsTitle">User Settings</string>
-    <string name="settingsBreadcrumb">Telekomsport - Unofficial</string>
+    <string name="settingsBreadcrumb" translatable="false">Telekomsport - Unofficial</string>
     <string name="settingsDescription">Here you can adjust your user settings</string>
     <string name="settingsPassword">Password</string>
     <string name="settingsUsername">Username</string>
@@ -19,4 +19,22 @@
     <string name="enable_random_adaptation">Enable random adaptation</string>
     <string name="exit_question_title">Exit Application</string>
     <string name="exit_question_message">Do you really want to exit the application?</string>
+    <string name="overview_preferencesTitle">Preferences</string>
+    <string name="overview_preferencesDescription">Application settings</string>
+    <string name="overview_aboutTitle">About</string>
+    <string name="overview_aboutDescription">Application information page</string>
+    <string name="overview_sportsTitle">Sports</string>
+    <string name="overview_competitionsTitle">Competitions</string>
+    <string name="overview_settingsTitle">Settings</string>
+    <string name="error_NoSportSelected">No sports entry selected</string>
+    <string name="selectedVideoDetails_backgroudImageError">Could not set backround image:</string>
+    <string name="selectedVideoDetails_gameReport">Game Report</string>
+    <string name="selectedVideoDetails_replay">Replay</string>
+    <string name="selectedVideoDetails_magazine">Magazine</string>
+    <string name="videoPlayback_noVideoDetailsError">No Selected Game Event</string>
+    <string name="videoPlayback_qualityChooser">QualityChooser</string>
+    <string name="videoPlayback_noPlayableContentError">Could not find playable content</string>
+    <string name="settings_LanguageTitle">Language</string>
+    <string name="application_loginFailed">Login Failed</string>
+    <string name="application_loginSucceeded">Login Succeeded</string>
 </resources>

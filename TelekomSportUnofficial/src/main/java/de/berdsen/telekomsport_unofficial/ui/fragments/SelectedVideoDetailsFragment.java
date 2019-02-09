@@ -30,6 +30,7 @@ import de.berdsen.telekomsport_unofficial.R;
 import de.berdsen.telekomsport_unofficial.model.GameEvent;
 import de.berdsen.telekomsport_unofficial.model.GameEventDetails;
 import de.berdsen.telekomsport_unofficial.model.SpecifiedVideoType;
+import de.berdsen.telekomsport_unofficial.model.TelekomApiConstants;
 import de.berdsen.telekomsport_unofficial.services.PicassoCache;
 import de.berdsen.telekomsport_unofficial.services.RestService;
 import de.berdsen.telekomsport_unofficial.services.SportsService;
@@ -37,7 +38,7 @@ import de.berdsen.telekomsport_unofficial.ui.base.AbstractBaseDetailsFragment;
 import de.berdsen.telekomsport_unofficial.ui.presenter.DetailsDescriptionPresenter;
 
 /**
- * Created by berthm on 19.10.2017.
+ * Created by Berdsen on 19.10.2017.
  */
 
 public class SelectedVideoDetailsFragment extends AbstractBaseDetailsFragment implements OnItemViewClickedListener, OnActionClickedListener {
@@ -56,6 +57,9 @@ public class SelectedVideoDetailsFragment extends AbstractBaseDetailsFragment im
 
     @Inject
     PicassoCache picassoCache;
+
+    @Inject
+    TelekomApiConstants constants;
 
     private GameEvent selectedGameEvent;
     private GameEventDetails selectedGameEventDetails;
@@ -116,7 +120,7 @@ public class SelectedVideoDetailsFragment extends AbstractBaseDetailsFragment im
             public void run() {
 
                 try {
-                    final Bitmap bitmap = picassoCache.getPicassoCacheInstance().load("https://www.telekomsport.de//images/share_img_fb.jpg").get();
+                    final Bitmap bitmap = picassoCache.getPicassoCacheInstance().load(constants.getBannerImageUrl()).get();
 
                     handler.post(new Runnable() {
                         @Override
@@ -125,7 +129,7 @@ public class SelectedVideoDetailsFragment extends AbstractBaseDetailsFragment im
                                 getBackgroundController().enableParallax();
                                 getBackgroundController().setCoverBitmap(bitmap);
                             } catch (Exception e) {
-                                Toast.makeText(context, "Could not set backround image: " + e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                                Toast.makeText(context, getString(R.string.selectedVideoDetails_backgroudImageError) + e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
                             }
                         }
                     });
@@ -143,9 +147,9 @@ public class SelectedVideoDetailsFragment extends AbstractBaseDetailsFragment im
         this.listOfActions = new ArrayList<>();
 
         if (this.selectedGameEventDetails != null) {
-            addAction(SpecifiedVideoType.Summary, GAMEREPORT, "Game Report", "");
-            addAction(SpecifiedVideoType.Playback, REPLAY, "Replay", "");
-            addAction(SpecifiedVideoType.Magazine, MAGAZINE, "Magazine", "");
+            addAction(SpecifiedVideoType.Summary, GAMEREPORT, getString(R.string.selectedVideoDetails_gameReport), "");
+            addAction(SpecifiedVideoType.Playback, REPLAY, getString(R.string.selectedVideoDetails_replay), "");
+            addAction(SpecifiedVideoType.Magazine, MAGAZINE, getString(R.string.selectedVideoDetails_magazine), "");
 
         }
 

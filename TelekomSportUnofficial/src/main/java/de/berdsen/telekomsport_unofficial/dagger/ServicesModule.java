@@ -20,7 +20,7 @@ import de.berdsen.telekomsport_unofficial.services.SportsService;
 import de.berdsen.telekomsport_unofficial.utils.ParseUtils;
 
 /**
- * Created by berthm on 27.09.2017.
+ * Created by Berdsen on 27.09.2017.
  */
 
 @Module(includes = {

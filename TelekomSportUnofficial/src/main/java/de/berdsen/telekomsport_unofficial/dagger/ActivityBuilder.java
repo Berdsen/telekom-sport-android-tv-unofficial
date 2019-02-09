@@ -5,7 +5,7 @@ import dagger.android.ContributesAndroidInjector;
 import de.berdsen.telekomsport_unofficial.ui.MainActivity;
 
 /**
- * Created by berthm on 26.09.2017.
+ * Created by Berdsen on 26.09.2017.
  */
 
 @Module

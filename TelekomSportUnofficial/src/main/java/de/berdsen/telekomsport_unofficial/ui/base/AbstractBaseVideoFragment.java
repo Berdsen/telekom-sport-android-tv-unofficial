@@ -9,7 +9,7 @@ import javax.inject.Inject;
 import dagger.android.support.AndroidSupportInjection;
 
 /**
- * Created by berthm on 19.10.2017.
+ * Created by Berdsen on 19.10.2017.
  */
 
 public class AbstractBaseVideoFragment extends VideoSupportFragment {

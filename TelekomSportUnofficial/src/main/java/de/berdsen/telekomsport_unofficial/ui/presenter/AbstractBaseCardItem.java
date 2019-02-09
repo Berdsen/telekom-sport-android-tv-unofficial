@@ -3,7 +3,7 @@ package de.berdsen.telekomsport_unofficial.ui.presenter;
 import lombok.Data;
 
 /**
- * Created by berthm on 16.10.2017.
+ * Created by Berdsen on 16.10.2017.
  */
 
 @Data

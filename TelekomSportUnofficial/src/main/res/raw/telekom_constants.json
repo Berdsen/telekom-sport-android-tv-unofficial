@@ -1,10 +1,12 @@
 {
+  "versionDate": "2019-02-05T07:00:00Z",
   "baseUrl": "https://www.magentasport.de",
   "apiUrlExtension": "/api/v2",
   "loginUrlExtension": "/service/auth/web/login?headto=%s/info",
   "loginEndpoint": "https://accounts.login.idm.telekom.com/sso",
   "videoUrlExtension": "/service/player/streamAccess",
   "videoUrlParams": "?videoId=%s&label=2780_hls",
+  "bannerImageUrl": "https://www.telekomsport.de/images/share_img_fb.jpg",
   "sports": [
     {
       "title": "Basketball",
@@ -44,7 +46,7 @@
       "pageExtension": "/basketball/bbl"
     },
     {
-      "title": "Easycredit BBL Pokal",
+      "title": "MagentaSport BBL Pokal",
       "imageUrlExtension": "/images/editorial/Logos/Bewerb-Logos/bbl-pokal-black-mini5.png",
       "pageExtension": "/basketball/bbl_pokal"
     },
@@ -67,6 +69,11 @@
       "title": "Deutsche Eishockey Liga",
       "imageUrlExtension": "/images/editorial/Logos/Bewerb-Logos/del.png",
       "pageExtension": "/eishockey/del"
+    },
+    {
+      "title": "Eishockey Länderspiele",
+      "imageUrlExtension": "/images/editorial/Logos/DEB-3D.PNG",
+      "pageExtension": "/eishockey/deb"
     },
     {
       "title": "3. Liga",
@@ -107,16 +114,6 @@
       "title": "MMA",
       "imageUrlExtension": "/images/editorial/Logos/Bewerb-Logos/mma_2x.png",
       "pageExtension": "/fighting/mma"
-    },
-    {
-      "title": "Wrestling",
-      "imageUrlExtension": "/images/editorial/Logos/Bewerb-Logos/wrestling_2x.png",
-      "pageExtension": "/fighting/wrestling"
-    },
-    {
-      "title": "UFC",
-      "imageUrlExtension": "/images/editorial/Logos/Bewerb-Logos/ufc_2x.png",
-      "pageExtension": "/fighting/ufc"
     },
     {
       "title": "Weitere Kampfsportarten",

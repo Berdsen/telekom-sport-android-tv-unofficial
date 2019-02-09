@@ -11,7 +11,7 @@ import android.util.TypedValue;
 import de.berdsen.telekomsport_unofficial.utils.ApplicationUtils;
 
 /**
- * Created by berthm on 20.11.2017.
+ * Created by Berdsen on 20.11.2017.
  */
 
 public class QualityChangerAction extends PlaybackControlsRow.MultiAction {

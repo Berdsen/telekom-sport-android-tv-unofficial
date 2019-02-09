@@ -5,7 +5,7 @@ import de.berdsen.telekomsport_unofficial.model.GameEventDetails;
 import de.berdsen.telekomsport_unofficial.model.VideoDetails;
 
 /**
- * Created by berthm on 19.10.2017.
+ * Created by Berdsen on 19.10.2017.
  */
 
 public class SportsService {

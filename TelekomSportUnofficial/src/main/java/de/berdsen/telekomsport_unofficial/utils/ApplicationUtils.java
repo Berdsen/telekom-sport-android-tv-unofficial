@@ -7,7 +7,7 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 
 /**
- * Created by berthm on 05.12.2017.
+ * Created by Berdsen on 05.12.2017.
  */
 
 public class ApplicationUtils {

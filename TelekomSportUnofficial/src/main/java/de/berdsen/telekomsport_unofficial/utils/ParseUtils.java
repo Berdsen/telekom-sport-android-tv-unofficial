@@ -17,7 +17,7 @@ import de.berdsen.telekomsport_unofficial.ui.presenter.DefaultCardItem;
 import de.berdsen.telekomsport_unofficial.ui.presenter.EventCardItem;
 
 /**
- * Created by berthm on 26.09.2017.
+ * Created by Berdsen on 26.09.2017.
  */
 
 public class ParseUtils {

@@ -4,7 +4,7 @@ import android.support.v17.leanback.widget.ImageCardView;
 import android.support.v17.leanback.widget.Presenter;
 
 /**
- * Created by berthm on 16.10.2017.
+ * Created by Berdsen on 16.10.2017.
  */
 
 public class AbstractBaseCardViewHolder extends Presenter.ViewHolder {

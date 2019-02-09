@@ -9,7 +9,7 @@ import javax.inject.Inject;
 import dagger.android.support.AndroidSupportInjection;
 
 /**
- * Created by berthm on 28.09.2017.
+ * Created by Berdsen on 28.09.2017.
  */
 
 public abstract class AbstractBaseDetailsFragment extends DetailsSupportFragment {

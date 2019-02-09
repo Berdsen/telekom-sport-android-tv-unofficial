@@ -5,7 +5,7 @@ import android.content.Context;
 import com.squareup.picasso.Picasso;
 
 /**
- * Created by berthm on 03.11.2017.
+ * Created by Berdsen on 03.11.2017.
  */
 
 public class PicassoCache {
