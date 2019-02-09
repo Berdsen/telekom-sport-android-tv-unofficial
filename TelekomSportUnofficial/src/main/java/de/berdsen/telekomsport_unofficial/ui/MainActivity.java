@@ -42,7 +42,7 @@ public class MainActivity extends AbstractBaseActivity {
 
         app.initializeSpinner((ProgressBar)findViewById(R.id.appSpinner));
 
-        app.doLogin(sessionService, context);
+        app.doLogin(sessionService, this);
     }
 
     @Override

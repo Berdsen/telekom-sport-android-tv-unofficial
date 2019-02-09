@@ -66,4 +66,8 @@ public abstract class AbstractBaseActivity extends FragmentActivity implements H
         getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
     }
 
+    public String getStringInternal(int resourceId) {
+        return getString(resourceId);
+    }
+
 }

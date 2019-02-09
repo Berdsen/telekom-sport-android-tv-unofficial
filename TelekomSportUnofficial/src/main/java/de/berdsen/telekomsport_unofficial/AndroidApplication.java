@@ -19,6 +19,7 @@ import de.berdsen.telekomsport_unofficial.dagger.DaggerAppComponent;
 import de.berdsen.telekomsport_unofficial.services.SessionService;
 import de.berdsen.telekomsport_unofficial.services.interfaces.LoginFinishedHandler;
 import de.berdsen.telekomsport_unofficial.ui.MainActivity;
+import de.berdsen.telekomsport_unofficial.ui.base.AbstractBaseActivity;
 
 /**
  * Created by Berdsen on 26.09.2017.
@@ -50,16 +51,16 @@ public class AndroidApplication extends Application implements HasActivityInject
         return activityDispatchingAndroidInjector;
     }
 
-    public void doLogin(SessionService sessionService, final Context context) {
+    public void doLogin(SessionService sessionService, final AbstractBaseActivity activity) {
         sessionService.loginAsync(new LoginFinishedHandler() {
             @Override
             public void loginFailed() {
-                Toast.makeText(context, "Login Failed", Toast.LENGTH_LONG).show();
+                Toast.makeText(activity, activity.getStringInternal(R.string.application_loginFailed), Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void loginSucceeded() {
-                Toast.makeText(context, "Login Succeeded", Toast.LENGTH_LONG).show();
+                Toast.makeText(activity, activity.getStringInternal(R.string.application_loginSucceeded), Toast.LENGTH_LONG).show();
             }
         }, false);
     }
@@ -82,10 +83,11 @@ public class AndroidApplication extends Application implements HasActivityInject
         });
     }
 
-    public void restartApplication(){
+    public void restartApplication(Activity runningActivity){
         // Intent intent = getPackageManager().getLaunchIntentForPackage(context.getPackageName());
         Intent intent = new Intent(context, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+        runningActivity.finish();
     }
 }

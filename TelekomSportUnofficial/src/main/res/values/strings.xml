@@ -35,4 +35,6 @@
     <string name="videoPlayback_qualityChooser">QualityChooser</string>
     <string name="videoPlayback_noPlayableContentError">Could not find playable content</string>
     <string name="settings_LanguageTitle">Language</string>
+    <string name="application_loginFailed">Login Failed</string>
+    <string name="application_loginSucceeded">Login Succeeded</string>
 </resources>

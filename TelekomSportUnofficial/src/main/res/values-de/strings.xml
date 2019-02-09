@@ -36,4 +36,6 @@
     <string name="videoPlayback_qualityChooser">Qualitätswähler</string>
     <string name="videoPlayback_noPlayableContentError">Kein wiedergebbarer Inhalt</string>
     <string name="settings_LanguageTitle">Sprache</string>
+    <string name="application_loginFailed">Login fehlgeschlagen</string>
+    <string name="application_loginSucceeded">Login erfolgreich</string>
 </resources>

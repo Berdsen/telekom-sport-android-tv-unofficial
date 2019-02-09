@@ -196,7 +196,7 @@ public class SettingsFragment extends AbstractBaseGuidedStepFragment
         editor.commit();
 
         if (currentLanguage != language) {
-            app.restartApplication();
+            app.restartApplication(getActivity());
         }
 
     }

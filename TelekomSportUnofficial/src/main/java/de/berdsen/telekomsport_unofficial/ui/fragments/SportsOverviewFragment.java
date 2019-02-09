@@ -25,9 +25,11 @@ import de.berdsen.telekomsport_unofficial.services.PicassoCache;
 import de.berdsen.telekomsport_unofficial.services.RestService;
 import de.berdsen.telekomsport_unofficial.services.SessionService;
 import de.berdsen.telekomsport_unofficial.services.interfaces.SportsResolvedHandler;
+import de.berdsen.telekomsport_unofficial.ui.base.AbstractBaseActivity;
 import de.berdsen.telekomsport_unofficial.ui.base.AbstractBaseBrowseFragment;
 import de.berdsen.telekomsport_unofficial.ui.presenter.DefaultCardItem;
 import de.berdsen.telekomsport_unofficial.ui.presenter.DefaultCardPresenter;
+import de.berdsen.telekomsport_unofficial.utils.ApplicationConstants;
 import de.berdsen.telekomsport_unofficial.utils.ParseUtils;
 
 /**
@@ -116,7 +118,9 @@ public class SportsOverviewFragment extends AbstractBaseBrowseFragment implement
     private SharedPreferences.OnSharedPreferenceChangeListener sharedPreferencesChanged = new SharedPreferences.OnSharedPreferenceChangeListener() {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-            androidApplication.doLogin(sessionService, context);
+            if (!s.equals(ApplicationConstants.PREFERENCES_LANGUAGE)) {
+                androidApplication.doLogin(sessionService, (AbstractBaseActivity)getActivity());
+            }
         }
     };
 
