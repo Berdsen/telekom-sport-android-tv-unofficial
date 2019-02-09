@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">Telekom Sport - Unofficial</string>
-    <string name="settingsTitle">Benutzeineinstellungen</string>
+    <string name="settingsTitle">Einstellungen</string>
     <string name="settingsBreadcrumb" translatable="false">Telekomsport - Unofficial</string>
     <string name="settingsDescription">Hier können die Benutzereinstellungen angepasst werden</string>
     <string name="settingsPassword">Passwort</string>
@@ -35,4 +35,5 @@
     <string name="videoPlayback_noVideoDetailsError">Kein Event selektiert</string>
     <string name="videoPlayback_qualityChooser">Qualitätswähler</string>
     <string name="videoPlayback_noPlayableContentError">Kein wiedergebbarer Inhalt</string>
+    <string name="settings_LanguageTitle">Sprache</string>
 </resources>

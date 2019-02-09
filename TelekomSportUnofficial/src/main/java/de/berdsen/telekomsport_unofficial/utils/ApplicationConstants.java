@@ -7,6 +7,7 @@ package de.berdsen.telekomsport_unofficial.utils;
 public class ApplicationConstants {
     public static final String PREFERENCES_LOGIN_USERNAME = "__USERNAME__";
     public static final String PREFERENCES_LOGIN_PASSWORD = "__PASSWORD__";
+    public static final String PREFERENCES_LANGUAGE = "__LANGUAGE__";
     public static final String PREFERENCES_USERAGENT = "__USERAGENT__";
 
     private enum UserAgentType {

@@ -21,6 +21,7 @@ import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
 import de.berdsen.telekomsport_unofficial.AndroidApplication;
+import de.berdsen.telekomsport_unofficial.utils.ApplicationConstants;
 
 /**
  * Created by Berdsen on 28.09.2017.
@@ -51,22 +52,18 @@ public abstract class AbstractBaseActivity extends FragmentActivity implements H
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         AndroidInjection.inject(this);
+        setLanguage();
+
         super.onCreate(savedInstanceState);
     }
 
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        //TODO: read language from Preferences
-        String lngCode = "en";
-        Locale newLocale = new Locale(lngCode);
-        Locale.setDefault(newLocale);
-
-        Resources res = newBase.getResources();
-        Configuration config = new Configuration(res.getConfiguration());
-        config.setLocale(newLocale);
-
-        newBase = newBase.createConfigurationContext(config);
-
-        super.attachBaseContext(newBase);
+    private void setLanguage() {
+        String localeString = sharedPreferences.getString(ApplicationConstants.PREFERENCES_LANGUAGE, "en");
+        Locale locale = new Locale(localeString);
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
     }
+
 }

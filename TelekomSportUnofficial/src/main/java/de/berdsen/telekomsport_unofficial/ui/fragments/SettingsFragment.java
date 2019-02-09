@@ -7,10 +7,14 @@ import android.support.v17.leanback.widget.GuidanceStylist;
 import android.support.v17.leanback.widget.GuidedAction;
 import android.text.InputType;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
+import de.berdsen.telekomsport_unofficial.AndroidApplication;
 import de.berdsen.telekomsport_unofficial.R;
 import de.berdsen.telekomsport_unofficial.ui.base.AbstractBaseGuidedStepFragment;
 import de.berdsen.telekomsport_unofficial.utils.ApplicationConstants;
@@ -27,9 +31,30 @@ public class SettingsFragment extends AbstractBaseGuidedStepFragment
 
     private final int ACTION_SET_USERNAME = 10;
     private final int ACTION_SET_PASSWORD = 11;
+    private final int ACTION_SET_LANGUAGE = 12;
+
+    private final int ACTION_SET_LANGUAGE_GERMAN = 20;
+    private final int ACTION_SET_LANGUAGE_ENGLISH = 21;
+
+    private final String GERMAN_LOCALE = "de";
+    private final String ENGLISH_LOCALE = "en";
+
+    private final Map<String, String> LANGUAGES = new HashMap<String, String>() {
+        {
+            put(GERMAN_LOCALE, "GERMAN");
+            put(ENGLISH_LOCALE, "ENGLISH");
+        }
+    };
+
+    private GuidedAction languageAction = null;
 
     @Inject
     SharedPreferences sharedPreferences;
+
+    @Inject
+    AndroidApplication app;
+
+    private String currentLanguage;
 
     @Override
     public void onCreate(final Bundle savedInstanceState)
@@ -51,9 +76,16 @@ public class SettingsFragment extends AbstractBaseGuidedStepFragment
     public void onCreateActions(@NonNull List<GuidedAction> actions, Bundle savedInstanceState) {
         String username = sharedPreferences.getString(ApplicationConstants.PREFERENCES_LOGIN_USERNAME, getString(R.string.emptyString));
         String password = sharedPreferences.getString(ApplicationConstants.PREFERENCES_LOGIN_PASSWORD, getString(R.string.emptyString));
+        currentLanguage = sharedPreferences.getString(ApplicationConstants.PREFERENCES_LANGUAGE, ENGLISH_LOCALE);
 
         addEditableAction(actions, ACTION_SET_USERNAME, getString(R.string.settingsUsername), username, InputType.TYPE_CLASS_TEXT);
         addEditableDescriptionAction(actions, ACTION_SET_PASSWORD, getString(R.string.settingsPassword), getString(R.string.settingsPassword), password, InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+
+        List<GuidedAction> languageActions = new ArrayList<>();
+
+        addAction(languageActions, ACTION_SET_LANGUAGE_GERMAN, LANGUAGES.get(GERMAN_LOCALE),"");
+        addAction(languageActions, ACTION_SET_LANGUAGE_ENGLISH, LANGUAGES.get(ENGLISH_LOCALE),"");
+        addDropDownAction(actions, ACTION_SET_LANGUAGE,getString(R.string.settings_LanguageTitle), LANGUAGES.containsKey(currentLanguage) ? LANGUAGES.get(currentLanguage) : LANGUAGES.get(ENGLISH_LOCALE), languageActions);
     }
 
     @Override
@@ -94,6 +126,16 @@ public class SettingsFragment extends AbstractBaseGuidedStepFragment
                 .build());
     }
 
+    private void addDropDownAction(List<GuidedAction> actions,long id, String title, String desc,List<GuidedAction> selectionActions){
+        languageAction = new GuidedAction.Builder(context)
+                .id(id)
+                .title(title)
+                .description(desc)
+                .subActions(selectionActions)
+                .build();
+        actions.add(languageAction);
+    }
+
     @Override
     public void onGuidedActionClicked(GuidedAction action) {
         int actionId = (int)action.getId();
@@ -112,7 +154,28 @@ public class SettingsFragment extends AbstractBaseGuidedStepFragment
                 closeView();
                 break;
         }
+    }
 
+    @Override
+    public boolean onSubGuidedActionClicked(GuidedAction action) {
+        int idx = findActionPositionById(ACTION_SET_LANGUAGE);
+
+        switch ((int)action.getId())
+        {
+            case ACTION_SET_LANGUAGE_ENGLISH:
+                currentLanguage = ENGLISH_LOCALE;
+                break;
+            case ACTION_SET_LANGUAGE_GERMAN:
+                currentLanguage = GERMAN_LOCALE;
+                break;
+            default:
+                currentLanguage = ENGLISH_LOCALE;
+                break;
+        }
+
+        languageAction.setDescription(LANGUAGES.get(currentLanguage));
+        notifyActionChanged(idx);
+        return super.onSubGuidedActionClicked(action);
     }
 
     private void saveSettings() {
@@ -124,10 +187,18 @@ public class SettingsFragment extends AbstractBaseGuidedStepFragment
         CharSequence username = usernameAction.getDescription();
         CharSequence password = passwordAction.getEditDescription();
 
+        CharSequence language = sharedPreferences.getString(ApplicationConstants.PREFERENCES_LANGUAGE, ENGLISH_LOCALE);
+
         editor.putString(ApplicationConstants.PREFERENCES_LOGIN_USERNAME, username.toString());
         editor.putString(ApplicationConstants.PREFERENCES_LOGIN_PASSWORD, password.toString());
+        editor.putString(ApplicationConstants.PREFERENCES_LANGUAGE, currentLanguage);
 
         editor.commit();
+
+        if (currentLanguage != language) {
+            app.restartApplication();
+        }
+
     }
 
     private void resetSettings() {
@@ -135,6 +206,7 @@ public class SettingsFragment extends AbstractBaseGuidedStepFragment
 
         editor.remove(ApplicationConstants.PREFERENCES_LOGIN_USERNAME);
         editor.remove(ApplicationConstants.PREFERENCES_LOGIN_PASSWORD);
+        editor.remove(ApplicationConstants.PREFERENCES_LANGUAGE);
 
         editor.commit();
     }
