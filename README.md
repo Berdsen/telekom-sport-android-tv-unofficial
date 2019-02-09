@@ -23,14 +23,17 @@ With this application you can watch the following sports on your AndroidTV
 * Fighting (currently not supported)
   * Boxing
   * MMA
-  * Wrestling
-  * UFC
   * others
 
 ## Quick summary ##
 
 Retrieving active streams from the Telekom Sport website and playing them, if you're eligible for.
 You need to log in at the preference screen, when you want to watch streams you got an abo for.
+
+### Version 0.15.0 ###
+
+* Added language switching
+* updated competitions in constants json
 
 ### Version 0.14.0 ###
 
