@@ -2,6 +2,7 @@ package de.berdsen.telekomsport_unofficial.dagger;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
+import de.berdsen.telekomsport_unofficial.ui.fragments.AboutFragment;
 import de.berdsen.telekomsport_unofficial.ui.fragments.SelectedVideoDetailsFragment;
 import de.berdsen.telekomsport_unofficial.ui.fragments.SettingsFragment;
 import de.berdsen.telekomsport_unofficial.ui.fragments.SportsOverviewFragment;
@@ -39,5 +40,10 @@ public abstract class FragmentBuilder {
             ServicesModule.class
     })
     public abstract VideoPlaybackFragment videoPlaybackFragment();
+
+    @ContributesAndroidInjector(modules = {
+            ServicesModule.class
+    })
+    public abstract AboutFragment aboutFragment();
 
 }

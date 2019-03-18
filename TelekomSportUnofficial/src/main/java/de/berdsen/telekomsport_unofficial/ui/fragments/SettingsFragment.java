@@ -41,8 +41,8 @@ public class SettingsFragment extends AbstractBaseGuidedStepFragment
 
     private final Map<String, String> LANGUAGES = new HashMap<String, String>() {
         {
-            put(GERMAN_LOCALE, "GERMAN");
-            put(ENGLISH_LOCALE, "ENGLISH");
+            put(GERMAN_LOCALE, "German");
+            put(ENGLISH_LOCALE, "English");
         }
     };
 

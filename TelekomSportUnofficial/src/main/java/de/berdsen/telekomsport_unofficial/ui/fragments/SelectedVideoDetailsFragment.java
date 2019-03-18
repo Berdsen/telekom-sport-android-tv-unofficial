@@ -1,9 +1,6 @@
 package de.berdsen.telekomsport_unofficial.ui.fragments;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.v17.leanback.app.DetailsSupportFragmentBackgroundController;
 import android.support.v17.leanback.widget.Action;
 import android.support.v17.leanback.widget.ArrayObjectAdapter;
 import android.support.v17.leanback.widget.ClassPresenterSelector;
@@ -19,9 +16,7 @@ import android.support.v17.leanback.widget.RowPresenter;
 import android.support.v17.leanback.widget.SparseArrayObjectAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
-import android.widget.Toast;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.inject.Inject;
@@ -30,8 +25,6 @@ import de.berdsen.telekomsport_unofficial.R;
 import de.berdsen.telekomsport_unofficial.model.GameEvent;
 import de.berdsen.telekomsport_unofficial.model.GameEventDetails;
 import de.berdsen.telekomsport_unofficial.model.SpecifiedVideoType;
-import de.berdsen.telekomsport_unofficial.model.TelekomApiConstants;
-import de.berdsen.telekomsport_unofficial.services.PicassoCache;
 import de.berdsen.telekomsport_unofficial.services.RestService;
 import de.berdsen.telekomsport_unofficial.services.SportsService;
 import de.berdsen.telekomsport_unofficial.ui.base.AbstractBaseDetailsFragment;
@@ -55,17 +48,10 @@ public class SelectedVideoDetailsFragment extends AbstractBaseDetailsFragment im
     @Inject
     SportsService sportsService;
 
-    @Inject
-    PicassoCache picassoCache;
-
-    @Inject
-    TelekomApiConstants constants;
-
     private GameEvent selectedGameEvent;
     private GameEventDetails selectedGameEventDetails;
     private DetailsOverviewRow mRow;
     private ArrayList<Object> listOfActions;
-    private DetailsSupportFragmentBackgroundController backgroundController = new DetailsSupportFragmentBackgroundController(this);
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -108,40 +94,6 @@ public class SelectedVideoDetailsFragment extends AbstractBaseDetailsFragment im
         loadBackgroundImage();
     }
 
-    private DetailsSupportFragmentBackgroundController getBackgroundController() {
-        return backgroundController;
-    }
-
-    private void loadBackgroundImage() {
-        final Handler handler = new Handler(context.getMainLooper());
-
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-                try {
-                    final Bitmap bitmap = picassoCache.getPicassoCacheInstance().load(constants.getBannerImageUrl()).get();
-
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                getBackgroundController().enableParallax();
-                                getBackgroundController().setCoverBitmap(bitmap);
-                            } catch (Exception e) {
-                                Toast.makeText(context, getString(R.string.selectedVideoDetails_backgroudImageError) + e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
-                            }
-                        }
-                    });
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
-        t.start();
-    }
-
     private void initActions() {
 
         this.listOfActions = new ArrayList<>();
@@ -150,7 +102,6 @@ public class SelectedVideoDetailsFragment extends AbstractBaseDetailsFragment im
             addAction(SpecifiedVideoType.Summary, GAMEREPORT, getString(R.string.selectedVideoDetails_gameReport), "");
             addAction(SpecifiedVideoType.Playback, REPLAY, getString(R.string.selectedVideoDetails_replay), "");
             addAction(SpecifiedVideoType.Magazine, MAGAZINE, getString(R.string.selectedVideoDetails_magazine), "");
-
         }
 
         mRow.setActionsAdapter(new SparseArrayObjectAdapter() {

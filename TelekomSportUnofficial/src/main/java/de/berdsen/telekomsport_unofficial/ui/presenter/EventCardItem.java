@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable;
 
 import de.berdsen.telekomsport_unofficial.model.GameEvent;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 /**
@@ -11,6 +12,7 @@ import lombok.Getter;
  */
 
 @Data
+@EqualsAndHashCode(callSuper = false)
 public class EventCardItem extends AbstractBaseCardItem {
     private String mainImageUrl;
     private String homeTeamImageUrl;
