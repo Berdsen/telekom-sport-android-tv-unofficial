@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">Telekom Sport - Unofficial</string>
+    <string name="app_version">Version: %1$s</string>
     <string name="settingsTitle">Einstellungen</string>
     <string name="settingsBreadcrumb" translatable="false">Telekomsport - Unofficial</string>
     <string name="settingsDescription">Hier können die Benutzereinstellungen angepasst werden</string>
@@ -38,4 +39,7 @@
     <string name="settings_LanguageTitle">Sprache</string>
     <string name="application_loginFailed">Login fehlgeschlagen</string>
     <string name="application_loginSucceeded">Login erfolgreich</string>
+    <string name="about_info">
+        <![CDATA[Für weitere Informationen besuchen Sie bitte https://github.com/Berdsen/telekom-sport-android-tv-unofficial]]>
+    </string>
 </resources>
