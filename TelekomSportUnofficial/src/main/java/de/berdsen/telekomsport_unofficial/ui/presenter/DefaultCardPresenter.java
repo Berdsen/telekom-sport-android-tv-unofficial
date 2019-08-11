@@ -1,8 +1,8 @@
 package de.berdsen.telekomsport_unofficial.ui.presenter;
 
  import android.graphics.Color;
-import android.support.v17.leanback.widget.ImageCardView;
-import android.support.v17.leanback.widget.Presenter;
+import androidx.leanback.widget.ImageCardView;
+import androidx.leanback.widget.Presenter;
 import android.text.TextUtils;
 import android.view.ViewGroup;
 import android.widget.ImageView;

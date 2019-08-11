@@ -12,8 +12,9 @@ import android.widget.Toast;
 
 import javax.inject.Inject;
 
+import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
-import dagger.android.HasActivityInjector;
+import dagger.android.HasAndroidInjector;
 import de.berdsen.telekomsport_unofficial.dagger.AppComponent;
 import de.berdsen.telekomsport_unofficial.dagger.DaggerAppComponent;
 import de.berdsen.telekomsport_unofficial.services.SessionService;
@@ -25,10 +26,10 @@ import de.berdsen.telekomsport_unofficial.ui.base.AbstractBaseActivity;
  * Created by Berdsen on 26.09.2017.
  */
 
-public class AndroidApplication extends Application implements HasActivityInjector {
+public class AndroidApplication extends Application implements HasAndroidInjector {
 
     @Inject
-    DispatchingAndroidInjector<Activity> activityDispatchingAndroidInjector;
+    DispatchingAndroidInjector<Object> activityDispatchingAndroidInjector;
 
     @Inject
     protected Context context;
@@ -47,7 +48,7 @@ public class AndroidApplication extends Application implements HasActivityInject
     }
 
     @Override
-    public DispatchingAndroidInjector<Activity> activityInjector() {
+    public AndroidInjector<Object> androidInjector() {
         return activityDispatchingAndroidInjector;
     }
 
@@ -90,4 +91,5 @@ public class AndroidApplication extends Application implements HasActivityInject
         startActivity(intent);
         runningActivity.finish();
     }
+
 }

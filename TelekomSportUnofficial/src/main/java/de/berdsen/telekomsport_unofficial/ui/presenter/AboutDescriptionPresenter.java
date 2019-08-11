@@ -2,7 +2,7 @@ package de.berdsen.telekomsport_unofficial.ui.presenter;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.support.v17.leanback.widget.AbstractDetailsDescriptionPresenter;
+import androidx.leanback.widget.AbstractDetailsDescriptionPresenter;
 
 import de.berdsen.telekomsport_unofficial.R;
 

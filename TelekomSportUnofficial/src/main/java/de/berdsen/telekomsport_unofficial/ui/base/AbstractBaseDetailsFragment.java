@@ -5,8 +5,8 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v17.leanback.app.DetailsSupportFragment;
-import android.support.v17.leanback.app.DetailsSupportFragmentBackgroundController;
+import androidx.leanback.app.DetailsSupportFragment;
+import androidx.leanback.app.DetailsSupportFragmentBackgroundController;
 import android.widget.Toast;
 
 import java.io.IOException;

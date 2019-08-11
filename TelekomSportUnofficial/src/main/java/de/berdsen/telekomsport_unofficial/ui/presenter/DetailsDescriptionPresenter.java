@@ -1,6 +1,6 @@
 package de.berdsen.telekomsport_unofficial.ui.presenter;
 
-import android.support.v17.leanback.widget.AbstractDetailsDescriptionPresenter;
+import androidx.leanback.widget.AbstractDetailsDescriptionPresenter;
 import android.text.Html;
 import android.util.Log;
 

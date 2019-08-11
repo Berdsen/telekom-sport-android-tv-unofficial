@@ -2,8 +2,8 @@ package de.berdsen.telekomsport_unofficial.ui.fragments;
 
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v17.leanback.app.VideoFragmentGlueHost;
-import android.support.v17.leanback.app.VideoSupportFragmentGlueHost;
+import androidx.leanback.app.VideoFragmentGlueHost;
+import androidx.leanback.app.VideoSupportFragmentGlueHost;
 import android.text.Html;
 import android.widget.Toast;
 

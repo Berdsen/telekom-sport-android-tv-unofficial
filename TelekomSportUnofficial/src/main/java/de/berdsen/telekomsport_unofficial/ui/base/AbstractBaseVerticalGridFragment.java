@@ -2,9 +2,9 @@ package de.berdsen.telekomsport_unofficial.ui.base;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v17.leanback.app.VerticalGridSupportFragment;
-import android.support.v17.leanback.widget.VerticalGridPresenter;
+import androidx.annotation.Nullable;
+import androidx.leanback.app.VerticalGridSupportFragment;
+import androidx.leanback.widget.VerticalGridPresenter;
 
 import javax.inject.Inject;
 

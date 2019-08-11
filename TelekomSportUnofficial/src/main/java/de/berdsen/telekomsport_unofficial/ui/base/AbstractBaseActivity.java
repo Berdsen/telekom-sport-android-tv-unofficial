@@ -2,24 +2,21 @@ package de.berdsen.telekomsport_unofficial.ui.base;
 
 import android.app.Application;
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentActivity;
 
 import java.util.Locale;
 
-import javax.annotation.Resource;
 import javax.inject.Inject;
 
 import dagger.android.AndroidInjection;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
-import dagger.android.support.HasSupportFragmentInjector;
+import dagger.android.HasAndroidInjector;
 import de.berdsen.telekomsport_unofficial.AndroidApplication;
 import de.berdsen.telekomsport_unofficial.utils.ApplicationConstants;
 
@@ -27,7 +24,7 @@ import de.berdsen.telekomsport_unofficial.utils.ApplicationConstants;
  * Created by Berdsen on 28.09.2017.
  */
 
-public abstract class AbstractBaseActivity extends FragmentActivity implements HasSupportFragmentInjector {
+public abstract class AbstractBaseActivity extends FragmentActivity implements HasAndroidInjector {
 
     @Inject
     protected AndroidApplication app;
@@ -42,10 +39,10 @@ public abstract class AbstractBaseActivity extends FragmentActivity implements H
     protected SharedPreferences sharedPreferences;
 
     @Inject
-    DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
+    DispatchingAndroidInjector<Object> fragmentDispatchingAndroidInjector;
 
     @Override
-    public AndroidInjector<Fragment> supportFragmentInjector() {
+    public AndroidInjector<Object> androidInjector() {
         return fragmentDispatchingAndroidInjector;
     }
 
