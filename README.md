@@ -30,6 +30,10 @@ With this application you can watch the following sports on your AndroidTV
 Retrieving active streams from the Telekom Sport website and playing them, if you're eligible for.
 You need to log in at the preference screen, when you want to watch streams you got an abo for.
 
+### Version 0.17.0 ###
+
+* Fixed login which has changed
+
 ### Version 0.16.0 ###
 
 * Added About view

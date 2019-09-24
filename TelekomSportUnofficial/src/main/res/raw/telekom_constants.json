@@ -3,7 +3,7 @@
   "baseUrl": "https://www.magentasport.de",
   "apiUrlExtension": "/api/v2",
   "loginUrlExtension": "/service/auth/web/login?headto=%s/info",
-  "loginEndpoint": "https://accounts.login.idm.telekom.com/sso",
+  "loginEndpoint": "https://accounts.login.idm.telekom.com/factorx",
   "videoUrlExtension": "/service/player/streamAccess",
   "videoUrlParams": "?videoId=%s&label=2780_hls",
   "bannerImageUrl": "https://www.telekomsport.de/images/share_img_fb.jpg",
